@@ -1,5 +1,4 @@
 <p>Upload photo</p>
 
 <img ng-src="{{photo.src}}" alt="Graduation photo">
-<input type="file" id="file" name="file" ng-model="photo.file"/>
-<button ng-click="uploadImage()">Add</button>
+<button accept="image/*" ngf-select ngf-change="onFileSelect($files)">Upload on file change</button>
