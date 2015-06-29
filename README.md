@@ -9,8 +9,8 @@ When my friend show me our junior high school graduation photo, I'm curious of w
 ## How it works
 
 open the [shared] link:
-> claim yourself
-> tag anybody you know with a name or other profiles
-> upload more graduation photo
-> share the link
-> browse what you want
+* claim yourself
+* tag anybody you know with a name or other profiles
+* upload more graduation photo
+* share the link
+* browse what you want
