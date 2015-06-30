@@ -1,14 +1,14 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('myApp', [
+angular.module('mates', [
         'ui.router',
         'flow',
         'ngFileUpload',
-        'myApp.menu',
-        'myApp.search',
-        'myApp.photo',
-        'myApp.version'
+        'mates.menu',
+        'mates.search',
+        'mates.photo',
+        'mates.version'
     ])
     .config(['$urlRouterProvider', function($urlRouterProvider) {
         $urlRouterProvider.otherwise('/photo');

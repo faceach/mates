@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.search', [])
+angular.module('mates.search', [])
 
 .config(['$stateProvider', function($stateProvider) {
     $stateProvider.state('search', {

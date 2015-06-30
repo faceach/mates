@@ -3,7 +3,6 @@ logs/*
 
 assets/
 node_modules/
-bower_components/
 
 tmp
 .DS_Store

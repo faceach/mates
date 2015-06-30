@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.menu', [])
+angular.module('mates.menu', [])
 
 .controller('MenuCtrl', [
     '$scope',

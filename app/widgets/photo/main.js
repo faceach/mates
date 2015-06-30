@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.photo', [])
+angular.module('mates.photo', [])
 
 .config(['$stateProvider', function($stateProvider) {
     $stateProvider.state('photo', {
