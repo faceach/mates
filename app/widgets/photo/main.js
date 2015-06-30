@@ -1,11 +1,20 @@
 'use strict';
 
-angular.module('myApp.photo', ['ngRoute'])
+angular.module('myApp.photo', [])
 
-.config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/photo', {
-        templateUrl: 'widgets/photo/index.html',
-        controller: 'PhotoCtrl'
+.config(['$stateProvider', function($stateProvider) {
+    $stateProvider.state('photo', {
+        url: "/photo",
+        views: {
+            "menu": {
+                templateUrl: 'widgets/menu/index.html',
+                controller: 'MenuCtrl'                
+            },
+            "content": {
+                templateUrl: 'widgets/photo/index.html',
+                controller: 'PhotoCtrl'                
+            }
+        }
     });
 }])
 
@@ -14,7 +23,7 @@ angular.module('myApp.photo', ['ngRoute'])
     function($scope) {
 
         $scope.photo = {
-            "src": ""
+            "src": "img/blank.png"
         };
 
         $scope.onFileSelect = function($files) {
