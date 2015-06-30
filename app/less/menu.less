@@ -1,0 +1,61 @@
+@menu-color-link: #666;
+@menu-color-link-active: #f66;
+@menu-color-bg: #eee;
+@menu-color-bg-active: #ccc;
+@menu-height: 50px;
+@menu-width-link: 40px;
+@menu-fontsize-icon: 24px;
+
+.menu {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: @menu-height;
+	background-color: @menu-color-bg;
+
+	.menu-fixed {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: @menu-width-link;
+
+		&.menu-l {
+			left: 0;
+		}
+		&.menu-r {
+			right: 0;
+		}
+	}
+	a.menu-link {
+		width: @menu-width-link;
+		text-align: center;
+		font-size: @menu-fontsize-icon;
+		padding: 0;
+		line-height: @menu-height;
+		display: block;
+		color: @menu-color-link;
+
+		&:active {
+			background-color: @menu-color-bg-active;
+			color: @menu-color-link-active;
+		}
+	}
+
+	ul {
+		margin: 0;
+		padding: 0;
+		position: absolute;
+		left: @menu-width-link;
+		right: @menu-width-link;
+		text-align: center;
+
+		> li {
+			list-style: none;
+			display: inline-block;
+			margin: 0;
+
+			> a {
+			}
+		}
+	}
+}

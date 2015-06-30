@@ -1,11 +1,20 @@
 'use strict';
 
-angular.module('myApp.photo', ['ngRoute'])
+angular.module('myApp.photo', [])
 
-.config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/photo', {
-        templateUrl: 'widgets/photo/index.html',
-        controller: 'PhotoCtrl'
+.config(['$stateProvider', function($stateProvider) {
+    $stateProvider.state('photo', {
+        url: "/photo",
+        views: {
+            "menu": {
+                templateUrl: 'widgets/menu/index.html',
+                controller: 'MenuCtrl'                
+            },
+            "content": {
+                templateUrl: 'widgets/photo/index.html',
+                controller: 'PhotoCtrl'                
+            }
+        }
     });
 }])
 
@@ -14,17 +23,17 @@ angular.module('myApp.photo', ['ngRoute'])
     function($scope) {
 
         $scope.photo = {
-            "file": "",
-            "src": ""
+            "src": "img/blank.png"
         };
 
-        $scope.uploadImage = function($event) {
-            /*var files = $event.target.files; // FileList object
+        $scope.onFileSelect = function($files) {
+            console.log("files exist");
 
+            if (!$files || $files.length <= 0) {
+                return;
+            }
             // Loop through the FileList and render image files as thumbnails.
-            var f = files[0];*/
-
-            var f = document.getElementById('file').files[0];
+            var f = $files[0];
 
             // Only process image files.
             // f.type === "" under Wechat (device: Samsung Android v4.4.x)
@@ -35,12 +44,16 @@ angular.module('myApp.photo', ['ngRoute'])
             (new ImagePinch({
                 file: f,
                 toHeight: 400, // *px
-                maxSize: 1024 * 3, // *kb
+                maxSize: 512, // *kb
                 success: function(file) {
                     var reader = new FileReader();
                     // Closure to capture the file information.
                     reader.onload = function(e) {
                         var theFile = $scope.photo.src = e.target.result;
+                        // TODO: do not call $apply()
+                        if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+                            $scope.$apply();
+                        }
                         // Render thumbnail.
                         /*loadImage.parseMetaData(theFile, function(data) {
                             var rotation = 0;

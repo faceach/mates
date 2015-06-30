@@ -2,11 +2,14 @@
 
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
-  'ngRoute',
-  'flow',
-  'myApp.photo',
-  'myApp.version'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/photo'});
-}]);
+        'ui.router',
+        'flow',
+        'ngFileUpload',
+        'myApp.menu',
+        'myApp.search',
+        'myApp.photo',
+        'myApp.version'
+    ])
+    .config(['$urlRouterProvider', function($urlRouterProvider) {
+        $urlRouterProvider.otherwise('/photo');
+    }]);
