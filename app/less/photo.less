@@ -1,3 +1,5 @@
+@photo-control-color-bg: #eee;
+@photo-control-height: 160px;
 
 .photo {
 	.photo-upload-btn {
@@ -11,10 +13,22 @@
 		position: fixed;
 		bottom: @menu-height;
 		left: 0;
+		text-align: center;
+		height: @photo-control-height;
+		line-height: 0;
+		overflow: hidden;
+		.tablecloth();
+		font-size: 10px;
+
+		&.photo-control-active {
+			background: none;
+			background-color: @color-black;
+			font-size: 0;
+		}
 
 		> img {
-			width: 100%;
-			max-height: 200px;
+			max-width: 100%;
+			max-height: @photo-control-height;
 		}
 	}
 }
