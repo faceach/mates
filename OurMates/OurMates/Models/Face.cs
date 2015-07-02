@@ -12,14 +12,14 @@ namespace OurMates.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Photo
+    public partial class Face
     {
+        public string FaceId { get; set; }
         public string PhotoId { get; set; }
-        public Nullable<System.DateTime> GraduateDate { get; set; }
-        public Nullable<System.DateTime> UploadDateTime { get; set; }
-        public Nullable<int> PersonNum { get; set; }
-        public string URL { get; set; }
-        public string School { get; set; }
-        public string Class { get; set; }
+        public string PersonId { get; set; }
+        public Nullable<int> TopPosition { get; set; }
+        public Nullable<int> LeftPosition { get; set; }
+        public Nullable<int> Width { get; set; }
+        public Nullable<int> Height { get; set; }
     }
 }

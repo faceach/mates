@@ -11,8 +11,20 @@ namespace OurMates
         {
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                routeTemplate: "api/mates",
+                defaults: new { controller = "MatesData", action = "Prob", id = RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "PersonWithAllPhotosApi",
+                routeTemplate: "api/person/photos",
+                defaults: new { controller = "MatesData", action = "GetPersonWithAllPhotos", id = RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "PhotoWithAllPersonsApi",
+                routeTemplate: "api/photo/persons",
+                defaults: new { controller = "MatesData", action = "GetPhotoWithAllPersons", id = RouteParameter.Optional }
             );
         }
     }

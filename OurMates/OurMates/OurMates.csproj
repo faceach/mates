@@ -72,6 +72,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Spatial, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Spatial.5.6.2\lib\net40\System.Spatial.dll</HintPath>
@@ -159,9 +161,41 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MatesController.cs" />
+    <Compile Include="Controllers\MatesDataController.cs" />
+    <Compile Include="Database\FaceManager.cs" />
+    <Compile Include="Database\PersonManager.cs" />
+    <Compile Include="Database\PhotoManager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Face.cs">
+      <DependentUpon>Mates.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FaceWithPersonModel.cs" />
+    <Compile Include="Models\FaceWithPhotoModel.cs" />
+    <Compile Include="Models\Mates.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Mates.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Mates.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Mates.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Mates.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Mates.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Person.cs">
+      <DependentUpon>Mates.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PersonModel.cs" />
+    <Compile Include="Models\Photo.cs">
+      <DependentUpon>Mates.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PhotoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -221,6 +255,23 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <EntityDeploy Include="Models\Mates.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Mates.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Mates.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Mates.edmx</DependentUpon>
+      <LastGenOutput>Mates.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Mates.edmx.diagram">
+      <DependentUpon>Mates.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Mates.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Mates.edmx</DependentUpon>
+      <LastGenOutput>Mates.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -255,10 +306,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

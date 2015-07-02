@@ -4,6 +4,8 @@ logs/*
 assets/
 node_modules/
 bower_components/
+bin/
+obj/
 
 tmp
 .DS_Store
