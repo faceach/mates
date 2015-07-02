@@ -193,5 +193,27 @@ namespace OurMates.Database
                 return true;
             }
         }
+
+        public static bool UpdatePersonOfFace(string faceId, string personId)
+        {
+            if (string.IsNullOrEmpty(faceId) || string.IsNullOrEmpty(personId))
+            {
+                return false;
+            }
+
+            using (var matesEntities = new MatesEntities())
+            {
+                Face face = matesEntities.Face.FirstOrDefault(c => c.FaceId == faceId);
+                if (face == null)
+                {
+                    return false;
+                }
+
+                face.PersonId = personId;
+
+                matesEntities.SaveChanges();
+                return true;
+            }
+        }
     }
 }
