@@ -23,8 +23,7 @@ angular.module('mates.photo', [])
     function($scope) {
 
         $scope.photo = {
-            "src": "img/blank.png",
-            "active": false
+            "src": "../test/004.jpg"
         };
 
         $scope.onFileSelect = function($files) {
@@ -51,13 +50,12 @@ angular.module('mates.photo', [])
                     // Closure to capture the file information.
                     reader.onload = function(e) {
                         var theFile = $scope.photo.src = e.target.result;
-                        $scope.photo.active = true;
 
                         // TODO: do not call $apply()
                         if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
                             $scope.$apply();
                         }
-                        
+
                         // Render thumbnail.
                         /*loadImage.parseMetaData(theFile, function(data) {
                             var rotation = 0;

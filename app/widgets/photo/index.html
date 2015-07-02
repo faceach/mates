@@ -1,6 +1,9 @@
 <div class="photo">
-	<button accept="image/*" ngf-select ngf-change="onFileSelect($files)" class="photo-upload-btn">Upload on file change</button>
-	<div class="photo-control-panel valign-img" ng-class="{'photo-control-active': photo.active}">
-		<img ng-src="{{photo.src}}" alt="Graduation photo">
+	<!--button accept="image/*" ngf-select ngf-change="onFileSelect($files)" class="photo-upload-btn">Upload on file change</button-->
+	<div class="photo-preview">
+		<img ng-src="{{photo.src}}" ng-show="photo.src" alt="">
+	</div>
+	<div class="photo-control-panel valign-img" ng-class="{'photo-control-active': photo.src}">
+		<img ng-src="{{photo.src}}" ng-show="photo.src" alt="">
 	</div>
 </div>

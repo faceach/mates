@@ -6,7 +6,7 @@
     </div>
     <ul>
         <li>
-            <a ui-sref="photo" class="menu-link">
+            <a class="menu-link" hm-tap="toggleLevelSelector($event)">
                 <i class="ion-ios-plus-empty"></i>
             </a>
         </li>
@@ -15,5 +15,27 @@
         <a ui-sref="search" class="menu-link">
             <i class="ion-ios-person-outline"></i>
         </a>
+    </div>
+    <div class="menu-level-selector" ng-show="levelSelector.visible">
+        <ul>
+            <li>
+                <a hm-tap="addPhoto($event, 1)">小学</a>
+            </li>
+            <li>
+                <a hm-tap="addPhoto($event, 2)">初中</a>
+            </li>
+            <li>
+                <a hm-tap="addPhoto($event, 3)">高中</a>
+            </li>
+            <li>
+                <a hm-tap="addPhoto($event, 4)">本科</a>
+            </li>
+            <li>
+                <a hm-tap="addPhoto($event, 5)">硕士</a>
+            </li>
+            <li>
+                <a hm-tap="addPhoto($event, 0)">其它</a>
+            </li>
+        </ul>
     </div>
 </nav>
