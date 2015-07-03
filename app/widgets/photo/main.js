@@ -34,12 +34,12 @@ angular.module('mates.photo', [])
             var panWidth = $event.target.clientWidth;
             var panHeight = $event.target.clientHeight;
 
-            var deltaX = $event.deltaX;
-            var deltaY = $event.deltaY;
+            var offsetX = $event.pointers[0].offsetX;
+            var offsetY = $event.pointers[0].offsetY;
 
             $scope.ratio = {
-                x: deltaX / panWidth,
-                y: deltaY / panHeight
+                x: offsetX / panWidth,
+                y: offsetY / panHeight
             };
         };
 
