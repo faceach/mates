@@ -6,6 +6,7 @@
 @menu-width-link: 40px;
 @menu-fontsize-icon: 24px;
 @menu-fontsize-text: 14px;
+@menu-size-caret: 5px;
 
 .menu {
 	position: fixed;
@@ -61,35 +62,48 @@
 
 	.menu-level-selector {
 		position: absolute;
-		bottom: @menu-height;
-		width: 100%;
+		bottom: @menu-height + @menu-size-caret;
+		width: 96%;
+		left: 2%;
+		border-radius: @border-radius;
 		height: @menu-height;
 		background-color: @menu-color-bg;
 
-	> ul {
-		margin: 0;
-		padding: 0;
-		text-align: center;
-
-		> li {
-			list-style: none;
-			display: inline-block;
+		> ul {
 			margin: 0;
+			padding: 0;
+			text-align: center;
+			overflow: hidden;
 
-			> a {
-				text-align: center;
-				font-size: @menu-fontsize-text;
-				padding: 0;
-				line-height: @menu-height;
-				display: block;
-				color: @menu-color-link;
+			> li {
+				width: 16.667%;
+				list-style: none;
+				float: left;
+				margin: 0;
 
-				&:active {
-					background-color: @menu-color-bg-active;
-					color: @menu-color-link-active;
+				> a {
+					text-align: center;
+					font-size: @menu-fontsize-text;
+					padding: 0;
+					line-height: @menu-height;
+					display: block;
+					color: @menu-color-link;
+
+					&:active {
+						background-color: @menu-color-bg-active;
+						color: @menu-color-link-active;
+					}
 				}
 			}
 		}
-	}
+
+		> .caret {
+			border-width: @menu-size-caret;
+			position: absolute;
+			top: @menu-height;
+			left: 50%;
+			margin-left: -@menu-size-caret;
+			border-top-color: @menu-color-bg;
+		}
 	}
 }
