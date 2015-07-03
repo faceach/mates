@@ -26,6 +26,12 @@ namespace OurMates
                 routeTemplate: "api/photo/persons",
                 defaults: new { controller = "MatesData", action = "GetPhotoWithAllPersons", id = RouteParameter.Optional }
             );
+
+            config.Routes.MapHttpRoute(
+                name: "UpdatePersonsApi",
+                routeTemplate: "api/person/update",
+                defaults: new { controller = "MatesData", action = "UploadPerson", id = RouteParameter.Optional }
+            );
         }
     }
 }

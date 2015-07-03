@@ -68,6 +68,13 @@ namespace OurMates.Models
 
             try
             {
+                string base64Image = json.Base64EncodedImage;
+                var filePath = AzureBlobStorageUtil.SaveImageToAzure(base64Image, person.PersonId, AccountUtil.sMatesPersonStorage);
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    person.PictureURL = AccountUtil.sPersonPicStorageBlobURLBase + filePath;
+                }
+
                 PersonManager.AddPerson(person);
 
                 string faceId = json.FaceId;

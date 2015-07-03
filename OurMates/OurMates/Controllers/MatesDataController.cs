@@ -11,6 +11,7 @@ using System.Web.Http;
 using OurMates.Models;
 using Newtonsoft.Json.Linq;
 using System.Text;
+using OurMates.Utils;
 
 namespace OurMates.Controllers
 {
@@ -41,7 +42,7 @@ namespace OurMates.Controllers
             PhotoModel photoModel = new PhotoModel();
             if (photoModel.TryParseJson(jsonData))
             {
-                String result = photoModel.GetJsonFromObject();
+                String result = Helper.GetJsonFromObject(photoModel);
 
                 response = new HttpResponseMessage(HttpStatusCode.OK);
                 response.Content = new StringContent(result, Encoding.UTF8, "application/json");

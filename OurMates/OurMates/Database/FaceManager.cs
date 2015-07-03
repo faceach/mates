@@ -209,9 +209,11 @@ namespace OurMates.Database
                     return false;
                 }
 
-                face.PersonId = personId;
-
-                matesEntities.SaveChanges();
+                if (string.IsNullOrEmpty(face.PersonId) || face.PersonId != personId)
+                {
+                    face.PersonId = personId;
+                    matesEntities.SaveChanges();
+                }
                 return true;
             }
         }

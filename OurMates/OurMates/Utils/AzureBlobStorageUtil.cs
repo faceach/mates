@@ -1,19 +1,11 @@
 ﻿using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
-
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Diagnostics;
-using Microsoft.WindowsAzure.ServiceRuntime;
-using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Text;
 
 namespace OurMates.Utils
 {
@@ -79,14 +71,14 @@ namespace OurMates.Utils
             return ret;
         }
 
-        public static string UploadImageToAzure(Stream stream, String fileName, String publicPath, String accountName, String accountKey)
+        public static string UploadImageToAzure(Stream stream, String fileName, String publicPath, String accountName, String accountKey, String blob)
         {
             try
             {
                 StorageCredentials credsC = new StorageCredentials(accountName, accountKey);
                 CloudStorageAccount accountC = new CloudStorageAccount(credsC, "core.chinacloudapi.cn", useHttps: true);
                 CloudBlobClient clientC = accountC.CreateCloudBlobClient();
-                CloudBlobContainer sxhtestContainerC = clientC.GetContainerReference("mates");
+                CloudBlobContainer sxhtestContainerC = clientC.GetContainerReference(blob);
                 sxhtestContainerC.CreateIfNotExists();
                 String webFileName = "image/" + publicPath + fileName;
                 //String webFileName = DateTime.Now.ToString("yyyyMMddhhmmss") + "/" + id + "/" + Path.GetFileName(fileName);
@@ -101,6 +93,52 @@ namespace OurMates.Utils
             {
                 return null;
             }
+        }
+
+
+        public static string SaveImageToAzure(string base64Image, string id, string blob)
+        {
+            string result = string.Empty;
+            if (!String.IsNullOrEmpty(base64Image))
+            {
+                try
+                {
+                    String fileName = id + ".jpg";
+                    var webFileName = fileName;
+                    using (Stream stream = Base64StringToStream(base64Image))
+                    {
+                        if (stream != null)
+                        {
+                            webFileName = AzureBlobStorageUtil.UploadImageToAzure(stream, fileName, "", AccountUtil.sAccountName, AccountUtil.sAccountKey, blob);
+                        }
+                    }
+                    result = webFileName;
+                }
+                catch (Exception e)
+                {
+                }
+            }
+
+            return result;
+        }
+
+        private static Stream Base64StringToStream(String inputStr)
+        {
+            Stream stream = null;
+            try
+            {
+                if (!String.IsNullOrEmpty(inputStr))
+                {
+                    byte[] buffer = Convert.FromBase64String(inputStr);
+                    stream = new MemoryStream(buffer);
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show("Base64StringToStream 转换失败\nException：" + ex.Message);
+            }
+
+            return stream;
         }
     }
 }

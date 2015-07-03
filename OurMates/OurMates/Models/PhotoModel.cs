@@ -86,10 +86,10 @@ namespace OurMates.Models
                 }
 
                 string base64Image = json.Base64EncodedImage;
-                var filePath = SaveImageToAzure(base64Image);
+                var filePath = AzureBlobStorageUtil.SaveImageToAzure(base64Image, photo.PhotoId, AccountUtil.sMatesPhotoStorage);
                 if (!string.IsNullOrEmpty(filePath))
                 {
-                    photo.URL = AccountUtil.sMatesStorageBlobURLBase + filePath;
+                    photo.URL = AccountUtil.sPhotoStorageBlobURLBase + filePath;
                     result = PhotoManager.AddPhoto(photo);
 
                     //TODO
@@ -105,62 +105,6 @@ namespace OurMates.Models
 
             return result;
 
-        }
-
-        public string GetJsonFromObject()
-        {
-            using (MemoryStream memStream = new MemoryStream())
-            {
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(PhotoModel));
-                ser.WriteObject(memStream, this);
-
-                return Encoding.UTF8.GetString(memStream.ToArray());
-            }
-        }
-
-        private string SaveImageToAzure(string base64Image)
-        {
-            string result = string.Empty;
-            if (!String.IsNullOrEmpty(base64Image))
-            {
-                try
-                {
-                    String fileName = this.PhotoEntity.PhotoId + ".jpg";
-                    var webFileName = fileName;
-                    using (Stream stream = Base64StringToStream(base64Image))
-                    {
-                        if (stream != null)
-                        {
-                            webFileName = AzureBlobStorageUtil.UploadImageToAzure(stream, fileName, "", AccountUtil.sAccountName, AccountUtil.sAccountKey);
-                        }
-                    }
-                    result = webFileName;
-                }
-                catch (Exception e)
-                {
-                }
-            }
-
-            return result;
-        }
-
-        private static Stream Base64StringToStream(String inputStr)
-        {
-            Stream stream = null;
-            try
-            {
-                if (!String.IsNullOrEmpty(inputStr))
-                {
-                    byte[] buffer = Convert.FromBase64String(inputStr);
-                    stream = new MemoryStream(buffer);
-                }
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show("Base64StringToStream 转换失败\nException：" + ex.Message);
-            }
-
-            return stream;
         }
 
     }
