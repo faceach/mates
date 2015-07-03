@@ -23,7 +23,7 @@ angular.module('mates.photo', [])
     function($scope) {
 
         $scope.photo = {
-            "src": "../test/004.jpg"
+            "src": "../test/001.jpg"
         };
 
         $scope.onFileSelect = function($files) {

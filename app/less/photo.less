@@ -1,5 +1,7 @@
 @photo-control-color-bg: #eee;
-@photo-control-height: 160px;
+@photo-control-height: 120px;
+@photo-control-button-width: 40px;
+@photo-control-fontsize-icon: 20px;
 
 .photo {
 	.photo-upload-btn {
@@ -15,20 +17,49 @@
 		left: 0;
 		text-align: center;
 		height: @photo-control-height;
-		line-height: 0;
 		overflow: hidden;
-		.tablecloth();
-		font-size: 10px;
 
 		&.photo-control-active {
-			background: none;
-			background-color: @color-black;
-			font-size: 0;
+			> .photo-control-pad {
+				background: none;
+				background-color: @color-black;
+				font-size: 0;
+			}
 		}
 
-		> img {
-			max-width: 100%;
-			max-height: @photo-control-height;
+		> .photo-control-pad {
+			position: absolute;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			right: @photo-control-button-width;
+			.tablecloth();
+			font-size: 10px;
+
+			> img {
+				max-width: 100%;
+				max-height: @photo-control-height;
+			}
+		}
+
+		> ul.photo-control-button {
+			position: absolute;
+			width: @photo-control-button-width;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			margin: 0;
+			padding: 0;
+
+			> li {
+				list-style: none;
+
+				> a {
+					display: block;
+					line-height: @photo-control-button-width;
+					font-size: @photo-control-fontsize-icon;
+				}
+			}
 		}
 	}
 	.photo-preview {

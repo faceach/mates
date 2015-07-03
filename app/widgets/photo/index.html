@@ -4,6 +4,25 @@
 		<img ng-src="{{photo.src}}" ng-show="photo.src" alt="">
 	</div>
 	<div class="photo-control-panel valign-img" ng-class="{'photo-control-active': photo.src}">
-		<img ng-src="{{photo.src}}" ng-show="photo.src" alt="">
+		<div class="photo-control-pad">
+			<img ng-src="{{photo.src}}" ng-show="photo.src" alt="">
+		</div>
+		<ul class="photo-control-button">
+			<li>
+				<a>
+					<i class="ion-navicon"></i>
+				</a>
+			</li>
+			<li>
+				<a>
+					<i class="ion-arrow-expand"></i>
+				</a>
+			</li>
+			<li>
+				<a>
+					<i class="ion-android-contract"></i>
+				</a>
+			</li>
+		</ul>
 	</div>
 </div>
