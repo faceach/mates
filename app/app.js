@@ -6,7 +6,7 @@ angular.module('mates', [
         'flow',
         'ngFileUpload',
         'btford.modal',
-        'angular-gestures',
+        'hmTouchEvents',
 
         'ng.utils',
 
@@ -17,17 +17,8 @@ angular.module('mates', [
     ])
     .config([
         '$urlRouterProvider',
-        'hammerDefaultOptsProvider',
-        function($urlRouterProvider, hammerDefaultOptsProvider) {
+        function($urlRouterProvider) {
             // Router
             $urlRouterProvider.otherwise('/photo');
-            // Hammer
-            hammerDefaultOptsProvider.set({
-                recognizers: [
-                    [Hammer.Tap, {
-                        time: 250
-                    }]
-                ]
-            });
         }
     ]);
