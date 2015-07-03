@@ -111,27 +111,31 @@ angular.module('mates.photo', [])
             var previewCentrePointX = Math.floor(previewContainerWidth / 2);
             var previewCentrePointY = Math.floor(previewContainerHeight / 2);
 
-            var elImg = $element.find("img")[0];
+            var _elImg = $element.find("img")[0];
 
-            elImg.onload = function(evt) {
-                var imgWidth = evt.target.offsetWidth;
-                var imgHeight = evt.target.offsetHeight;
+            _elImg.onload = function(evt) {
+                var elImg = evt.target;
+                var imgWidth = elImg.offsetWidth;
+                var imgHeight = elImg.offsetHeight;
 
                 var xMin = previewCentrePointX / imgWidth,
                     xMax = 1 - xMin,
                     yMin = previewCentrePointY / imgHeight,
                     yMax = 1 - yMin;
 
-                var previewScrollX = 0;
-                var previewScrollY = 0;
-
+                var offsetX = 0,
+                    offsetY = 0;
                 $scope.$watch('ratio', function() {
                     if ($scope.ratio.x > xMin && $scope.ratio.x < xMax) {
-                        $element[0].scrollLeft = imgWidth * $scope.ratio.x - previewCentrePointX;
+                        offsetX = imgWidth * $scope.ratio.x - previewCentrePointX;
                     }
                     if ($scope.ratio.y > yMin && $scope.ratio.y < yMax) {
-                        $element[0].scrollTop = imgHeight * $scope.ratio.y - previewCentrePointY;
+                        offsetY = imgHeight * $scope.ratio.y - previewCentrePointY;
                     }
+
+                    //$element[0].scrollLeft = offsetX;
+                    //$element[0].scrollTop = offsetY;
+                    elImg.style.webkitTransform = 'translate(' + -offsetX + 'px, ' + -offsetY + 'px)';
                 });
             }
         }

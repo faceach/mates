@@ -68,6 +68,14 @@
 		left: 0;
 		top: 0;
 		bottom: @photo-control-height + @menu-height;
-		overflow: scroll;
+		/*overflow: scroll;*/
+		overflow: hidden;
+
+		> img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			transition: all .2s ease-out;
+		}
 	}
 }
