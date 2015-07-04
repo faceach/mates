@@ -3,12 +3,12 @@
 	<div class="photo-preview" photo-preview ratio="ratio">
 		<div class="photo-preview-map">
 			<img ng-src="{{photo.src}}" ng-show="photo.src" alt="">
-			<span ng-repeat="face in faces" class="photo-preview-face" style="left: {{face.faceRectangle.left}}px; top: {{face.faceRectangle.top}}px; width: {{face.faceRectangle.width}}px; height: {{face.faceRectangle.height}}px;"></span>
+			<span ng-repeat="face in faces" class="photo-preview-face" ng-class="{'photo-preview-face-active': face.active, 'photo-preview-face-read': face.read, 'photo-preview-face-edit': face.edit}" style="left: {{face.faceRectangle.left - 3}}px; top: {{face.faceRectangle.top - 3}}px; width: {{face.faceRectangle.width}}px; height: {{face.faceRectangle.height}}px;"></span>
 		</div>
 	</div>
 	<div class="photo-control-panel valign-img" ng-class="{'photo-control-active': photo.src}">
-		<div class="photo-control-pad">
-			<img ng-src="{{photo.src}}" ng-show="photo.src" alt="" hm-panmove="padMove($event)">
+		<div class="photo-control-pad" hm-panmove="preview($event)" hm-tap="read($event)" hm-doubletap="edit($event)">
+			<img ng-src="{{photo.src}}" ng-show="photo.src" alt="">
 			<span class="photo-control-focus" style="left: {{focusPosition.left}}px; top: {{focusPosition.top}}px;">
 				<i class="ion-ios-plus-empty"></i>
 			</span>

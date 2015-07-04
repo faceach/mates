@@ -21,10 +21,12 @@ angular.module('mates.photo', [])
 .controller('PhotoCtrl', [
     '$scope',
     '$http',
-    function($scope, $http) {
+    '_',
+    function($scope, $http, _) {
+        var photoId = "004";
 
         $scope.photo = {
-            "src": "../test/004.jpg"
+            "src": "../test/" + photoId + ".jpg"
         };
         $scope.ratio = {
             "x": 0.5,
@@ -38,7 +40,7 @@ angular.module('mates.photo', [])
 
         $http({
                 method: 'GET',
-                url: "./api/face.json"
+                url: "./api/face_" + photoId + ".json"
             })
             .success(function(data, status, headers, config) {
                 if (!data) {
@@ -48,22 +50,82 @@ angular.module('mates.photo', [])
             })
             .error(function(data, status, headers, config) {});
 
-        $scope.padMove = function($event) {
-            var panWidth = $event.target.clientWidth;
-            var panHeight = $event.target.clientHeight;
+        $scope.preview = function($event) {
 
-            var offsetX = $event.center.x - $event.target.x;
-            var offsetY = $event.center.y - $event.target.y;
-
-            $scope.ratio = {
-                x: offsetX / panWidth,
-                y: offsetY / panHeight
+            var elPad = $event.element[0];
+            var effectualTarget = elPad.firstElementChild;
+            var effectualPosition = {
+                "left": effectualTarget.offsetLeft,
+                "top": effectualTarget.offsetTop,
+                "width": effectualTarget.clientWidth,
+                "height": effectualTarget.clientHeight
             };
 
-            $scope.focusPosition = {
-                "left": offsetX + $event.target.offsetLeft,
-                "top": offsetY + $event.target.offsetTop
+            var targetClientRect = elPad.getBoundingClientRect();
+            var offsetX = $event.center.x - targetClientRect.left;
+            var offsetY = $event.center.y - targetClientRect.top;
+
+            var effectualOffsetX = 0,
+                effectualOffsetY = 0;
+
+            if (offsetX <= effectualPosition.left) {
+                effectualOffsetX = 0;
+            } else if (offsetX >= effectualPosition.width + effectualPosition.left) {
+                effectualOffsetX = effectualPosition.width;
+            } else {
+                effectualOffsetX = offsetX - effectualPosition.left;
             }
+
+            if (offsetY <= effectualPosition.top) {
+                effectualOffsetY = 0;
+            } else if (offsetY >= effectualPosition.height + effectualPosition.top) {
+                effectualOffsetY = effectualPosition.height;
+            } else {
+                effectualOffsetY = offsetY - effectualPosition.top;
+            }
+
+            // Focus point / Photo size
+            $scope.ratio = {
+                x: (effectualOffsetX / effectualPosition.width).toFixed(4),
+                y: (effectualOffsetY / effectualPosition.height).toFixed(4)
+            };
+
+            // Focus point 
+            $scope.focusPosition = {
+                "left": effectualOffsetX + effectualPosition.left,
+                "top": effectualOffsetY + effectualPosition.top
+            };
+
+            // Active face
+            var pointX = Math.floor(effectualTarget.naturalWidth * $scope.ratio.x),
+                pointY = Math.floor(effectualTarget.naturalHeight * $scope.ratio.y);
+            var face = _.find($scope.faces, function(face) {
+                return pointX >= face.faceRectangle.left &&
+                    pointX <= face.faceRectangle.left + face.faceRectangle.width &&
+                    pointY >= face.faceRectangle.top &&
+                    pointY <= face.faceRectangle.top + face.faceRectangle.height
+            });
+            if (face) {
+                _.each($scope.faces, function(face) {
+                    face.active = false;
+                    face.read = false;
+                    face.edit = false;
+                });
+                face.active = true;
+            }
+        };
+
+        $scope.read = function($event) {
+            var face = _.find($scope.faces, function(face) {
+                return face.active;
+            });
+            face && (face.read = true);
+        };
+        $scope.edit = function($event) {
+            var face = _.find($scope.faces, function(face) {
+                return face.active;
+            });
+            face && (face.edit = true);
         };
 
         $scope.onFileSelect = function($files) {
@@ -139,28 +201,40 @@ angular.module('mates.photo', [])
                 var _elImg = $element.find("img")[0];
 
                 _elImg.onload = function(evt) {
-                    var imgWidth = _elMap.offsetWidth;
-                    var imgHeight = _elMap.offsetHeight;
+                    var mapWidth = _elMap.offsetWidth;
+                    var mapHeight = _elMap.offsetHeight;
 
-                    var xMin = previewCentrePointX / imgWidth,
+                    var xMin = (previewCentrePointX / mapWidth).toFixed(4),
                         xMax = 1 - xMin,
-                        yMin = previewCentrePointY / imgHeight,
+                        yMin = (previewCentrePointY / mapHeight).toFixed(4),
                         yMax = 1 - yMin;
 
-                    var offsetX = 0,
-                        offsetY = 0;
-                    $scope.$watch('ratio', function() {
-                        if ($scope.ratio.x > xMin && $scope.ratio.x < xMax) {
-                            offsetX = imgWidth * $scope.ratio.x - previewCentrePointX;
+                    function movePreview() {
+                        var offsetX = 0,
+                            offsetY = 0;
+                        if ($scope.ratio.x <= xMin) {
+                            offsetX = 0;
+                        } else if ($scope.ratio.x >= xMax) {
+                            offsetX = mapWidth - previewContainerWidth;
+                        } else {
+                            offsetX = Math.floor(mapWidth * $scope.ratio.x) - previewCentrePointX;
                         }
-                        if ($scope.ratio.y > yMin && $scope.ratio.y < yMax) {
-                            offsetY = imgHeight * $scope.ratio.y - previewCentrePointY;
+
+                        if ($scope.ratio.y <= yMin) {
+                            offsetY = 0;
+                        } else if ($scope.ratio.y >= yMax) {
+                            offsetY = mapHeight - previewContainerHeight;
+                        } else {
+                            offsetY = Math.floor(mapHeight * $scope.ratio.y) - previewCentrePointY;
                         }
 
                         //$element[0].scrollLeft = offsetX;
                         //$element[0].scrollTop = offsetY;
                         _elMap.style.webkitTransform = 'translate(' + -offsetX + 'px, ' + -offsetY + 'px)';
-                    });
+                    }
+
+                    $scope.$watch('ratio', movePreview);
+                    movePreview();
                 }
             }
         };
