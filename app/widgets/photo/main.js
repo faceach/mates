@@ -86,8 +86,8 @@ angular.module('mates.photo', [])
 
             // Focus point / Photo size
             $scope.ratio = {
-                x: (effectualOffsetX / effectualPosition.width).toFixed(4),
-                y: (effectualOffsetY / effectualPosition.height).toFixed(4)
+                x: effectualOffsetX / effectualPosition.width,
+                y: effectualOffsetY / effectualPosition.height
             };
 
             // Focus point 
@@ -204,9 +204,9 @@ angular.module('mates.photo', [])
                     var mapWidth = _elMap.offsetWidth;
                     var mapHeight = _elMap.offsetHeight;
 
-                    var xMin = (previewCentrePointX / mapWidth).toFixed(4),
+                    var xMin = previewCentrePointX / mapWidth,
                         xMax = 1 - xMin,
-                        yMin = (previewCentrePointY / mapHeight).toFixed(4),
+                        yMin = previewCentrePointY / mapHeight,
                         yMax = 1 - yMin;
 
                     function movePreview() {
