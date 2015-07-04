@@ -20,7 +20,8 @@ angular.module('mates.photo', [])
 
 .controller('PhotoCtrl', [
     '$scope',
-    function($scope) {
+    '$http',
+    function($scope, $http) {
 
         $scope.photo = {
             "src": "../test/004.jpg"
@@ -33,6 +34,19 @@ angular.module('mates.photo', [])
             "left": "50%",
             "top": "50%"
         };
+        $scope.faces = [];
+
+        $http({
+                method: 'GET',
+                url: "./api/face.json"
+            })
+            .success(function(data, status, headers, config) {
+                if (!data) {
+                    return;
+                }
+                $scope.faces = data.faces;
+            })
+            .error(function(data, status, headers, config) {});
 
         $scope.padMove = function($event) {
             var panWidth = $event.target.clientWidth;
@@ -107,46 +121,47 @@ angular.module('mates.photo', [])
     }
 ])
 
-.directive('photoPreview', function() {
-    return {
-        restrict: 'A',
-        scope: {
-            ratio: '='
-        },
-        link: function($scope, $element, $attr) {
-            var previewContainerWidth = $element[0].offsetWidth;
-            var previewContainerHeight = $element[0].offsetHeight;
+.directive('photoPreview',
+    function() {
+        return {
+            restrict: 'A',
+            scope: {
+                ratio: '='
+            },
+            link: function($scope, $element, $attr) {
+                var previewContainerWidth = $element[0].offsetWidth;
+                var previewContainerHeight = $element[0].offsetHeight;
 
-            var previewCentrePointX = Math.floor(previewContainerWidth / 2);
-            var previewCentrePointY = Math.floor(previewContainerHeight / 2);
+                var previewCentrePointX = Math.floor(previewContainerWidth / 2);
+                var previewCentrePointY = Math.floor(previewContainerHeight / 2);
 
-            var _elImg = $element.find("img")[0];
+                var _elMap = $element.children()[0];
+                var _elImg = $element.find("img")[0];
 
-            _elImg.onload = function(evt) {
-                var elImg = evt.target;
-                var imgWidth = elImg.offsetWidth;
-                var imgHeight = elImg.offsetHeight;
+                _elImg.onload = function(evt) {
+                    var imgWidth = _elMap.offsetWidth;
+                    var imgHeight = _elMap.offsetHeight;
 
-                var xMin = previewCentrePointX / imgWidth,
-                    xMax = 1 - xMin,
-                    yMin = previewCentrePointY / imgHeight,
-                    yMax = 1 - yMin;
+                    var xMin = previewCentrePointX / imgWidth,
+                        xMax = 1 - xMin,
+                        yMin = previewCentrePointY / imgHeight,
+                        yMax = 1 - yMin;
 
-                var offsetX = 0,
-                    offsetY = 0;
-                $scope.$watch('ratio', function() {
-                    if ($scope.ratio.x > xMin && $scope.ratio.x < xMax) {
-                        offsetX = imgWidth * $scope.ratio.x - previewCentrePointX;
-                    }
-                    if ($scope.ratio.y > yMin && $scope.ratio.y < yMax) {
-                        offsetY = imgHeight * $scope.ratio.y - previewCentrePointY;
-                    }
+                    var offsetX = 0,
+                        offsetY = 0;
+                    $scope.$watch('ratio', function() {
+                        if ($scope.ratio.x > xMin && $scope.ratio.x < xMax) {
+                            offsetX = imgWidth * $scope.ratio.x - previewCentrePointX;
+                        }
+                        if ($scope.ratio.y > yMin && $scope.ratio.y < yMax) {
+                            offsetY = imgHeight * $scope.ratio.y - previewCentrePointY;
+                        }
 
-                    //$element[0].scrollLeft = offsetX;
-                    //$element[0].scrollTop = offsetY;
-                    elImg.style.webkitTransform = 'translate(' + -offsetX + 'px, ' + -offsetY + 'px)';
-                });
+                        //$element[0].scrollLeft = offsetX;
+                        //$element[0].scrollTop = offsetY;
+                        _elMap.style.webkitTransform = 'translate(' + -offsetX + 'px, ' + -offsetY + 'px)';
+                    });
+                }
             }
-        }
-    };
-});
+        };
+    });
