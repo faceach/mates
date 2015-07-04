@@ -28,7 +28,11 @@ angular.module('mates.photo', [])
         $scope.ratio = {
             "x": 0.5,
             "y": 0.5
-        }
+        };
+        $scope.focusPosition = {
+            "left": "50%",
+            "top": "50%"
+        };
 
         $scope.padMove = function($event) {
             var panWidth = $event.target.clientWidth;
@@ -41,6 +45,11 @@ angular.module('mates.photo', [])
                 x: offsetX / panWidth,
                 y: offsetY / panHeight
             };
+
+            $scope.focusPosition = {
+                "left": offsetX + $event.target.offsetLeft,
+                "top": offsetY + $event.target.offsetTop
+            }
         };
 
         $scope.onFileSelect = function($files) {

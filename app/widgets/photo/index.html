@@ -6,6 +6,9 @@
 	<div class="photo-control-panel valign-img" ng-class="{'photo-control-active': photo.src}">
 		<div class="photo-control-pad">
 			<img ng-src="{{photo.src}}" ng-show="photo.src" alt="" hm-panmove="padMove($event)">
+			<span class="photo-control-focus" style="left: {{focusPosition.left}}px; top: {{focusPosition.top}}px;">
+				<i class="ion-ios-plus-empty"></i>
+			</span>
 		</div>
 		<ul class="photo-control-button">
 			<li>
