@@ -11,6 +11,7 @@ angular.module('mates', [
         'ng.utils',
 
         'mates.menu',
+        'mates.addPhoto',
         'mates.search',
         'mates.photo',
         'mates.version'

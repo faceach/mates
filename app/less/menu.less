@@ -15,19 +15,6 @@
 	height: @menu-height;
 	background-color: @menu-color-bg;
 
-	> .menu-fixed {
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		width: @menu-width-link;
-
-		&.menu-l {
-			left: 0;
-		}
-		&.menu-r {
-			right: 0;
-		}
-	}
 	a.menu-link {
 		width: @menu-width-link;
 		text-align: center;
@@ -42,32 +29,64 @@
 			color: @menu-color-link-active;
 		}
 	}
-	> ul {
-		margin: 0;
-		padding: 0;
+
+	.menu-main {
 		position: absolute;
-		left: @menu-width-link;
-		right: @menu-width-link;
-		text-align: center;
+		z-index: 3;
+		width: 100%;
+		height: 100%;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		background-color: @menu-color-bg;
 
-		> li {
-			list-style: none;
-			display: inline-block;
+		> .menu-fixed {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: @menu-width-link;
+
+			&.menu-l {
+				left: 0;
+			}
+			&.menu-r {
+				right: 0;
+			}
+		}
+		> ul {
 			margin: 0;
+			padding: 0;
+			position: absolute;
+			left: @menu-width-link;
+			right: @menu-width-link;
+			text-align: center;
 
-			> a {
+			> li {
+				list-style: none;
+				display: inline-block;
+				margin: 0;
+
+				> a {
+				}
 			}
 		}
 	}
 
 	.menu-level-selector {
 		position: absolute;
-		bottom: @menu-height + @menu-size-caret;
-		width: 96%;
-		left: 2%;
+		z-index: 1;
+		top: 0;
+		width: @width-card;
+		left: @width-card-offset;
 		border-radius: @border-radius;
 		height: @menu-height;
 		background-color: @menu-color-bg;
+
+        &.animated.slideInUp,
+        &.animated.slideOutDown {
+			top: -(@menu-height + @menu-size-caret);
+        }
 
 		> ul {
 			margin: 0;
@@ -81,7 +100,7 @@
 				float: left;
 				margin: 0;
 
-				> button {
+				> .menu-level-btn {
 					text-align: center;
 					font-size: @menu-fontsize-text;
 					padding: 0;
@@ -98,12 +117,12 @@
 					}
 				}
 				&:first-child {
-					> button {
+					> .menu-level-btn {
 						border-radius: @border-radius 0 0 @border-radius;
 					}
 				}
 				&:last-child {
-					> button {
+					> .menu-level-btn {
 						border-radius: 0 @border-radius @border-radius 0;
 					}
 				}

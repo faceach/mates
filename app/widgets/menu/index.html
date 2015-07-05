@@ -1,40 +1,42 @@
 <nav class="menu">
-    <div class="menu-fixed menu-l">
-        <a ui-sref="search" class="menu-link">
-            <i class="ion-ios-search-strong"></i>
-        </a>
-    </div>
-    <ul>
-        <li>
-            <a class="menu-link" hm-tap="toggleLevelSelector($event)">
-                <i class="ion-plus"></i>
+    <div class="menu-main">
+        <div class="menu-fixed menu-l">
+            <a ui-sref="search" class="menu-link">
+                <i class="ion-ios-search-strong"></i>
             </a>
-        </li>
-    </ul>
-    <div class="menu-fixed menu-r">
-        <a ui-sref="search" class="menu-link">
-            <i class="ion-android-person"></i>
-        </a>
-    </div>
-    <div class="menu-level-selector" ng-show="levelSelector.visible">
+        </div>
         <ul>
             <li>
-                <button accept="image/*" ngf-select ngf-change="addPhoto($files, 1)">小学</button>
+                <a class="menu-link" hm-tap="toggleLevelSelector($event)">
+                    <i class="ion-plus"></i>
+                </a>
+            </li>
+        </ul>
+        <div class="menu-fixed menu-r">
+            <a ui-sref="search" class="menu-link">
+                <i class="ion-android-person"></i>
+            </a>
+        </div>
+    </div>
+    <div class="menu-level-selector" ng-class="{'animated slideInUp': levelSelector.visible, 'slideOutDown': !levelSelector.visible}">
+        <ul>
+            <li>
+                <a class="menu-level-btn" hm-tap="addPhoto(1)">小学</a>
             </li>
             <li>
-                <button accept="image/*" ngf-select ngf-change="addPhoto($files, 2)">初中</button>
+                <a class="menu-level-btn" hm-tap="addPhoto(2)">初中</a>
             </li>
             <li>
-                <button accept="image/*" ngf-select ngf-change="addPhoto($files, 3)">高中</button>
+                <a class="menu-level-btn" hm-tap="addPhoto(3)">高中</a>
             </li>
             <li>
-                <button accept="image/*" ngf-select ngf-change="addPhoto($files, 4)">本科</button>
+                <a class="menu-level-btn" hm-tap="addPhoto(4)">本科</a>
             </li>
             <li>
-                <button accept="image/*" ngf-select ngf-change="addPhoto($files, 5)">硕士</button>
+                <a class="menu-level-btn" hm-tap="addPhoto(5)">研究生</a>
             </li>
             <li>
-                <button accept="image/*" ngf-select ngf-change="addPhoto($files, 0)">其它</button>
+                <a class="menu-level-btn" hm-tap="addPhoto(0)">其它</a>
             </li>
         </ul>
         <span class="caret"></span>

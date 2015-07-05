@@ -1,0 +1,24 @@
+<div class="addphoto-card animated slideInUp">
+	<a href ng-click="closeMe()">Close Me</a>
+	<button accept="image/*" ngf-select ngf-change="readPhoto($files)">点击添加集体照</button>
+	<form novalidate class="simple-form">
+		<div>
+			<img src="{{photo.src}}" alt="" width="100%">
+		</div>
+		<div>
+			学校: <input type="text" ng-model="photo.school" /><br>
+			* 育才中学
+		</div>
+		<div>
+			年份: <input type="text" ng-model="photo.year" /><br>
+			* 2003届毕业
+		</div>
+		<div>
+			班级: <input type="text" ng-model="photo.class" /><br>
+			* 初三（1）班
+		</div>
+		<div>
+			<input type="submit" ng-click="save(photo)" value="保存" />
+		</div>
+	</form>
+</div>
