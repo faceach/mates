@@ -81,12 +81,15 @@
 				float: left;
 				margin: 0;
 
-				> a {
+				> button {
 					text-align: center;
 					font-size: @menu-fontsize-text;
 					padding: 0;
 					line-height: @menu-height;
 					display: block;
+					width: 100%;
+					border: none;
+					background-color: transparent;
 					color: @menu-color-link;
 
 					&:active {
@@ -95,12 +98,12 @@
 					}
 				}
 				&:first-child {
-					> a {
+					> button {
 						border-radius: @border-radius 0 0 @border-radius;
 					}
 				}
 				&:last-child {
-					> a {
+					> button {
 						border-radius: 0 @border-radius @border-radius 0;
 					}
 				}

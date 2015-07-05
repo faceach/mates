@@ -19,22 +19,22 @@
     <div class="menu-level-selector" ng-show="levelSelector.visible">
         <ul>
             <li>
-                <a hm-tap="addPhoto($event, 1)">小学</a>
+                <button accept="image/*" ngf-select ngf-change="addPhoto($files, 1)">小学</button>
             </li>
             <li>
-                <a hm-tap="addPhoto($event, 2)">初中</a>
+                <button accept="image/*" ngf-select ngf-change="addPhoto($files, 2)">初中</button>
             </li>
             <li>
-                <a hm-tap="addPhoto($event, 3)">高中</a>
+                <button accept="image/*" ngf-select ngf-change="addPhoto($files, 3)">高中</button>
             </li>
             <li>
-                <a hm-tap="addPhoto($event, 4)">本科</a>
+                <button accept="image/*" ngf-select ngf-change="addPhoto($files, 4)">本科</button>
             </li>
             <li>
-                <a hm-tap="addPhoto($event, 5)">硕士</a>
+                <button accept="image/*" ngf-select ngf-change="addPhoto($files, 5)">硕士</button>
             </li>
             <li>
-                <a hm-tap="addPhoto($event, 0)">其它</a>
+                <button accept="image/*" ngf-select ngf-change="addPhoto($files, 0)">其它</button>
             </li>
         </ul>
         <span class="caret"></span>
