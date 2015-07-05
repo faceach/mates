@@ -1,24 +1,72 @@
 <div class="addphoto-card animated slideInUp">
-	<a href ng-click="closeMe()">Close Me</a>
-	<button accept="image/*" ngf-select ngf-change="readPhoto($files)">点击添加集体照</button>
-	<form novalidate class="simple-form">
-		<div>
-			<img src="{{photo.src}}" alt="" width="100%">
-		</div>
-		<div>
-			学校: <input type="text" ng-model="photo.school" /><br>
-			* 育才中学
-		</div>
-		<div>
-			年份: <input type="text" ng-model="photo.year" /><br>
-			* 2003届毕业
-		</div>
-		<div>
-			班级: <input type="text" ng-model="photo.class" /><br>
-			* 初三（1）班
-		</div>
-		<div>
-			<input type="submit" ng-click="save(photo)" value="保存" />
-		</div>
-	</form>
+    <a href ng-click="closeMe()">Close Me</a>
+    <button accept="image/*" ngf-select ngf-change="readPhoto($files)">点击添加集体照</button>
+    <form>
+        <div class="row">
+	        <div class="large-12 columns">
+	            <img src="{{photo.src}}" alt="" width="100%">
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <div class="row collapse">
+                    <label>学校:</label>
+                    <div class="small-4 columns">
+	                    <select>
+	                        <option value="1">幼儿园</option>
+	                        <option value="2">小学</option>
+	                        <option value="3">初中</option>
+	                        <option value="4">高中</option>
+	                        <option value="5">本科</option>
+	                        <option value="6">研究生</option>
+	                        <option value="7">其它</option>
+	                    </select>
+                    </div>
+                    <div class="small-8 columns">
+	                    <input type="text" placeholder="育才中学" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <div class="row collapse">
+	                <label>毕业年份:</label>
+	                <div class="small-9 columns">
+	                    <select>
+	                        <option value="2000">2000</option>
+	                        <option value="2001">2001</option>
+	                        <option value="2002">2002</option>
+	                        <option value="2003">2003</option>
+	                        <option value="2004">2004</option>
+	                        <option value="2005">2005</option>
+	                        <option value="2006">2006</option>
+	                        <option value="2007">2007</option>
+	                    </select>
+	                </div>
+	                <div class="small-3 columns">
+	                    <span class="postfix">届</span>
+	                </div>
+	            </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <div class="row collapse">
+                    <label>班级</label>
+                    <div class="small-9 columns">
+                        <input type="text" placeholder="3" />
+                    </div>
+                    <div class="small-3 columns">
+                        <span class="postfix">班</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+	            <input type="submit" class="button" ng-click="save(photo)" value="保存" />
+            </div>
+        </div>
+    </form>
 </div>
