@@ -26,9 +26,11 @@ angular.module('mates.addPhoto', [])
     '$q',
     '$http',
     'addPhotoModal',
-    function($scope, $q, $http, addPhotoModal) {
+    'msgBus',
+    function($scope, $q, $http, addPhotoModal, msgBus) {
 
         $scope.photo = {
+            "visible": false,
             "src": "./img/blank.png",
             "levelId": addPhotoModal.levelId
         };
@@ -72,11 +74,16 @@ angular.module('mates.addPhoto', [])
         $scope.readPhoto = function($files) {
             photoReader($files).then(function(file) {
                 $scope.photo.src = file;
+                $scope.photo.visible = true;
             });
         };
 
         $scope.save = function(photo) {
+            console.log("Add photo params:");
             console.dir(photo);
+            // Emit
+            msgBus.emitMsg("addPhoto", photo);
+            addPhotoModal.hide();
         };
     }
 ]);

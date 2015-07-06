@@ -1,10 +1,11 @@
 <div class="addphoto-card animated slideInUp">
-    <a href ng-click="closeMe()">Close Me</a>
-    <button accept="image/*" ngf-select ngf-change="readPhoto($files)">点击添加集体照</button>
     <form>
         <div class="row">
-	        <div class="large-12 columns">
-	            <img src="{{photo.src}}" alt="" width="100%">
+	        <div class="large-12 columns photo-thumbnail" accept="image/*" ngf-select ngf-change="readPhoto($files)">
+                <div class="photo-thumbnail-container">
+    	            <img ng-src="{{photo.src}}" src="./img/blank.png" alt="" ng-show="photo.visible">
+                    <div accept="image/*" class="photo-thumbnail-btn" ng-hide="photo.visible">点击添加集体照</div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -65,6 +66,7 @@
         </div>
         <div class="row">
             <div class="large-12 columns">
+                <a href  class="button secondary" ng-click="closeMe()">取消</a>
 	            <input type="submit" class="button" ng-click="save(photo)" value="保存" />
             </div>
         </div>

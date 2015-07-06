@@ -7,7 +7,7 @@ angular.module('mates.photo', [])
         url: "/photo",
         views: {
             "menu": {
-                templateUrl: 'widgets/menu/index.html',
+                templateUrl: 'widgets/menu/home.html',
                 controller: 'MenuCtrl'
             },
             "content": {
@@ -22,7 +22,8 @@ angular.module('mates.photo', [])
     '$scope',
     '$http',
     '_',
-    function($scope, $http, _) {
+    'msgBus',
+    function($scope, $http, _, msgBus) {
         var photoId = "004";
 
         $scope.photo = {
@@ -49,6 +50,11 @@ angular.module('mates.photo', [])
                 $scope.faces = data.faces;
             })
             .error(function(data, status, headers, config) {});
+
+        // Message event listner
+        msgBus.onMsg('addPhoto', $scope, function($event, photo) {
+            $scope.photo.src = photo.src;
+        });
 
         $scope.preview = function($event) {
 

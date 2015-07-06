@@ -7,7 +7,7 @@ angular.module('mates.search', [])
         url: "/search",
         views: {
             "menu": {
-                templateUrl: 'widgets/menu/index.html',
+                templateUrl: 'widgets/menu/non-home.html',
                 controller: 'MenuCtrl'
             },
             "content": {
