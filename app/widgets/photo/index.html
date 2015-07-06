@@ -1,34 +1,155 @@
 <div class="photo">
-	<!--button accept="image/*" ngf-select ngf-change="onFileSelect($files)" class="photo-upload-btn">Upload on file change</button-->
-	<div class="photo-preview" photo-preview ratio="ratio">
-		<div class="photo-preview-map">
-			<img ng-src="{{photo.src}}" ng-show="photo.src" alt="">
-			<span ng-repeat="face in faces" class="photo-preview-face" ng-class="{'photo-preview-face-active': face.active, 'photo-preview-face-read': face.read, 'photo-preview-face-edit': face.edit}" style="left: {{face.faceRectangle.left - 3}}px; top: {{face.faceRectangle.top - 3}}px; width: {{face.faceRectangle.width}}px; height: {{face.faceRectangle.height}}px;"></span>
-		</div>
-	</div>
-	<div class="photo-control-panel valign-img" ng-class="{'photo-control-active': photo.src}">
-		<div class="photo-control-pad" hm-panmove="preview($event)" hm-tap="read($event)" hm-doubletap="edit($event)">
-			<img ng-src="{{photo.src}}" ng-show="photo.src" alt="">
-			<span class="photo-control-focus" style="left: {{focusPosition.left}}px; top: {{focusPosition.top}}px;">
-				<i class="ion-ios-plus-empty"></i>
-			</span>
-		</div>
-		<ul class="photo-control-button">
-			<li>
-				<a>
-					<i class="ion-navicon"></i>
-				</a>
-			</li>
-			<li>
-				<a>
-					<i class="ion-arrow-expand"></i>
-				</a>
-			</li>
-			<li>
-				<a>
-					<i class="ion-android-contract"></i>
-				</a>
-			</li>
-		</ul>
-	</div>
+    <div class="row">
+        <div class="small-12 columns photo-thumbnail">
+            <div class="photo-thumbnail-container">
+                <a ui-sref="photo/review">
+                	<img ng-src="{{photo.src}}" src="./img/blank.png" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12 columns">
+            <h2>
+            	育才中学<br>
+            	<small>中国 上海市 嘉定区</small>
+			</h2>
+            <h3 class="subheader">
+            	2003届初三（3）班毕业照<br>
+            </h3>
+            <blockquote>初中的生活犹如一本书，打开书，每一个故事都记录了一段单纯的起伏，故事里终究会有遗憾，会有叹息，会有泪滴，要不就是青涩的年纪，就没有酸涩的回忆。请相信，一切暂别的都要重聚，一切遗憾的都要圆满。</blockquote>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="small-12 columns">
+			<ul class="no-bullet">
+				<li>
+					<div class="row">
+						<div class="small-3 columns">
+							<a class="th" href>
+								<img src="../test/a_001.jpg" alt="" width="100%">
+							</a>
+						</div>
+						<div class="small-9 columns">
+							<h3>同学_001</h3>
+							<p>
+								<span class="info round label">可爱</span>
+								<span class="info round label">聪明</span>
+								<span class="info round label">调皮</span>
+							</p>
+						</div>
+					</div>
+					<hr>
+				</li>
+				<li>
+					<div class="row">
+						<div class="small-3 columns">
+							<a class="th" href>
+								<img src="../test/a_002.jpg" alt="" width="100%">
+							</a>
+						</div>
+						<div class="small-9 columns">
+							<h3>同学_002</h3>
+							<p>
+								<span class="info round label">可爱</span>
+								<span class="info round label">聪明</span>
+								<span class="info round label">调皮</span>
+							</p>
+						</div>
+					</div>
+					<hr>
+				</li>
+				<li>
+					<div class="row">
+						<div class="small-3 columns">
+							<a class="th" href>
+								<img src="../test/a_003.jpg" alt="" width="100%">
+							</a>
+						</div>
+						<div class="small-9 columns">
+							<h3>同学_003</h3>
+							<p>
+								<span class="info round label">可爱</span>
+								<span class="info round label">聪明</span>
+								<span class="info round label">调皮</span>
+							</p>
+						</div>
+					</div>
+					<hr>
+				</li>
+				<li>
+					<div class="row">
+						<div class="small-3 columns">
+							<a class="th" href>
+								<img src="../test/a_004.jpg" alt="" width="100%">
+							</a>
+						</div>
+						<div class="small-9 columns">
+							<h3>同学_004</h3>
+							<p>
+								<span class="info round label">可爱</span>
+								<span class="info round label">聪明</span>
+								<span class="info round label">调皮</span>
+							</p>
+						</div>
+					</div>
+					<hr>
+				</li>
+				<li>
+					<div class="row">
+						<div class="small-3 columns">
+							<a class="th" href>
+								<img src="../test/a_005.jpg" alt="" width="100%">
+							</a>
+						</div>
+						<div class="small-9 columns">
+							<h3>同学_005</h3>
+							<p>
+								<span class="info round label">可爱</span>
+								<span class="info round label">聪明</span>
+								<span class="info round label">调皮</span>
+							</p>
+						</div>
+					</div>
+					<hr>
+				</li>
+				<li>
+					<div class="row">
+						<div class="small-3 columns">
+							<a class="th" href>
+								<img src="../test/a_006.jpg" alt="" width="100%">
+							</a>
+						</div>
+						<div class="small-9 columns">
+							<h3>同学_006</h3>
+							<p>
+								<span class="info round label">可爱</span>
+								<span class="info round label">聪明</span>
+								<span class="info round label">调皮</span>
+							</p>
+						</div>
+					</div>
+					<hr>
+				</li>
+				<li>
+					<div class="row">
+						<div class="small-3 columns">
+							<a class="th" href>
+								<img src="../test/a_007.jpg" alt="" width="100%">
+							</a>
+						</div>
+						<div class="small-9 columns">
+							<h3>同学_007</h3>
+							<p>
+								<span class="info round label">可爱</span>
+								<span class="info round label">聪明</span>
+								<span class="info round label">调皮</span>
+							</p>
+						</div>
+					</div>
+				</li>
+			</ul>
+        </div>
+    </div>
 </div>

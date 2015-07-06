@@ -14,6 +14,7 @@ angular.module('mates', [
         'mates.addPhoto',
         'mates.search',
         'mates.photo',
+        'mates.photoReview',
         'mates.version'
     ])
     .config([
