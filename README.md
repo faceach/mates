@@ -18,7 +18,7 @@ open the [shared] link:
 
 ## Site map
 * `/app/photo` - Photo and photo information
-* `/app/photo/map` - Browse photo and highlight one's face
+* `/app/photo/review` - Browse photo and highlight one's face
 * `/app/search` - Search photo
 * `/app/account` - Account information
 

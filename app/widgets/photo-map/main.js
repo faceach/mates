@@ -27,15 +27,8 @@ angular.module('mates.photoReview', [])
         var photoId = "004";
 
         $scope.photo = {
-            "src": "../test/" + photoId + ".jpg"
-        };
-        $scope.ratio = {
-            "x": 0.5,
-            "y": 0.5
-        };
-        $scope.focusPosition = {
-            "left": "50%",
-            "top": "50%"
+            "src": "../test/" + photoId + ".jpg",
+            "ratio": 0
         };
         $scope.faces = [];
 
@@ -56,71 +49,6 @@ angular.module('mates.photoReview', [])
             $scope.photo.src = photo.src;
         });
 
-        $scope.preview = function($event) {
-
-            var elPad = $event.element[0];
-            var effectualTarget = elPad.firstElementChild;
-            var effectualPosition = {
-                "left": effectualTarget.offsetLeft,
-                "top": effectualTarget.offsetTop,
-                "width": effectualTarget.clientWidth,
-                "height": effectualTarget.clientHeight
-            };
-
-            var targetClientRect = elPad.getBoundingClientRect();
-            var offsetX = $event.center.x - targetClientRect.left;
-            var offsetY = $event.center.y - targetClientRect.top;
-
-            var effectualOffsetX = 0,
-                effectualOffsetY = 0;
-
-            if (offsetX <= effectualPosition.left) {
-                effectualOffsetX = 0;
-            } else if (offsetX >= effectualPosition.width + effectualPosition.left) {
-                effectualOffsetX = effectualPosition.width;
-            } else {
-                effectualOffsetX = offsetX - effectualPosition.left;
-            }
-
-            if (offsetY <= effectualPosition.top) {
-                effectualOffsetY = 0;
-            } else if (offsetY >= effectualPosition.height + effectualPosition.top) {
-                effectualOffsetY = effectualPosition.height;
-            } else {
-                effectualOffsetY = offsetY - effectualPosition.top;
-            }
-
-            // Focus point / Photo size
-            $scope.ratio = {
-                x: effectualOffsetX / effectualPosition.width,
-                y: effectualOffsetY / effectualPosition.height
-            };
-
-            // Focus point 
-            $scope.focusPosition = {
-                "left": effectualOffsetX + effectualPosition.left,
-                "top": effectualOffsetY + effectualPosition.top
-            };
-
-            // Active face
-            var pointX = Math.floor(effectualTarget.naturalWidth * $scope.ratio.x),
-                pointY = Math.floor(effectualTarget.naturalHeight * $scope.ratio.y);
-            var face = _.find($scope.faces, function(face) {
-                return pointX >= face.faceRectangle.left &&
-                    pointX <= face.faceRectangle.left + face.faceRectangle.width &&
-                    pointY >= face.faceRectangle.top &&
-                    pointY <= face.faceRectangle.top + face.faceRectangle.height
-            });
-            if (face) {
-                _.each($scope.faces, function(face) {
-                    face.active = false;
-                    face.read = false;
-                    face.edit = false;
-                });
-                face.active = true;
-            }
-        };
-
         $scope.read = function($event) {
             var face = _.find($scope.faces, function(face) {
                 return face.active;
@@ -136,7 +64,7 @@ angular.module('mates.photoReview', [])
     }
 ])
 
-.directive('photoPreview',
+.directive('photoMap',
     function() {
         return {
             restrict: 'A',
@@ -157,37 +85,11 @@ angular.module('mates.photoReview', [])
                     var mapWidth = _elMap.offsetWidth;
                     var mapHeight = _elMap.offsetHeight;
 
-                    var xMin = previewCentrePointX / mapWidth,
-                        xMax = 1 - xMin,
-                        yMin = previewCentrePointY / mapHeight,
-                        yMax = 1 - yMin;
+                    var imgWidth = _elImg.naturalWidth;
+                    var imgHeight = _elImg.naturalHeight;
 
-                    function movePreview() {
-                        var offsetX = 0,
-                            offsetY = 0;
-                        if ($scope.ratio.x <= xMin) {
-                            offsetX = 0;
-                        } else if ($scope.ratio.x >= xMax) {
-                            offsetX = mapWidth - previewContainerWidth;
-                        } else {
-                            offsetX = Math.floor(mapWidth * $scope.ratio.x) - previewCentrePointX;
-                        }
-
-                        if ($scope.ratio.y <= yMin) {
-                            offsetY = 0;
-                        } else if ($scope.ratio.y >= yMax) {
-                            offsetY = mapHeight - previewContainerHeight;
-                        } else {
-                            offsetY = Math.floor(mapHeight * $scope.ratio.y) - previewCentrePointY;
-                        }
-
-                        //$element[0].scrollLeft = offsetX;
-                        //$element[0].scrollTop = offsetY;
-                        _elMap.style.webkitTransform = 'translate(' + -offsetX + 'px, ' + -offsetY + 'px)';
-                    }
-
-                    $scope.$watch('ratio', movePreview);
-                    movePreview();
+                    $scope.ratio = mapHeight/imgHeight;
+                    $scope.$apply();
                 }
             }
         };

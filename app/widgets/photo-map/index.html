@@ -1,34 +1,27 @@
-<div class="photo">
-	<!--button accept="image/*" ngf-select ngf-change="onFileSelect($files)" class="photo-upload-btn">Upload on file change</button-->
-	<div class="photo-preview" photo-preview ratio="ratio">
-		<div class="photo-preview-map">
-			<img ng-src="{{photo.src}}" ng-show="photo.src" alt="">
-			<span ng-repeat="face in faces" class="photo-preview-face" ng-class="{'photo-preview-face-active': face.active, 'photo-preview-face-read': face.read, 'photo-preview-face-edit': face.edit}" style="left: {{face.faceRectangle.left - 3}}px; top: {{face.faceRectangle.top - 3}}px; width: {{face.faceRectangle.width}}px; height: {{face.faceRectangle.height}}px;"></span>
-		</div>
-	</div>
-	<div class="photo-control-panel valign-img" ng-class="{'photo-control-active': photo.src}">
-		<div class="photo-control-pad" hm-panmove="preview($event)" hm-tap="read($event)" hm-doubletap="edit($event)">
-			<img ng-src="{{photo.src}}" ng-show="photo.src" alt="">
-			<span class="photo-control-focus" style="left: {{focusPosition.left}}px; top: {{focusPosition.top}}px;">
-				<i class="ion-ios-plus-empty"></i>
-			</span>
-		</div>
-		<ul class="photo-control-button">
-			<li>
-				<a>
-					<i class="ion-navicon"></i>
-				</a>
-			</li>
-			<li>
-				<a>
-					<i class="ion-arrow-expand"></i>
-				</a>
-			</li>
-			<li>
-				<a>
-					<i class="ion-android-contract"></i>
-				</a>
-			</li>
-		</ul>
-	</div>
+<div class="photo-map">
+    <div class="photo-map-panel" photo-map ratio="photo.ratio">
+        <div class="photo-map-view">
+            <img ng-src="{{photo.src}}" ng-show="photo.src" alt="">
+            <span ng-repeat="face in faces" class="photo-map-face" ng-class="{'photo-map-face-active': face.active, 'photo-map-face-read': face.read, 'photo-map-face-edit': face.edit}" style="left: {{face.faceRectangle.left * photo.ratio - 3}}px; top: {{face.faceRectangle.top * photo.ratio - 3}}px; width: {{face.faceRectangle.width * photo.ratio}}px; height: {{face.faceRectangle.height * photo.ratio}}px;"></span>
+        </div>
+    </div>
+    <div class="photo-map-control">
+        <ul class="photo-map-control-button">
+            <li>
+                <a>
+                    <i class="ion-navicon"></i>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <i class="ion-arrow-expand"></i>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <i class="ion-android-contract"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>
