@@ -24,11 +24,13 @@ angular.module('mates.photoReview', [])
     '_',
     'msgBus',
     function($scope, $http, _, msgBus) {
-        var photoId = "004";
+        var photoId = "001";
 
         $scope.photo = {
             "src": "../test/" + photoId + ".jpg",
-            "ratio": 0
+            "ratio": 0,
+            "sizeInc": 10,
+            "sizeEdge": 2
         };
         $scope.faces = [];
 
@@ -40,7 +42,7 @@ angular.module('mates.photoReview', [])
                 if (!data) {
                     return;
                 }
-                $scope.faces = data.faces;
+                $scope.faces = data;
             })
             .error(function(data, status, headers, config) {});
 
@@ -88,7 +90,7 @@ angular.module('mates.photoReview', [])
                     var imgWidth = _elImg.naturalWidth;
                     var imgHeight = _elImg.naturalHeight;
 
-                    $scope.ratio = mapHeight/imgHeight;
+                    $scope.ratio = (mapHeight / imgHeight).toFixed(3);
                     $scope.$apply();
                 }
             }

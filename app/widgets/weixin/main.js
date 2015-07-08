@@ -72,9 +72,9 @@ angular.module('mates.weixin', [])
                         });
 
                         var shareInfo = {
-                            title: '您的“同声传译”', // 分享标题
-                            link: 'https://voicetranslator.chinacloudsites.cn', // 分享链接
-                            imgUrl: 'https://voicetranslator.chinacloudsites.cn/img/share.png', // 分享图标
+                            title: '回首青葱岁月，打开尘封的毕业照', // 分享标题
+                            link: 'https://mates.chinacloudsites.cn', // 分享链接
+                            imgUrl: 'https://mates.chinacloudsites.cn/app/img/share.png', // 分享图标
                             success: function() {
                                 // 用户确认分享后执行的回调函数
                             },
