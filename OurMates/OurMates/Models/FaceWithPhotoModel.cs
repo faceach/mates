@@ -20,5 +20,7 @@ namespace OurMates.Models
             this.FaceModel = face;
             this.PhotoModel = photo;
         }
+
+
     }
 }

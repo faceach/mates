@@ -20,6 +20,6 @@ namespace OurMates.Models
         public Nullable<int> PersonNum { get; set; }
         public string URL { get; set; }
         public string School { get; set; }
-        public string Class { get; set; }
+        public string GradeClass { get; set; }
     }
 }

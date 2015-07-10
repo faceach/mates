@@ -9,6 +9,7 @@ namespace OurMates
     {
         public static void Register(HttpConfiguration config)
         {
+            // Web API routes
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/mates",
@@ -28,8 +29,14 @@ namespace OurMates
             );
 
             config.Routes.MapHttpRoute(
+                name: "UpdatePhotoApi",
+                routeTemplate: "api/photo/upload",
+                defaults: new { controller = "MatesData", action = "UploadPhoto", id = RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "UpdatePersonsApi",
-                routeTemplate: "api/person/update",
+                routeTemplate: "api/person/upload",
                 defaults: new { controller = "MatesData", action = "UploadPerson", id = RouteParameter.Optional }
             );
         }

@@ -15,14 +15,14 @@
     <Property name="SetConfiguration" value="Configuration=Debug" />
     <Property name="SetPlatform" value="Platform=AnyCPU" />
     <Property name="RoleTargetFramework" value="v4.5" />
-    <Property name="OutputDir" value="D:\Task\Mates\src\OurMates\OurMatesCloudServices\obj\Debug\OurMates\" />
+    <Property name="OutputDir" value="D:\Task\Mates\src\mates\OurMates\OurMatesCloudServices\obj\Debug\OurMates\" />
     <Property name="EntryPoint" value="OurMates.dll" />
-    <Property name="SourceDir" value="D:\Task\Mates\src\OurMates\OurMates\" />
-    <Property name="SitePhysicalPath" value="D:\Task\Mates\src\OurMates\OurMatesCloudServices\obj\Debug\OurMates\" />
+    <Property name="SourceDir" value="D:\Task\Mates\src\mates\OurMates\OurMates\" />
+    <Property name="SitePhysicalPath" value="D:\Task\Mates\src\mates\OurMates\OurMatesCloudServices\obj\Debug\OurMates\" />
     <Property name="TargetRuntimeVersion" value="v4.0" />
   </Properties>
   <Sites>
-    <Site name="Web" physicalDirectory="D:\Task\Mates\src\OurMates\OurMatesCloudServices\obj\Debug\OurMates\">
+    <Site name="Web" physicalDirectory="D:\Task\Mates\src\mates\OurMates\OurMatesCloudServices\obj\Debug\OurMates\">
       <Bindings>
         <Binding name="Endpoint1" endpointName="Endpoint1" />
       </Bindings>

@@ -6,6 +6,8 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Microsoft.WindowsAzure.IntelligentServices.Face.AlgorithmHelper;
+using System.Configuration;
 
 namespace OurMates
 {
@@ -21,6 +23,15 @@ namespace OurMates
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            InitializeOxfordFaceApiClient();
+        }
+
+        public static OxfordFaceApiClient OxfordFaceApiClient;
+
+        public void InitializeOxfordFaceApiClient()
+        {
+            OxfordFaceApiClient = new OxfordFaceApiClient(ConfigurationManager.AppSettings["SubscriptionKey"]);
         }
     }
 }

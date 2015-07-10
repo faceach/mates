@@ -105,7 +105,7 @@ namespace OurMates.Utils
                 {
                     String fileName = id + ".jpg";
                     var webFileName = fileName;
-                    using (Stream stream = Base64StringToStream(base64Image))
+                    using (Stream stream = Helper.Base64StringToStream(base64Image))
                     {
                         if (stream != null)
                         {
@@ -120,25 +120,6 @@ namespace OurMates.Utils
             }
 
             return result;
-        }
-
-        private static Stream Base64StringToStream(String inputStr)
-        {
-            Stream stream = null;
-            try
-            {
-                if (!String.IsNullOrEmpty(inputStr))
-                {
-                    byte[] buffer = Convert.FromBase64String(inputStr);
-                    stream = new MemoryStream(buffer);
-                }
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show("Base64StringToStream 转换失败\nException：" + ex.Message);
-            }
-
-            return stream;
         }
     }
 }

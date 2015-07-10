@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System;
 
 namespace OurMates.Utils
 {
@@ -15,6 +16,25 @@ namespace OurMates.Utils
 
                 return Encoding.UTF8.GetString(memStream.ToArray());
             }
+        }
+
+        public static Stream Base64StringToStream(String inputStr)
+        {
+            Stream stream = null;
+            try
+            {
+                if (!String.IsNullOrEmpty(inputStr))
+                {
+                    byte[] buffer = Convert.FromBase64String(inputStr);
+                    stream = new MemoryStream(buffer);
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show("Base64StringToStream 转换失败\nException：" + ex.Message);
+            }
+
+            return stream;
         }
     }
 }

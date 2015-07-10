@@ -25,7 +25,7 @@
     </Endpoints>
     <Contents>
       <Content destination=".\">
-        <SourceDirectory path="D:\Task\Mates\src\OurMates\OurMatesCloudServices\rcf\Debug\OurMatesContent\" />
+        <SourceDirectory path="D:\Task\Mates\src\mates\OurMates\OurMatesCloudServices\rcf\Debug\OurMatesContent\" />
       </Content>
     </Contents>
   </WebRole>

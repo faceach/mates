@@ -1,13 +1,6 @@
 ﻿
-using System;
-using System.Collections.Generic;
 using OurMates.Database;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.IO;
-using System.Runtime.Serialization.Json;
-using OurMates.Utils;
-using System.Text;
+using System.Collections.Generic;
 
 namespace OurMates.Models
 {
@@ -36,76 +29,30 @@ namespace OurMates.Models
 
             return new PhotoModel(photo, faceWithPersonList);
         }
-
-        public bool TryParseJson(JObject jsonData)
+        /*
+        public void TagModel(PhotoAnalyzeResultsModel model, string belongTo)
         {
-            dynamic json = jsonData;
-
-            bool result = false;
-
-            Photo photo = new Photo();
-            photo.PhotoId = json.ID;
-            if (string.IsNullOrEmpty(photo.PhotoId))
+            foreach (var face in model.Faces)
             {
-                return false;
+                face.BelongTo = belongTo;
             }
 
-            photo.GraduateDate = json.GraduateDate;
-            if (photo.GraduateDate == null || !photo.GraduateDate.HasValue)
+            if (model.Faces.Count == 0)
             {
-                return false;
+                model.Description = "No faces";
+                model.Category |= 0X0000;
             }
-
-            photo.School = json.School;
-            if (string.IsNullOrEmpty(photo.School))
+            else if (model.Faces.Count > 1)
             {
-                return false;
+                model.Description = "face select";
+                model.Category |= 0X0100;
             }
-
-            photo.Class = json.Class;
-            if (string.IsNullOrEmpty(photo.Class))
+            else
             {
-                return false;
+                model.Description = "success";
             }
-
-            try
-            {
-                string timestamp = json.UploadDateTime;
-                if (!string.IsNullOrEmpty(timestamp))
-                {
-                    DateTime dateTime;
-                    if (DateTime.TryParse(timestamp, out dateTime))
-                    {
-                        photo.UploadDateTime = dateTime;
-                    }
-                }
-
-                if (!photo.UploadDateTime.HasValue)
-                {
-                    photo.UploadDateTime = DateTime.Now;
-                }
-
-                string base64Image = json.Base64EncodedImage;
-                var filePath = AzureBlobStorageUtil.SaveImageToAzure(base64Image, photo.PhotoId, AccountUtil.sMatesPhotoStorage);
-                if (!string.IsNullOrEmpty(filePath))
-                {
-                    photo.URL = AccountUtil.sPhotoStorageBlobURLBase + filePath;
-                    result = PhotoManager.AddPhoto(photo);
-
-                    //TODO
-                    //Parse faces
-
-                }
-
-                this.PhotoEntity = photo;
-            }
-            catch (Exception e)
-            {
-            }
-
-            return result;
 
         }
-
+        */
     }
 }

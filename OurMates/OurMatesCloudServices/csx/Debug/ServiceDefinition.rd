@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="OurMatesCloudServices" generation="1" functional="0" release="0" Id="00865a20-7890-4bbe-8b0d-00065564ff42" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="OurMatesCloudServices" generation="1" functional="0" release="0" Id="de585a14-74c9-4cd5-ac5c-85583f6b199b" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="OurMatesCloudServicesGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -42,7 +42,7 @@
       </maps>
       <components>
         <groupHascomponents>
-          <role name="OurMates" generation="1" functional="0" release="0" software="D:\Task\Mates\src\OurMates\OurMatesCloudServices\csx\Debug\roles\OurMates" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaIISHost.exe " memIndex="-1" hostingEnvironment="frontendadmin" hostingEnvironmentVersion="2">
+          <role name="OurMates" generation="1" functional="0" release="0" software="D:\Task\Mates\src\mates\OurMates\OurMatesCloudServices\csx\Debug\roles\OurMates" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaIISHost.exe " memIndex="-1" hostingEnvironment="frontendadmin" hostingEnvironmentVersion="2">
             <componentports>
               <inPort name="Endpoint1" protocol="http" portRanges="80" />
             </componentports>
@@ -70,9 +70,9 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="8bf5458e-c019-47a7-b29d-ab72403fb0a7" ref="Microsoft.RedDog.Contract\ServiceContract\OurMatesCloudServicesContract@ServiceDefinition">
+    <implementation Id="f67829a6-8692-437e-af01-7eeea18d0b97" ref="Microsoft.RedDog.Contract\ServiceContract\OurMatesCloudServicesContract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="c151e9c6-ec09-4323-a5bd-a6e8a92d5253" ref="Microsoft.RedDog.Contract\Interface\OurMates:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="1deae3f2-943f-4fb6-88ce-505867267e8b" ref="Microsoft.RedDog.Contract\Interface\OurMates:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/OurMatesCloudServices/OurMatesCloudServicesGroup/OurMates:Endpoint1" />
           </inPort>

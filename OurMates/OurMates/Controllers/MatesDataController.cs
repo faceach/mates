@@ -12,11 +12,20 @@ using OurMates.Models;
 using Newtonsoft.Json.Linq;
 using System.Text;
 using OurMates.Utils;
+using System.Threading.Tasks;
+using OurMates.Models.OxfordModel;
+using OurMates.Database;
 
 namespace OurMates.Controllers
 {
     public class MatesDataController : ApiController
     {
+        [HttpGet]
+        public string Prob()
+        {
+            return "success";
+        }
+
         [HttpGet]
         public JObject GetPersonWithAllPhotos(string personId)
         {
@@ -35,14 +44,14 @@ namespace OurMates.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage UploadPhoto(JObject jsonData)
+        public async Task<HttpResponseMessage> UploadPhoto(JObject jsonData)
         {
             HttpResponseMessage response = null;
 
-            PhotoModel photoModel = new PhotoModel();
-            if (photoModel.TryParseJson(jsonData))
+            var resultModel = await PhotoAnalyzeResultsModel.TryParseJson(jsonData);
+            if (resultModel != null)
             {
-                String result = Helper.GetJsonFromObject(photoModel);
+                String result = Helper.GetJsonFromObject(resultModel);
 
                 response = new HttpResponseMessage(HttpStatusCode.OK);
                 response.Content = new StringContent(result, Encoding.UTF8, "application/json");
@@ -56,8 +65,7 @@ namespace OurMates.Controllers
         {
             HttpStatusCode httpStatusCode = HttpStatusCode.BadRequest;
 
-            PhotoModel photoModel = new PhotoModel();
-            if (photoModel.TryParseJson(jsonData))
+            if (PersonManager.TryParseJson(jsonData))
             {
                 httpStatusCode = HttpStatusCode.OK;
             }
