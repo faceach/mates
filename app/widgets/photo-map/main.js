@@ -24,7 +24,7 @@ angular.module('mates.photoReview', [])
     '_',
     'msgBus',
     function($scope, $http, _, msgBus) {
-        var photoId = "001";
+        var photoId = "004";
 
         $scope.photo = {
             "src": "../test/" + photoId + ".jpg",
@@ -33,6 +33,7 @@ angular.module('mates.photoReview', [])
             "sizeEdge": 2
         };
         $scope.faces = [];
+        $scope.faceActive = false;
 
         $http({
                 method: 'GET',
@@ -51,16 +52,38 @@ angular.module('mates.photoReview', [])
             $scope.photo.src = photo.src;
         });
 
-        $scope.read = function($event) {
-            var face = _.find($scope.faces, function(face) {
-                return face.active;
-            });
-            face && (face.read = true);
+        $scope.toggleFaces = function($event) {
+            if ($scope.faceActive) {
+                _.each($scope.faces, function(face) {
+                    face.active = false;
+                    face.read = false;
+                    face.edit = false;
+                });
+            } else {
+                _.each($scope.faces, function(face) {
+                    face.active = true;
+                    face.read = false;
+                    face.edit = false;
+                });
+            }
+            $scope.faceActive = !$scope.faceActive;
         };
-        $scope.edit = function($event) {
-            var face = _.find($scope.faces, function(face) {
-                return face.active;
-            });
+        $scope.active = function($event, face) {
+            if (!face.active) {
+                _.each($scope.faces, function(face) {
+                    face.active = false;
+                    face.read = false;
+                    face.edit = false;
+                });
+                face.active = true;
+                return;
+            } else if (!face.read) {
+                // Read mode
+                face && (face.read = true);
+                return;
+            }
+        };
+        $scope.edit = function($event, face) {
             face && (face.edit = true);
         };
     }
