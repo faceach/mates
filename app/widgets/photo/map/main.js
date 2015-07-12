@@ -23,7 +23,8 @@ angular.module('mates.photo.map', [])
     '$http',
     '_',
     'msgBus',
-    function($scope, $http, _, msgBus) {
+    'photoPeopleModal',
+    function($scope, $http, _, msgBus,photoPeopleModal) {
         var photoId = "004";
 
         $scope.photo = {
@@ -80,6 +81,7 @@ angular.module('mates.photo.map', [])
             } else if (!face.read) {
                 // Read mode
                 face && (face.read = true);
+                photoPeopleModal.show(face);
                 return;
             }
         };

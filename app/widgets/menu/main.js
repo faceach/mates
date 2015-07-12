@@ -6,17 +6,17 @@ angular.module('mates.menu', [])
     'photoAddModal',
     function($scope, photoAddModal) {
 
-        $scope.levelSelector = {
+        $scope.categorySelector = {
             "visible": false
         };
 
-        $scope.toggleLevelSelector = function($event) {
-            $scope.levelSelector.visible = !$scope.levelSelector.visible;
+        $scope.toggleCategorySelector = function($event) {
+            $scope.categorySelector.visible = !$scope.categorySelector.visible;
         }
 
-        $scope.addPhoto = function(levelId){
-            $scope.levelSelector.visible = false;
-            photoAddModal.show(levelId);
+        $scope.addPhoto = function(categoryId){
+            $scope.categorySelector.visible = false;
+            photoAddModal.show(categoryId);
         };
     }
 ]);

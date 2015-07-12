@@ -10,8 +10,8 @@ angular.module('mates.photo.add', [])
             templateUrl: 'widgets/photo/add/index.html'
         });
         return {
-            "show": function(levelId) {
-                this.levelId = levelId;
+            "show": function(categoryId) {
+                this.categoryId = categoryId;
                 modalService.activate();
             },
             "hide": function() {
@@ -32,7 +32,7 @@ angular.module('mates.photo.add', [])
         $scope.photo = {
             "visible": false,
             "src": "./img/blank.png",
-            "levelId": photoAddModal.levelId
+            "categoryId": photoAddModal.categoryId
         };
 
         $scope.closeMe = photoAddModal.hide;
@@ -83,7 +83,27 @@ angular.module('mates.photo.add', [])
             console.dir(photo);
             // Emit
             msgBus.emitMsg("addPhoto", photo);
-            photoAddModal.hide();
+            //photoAddModal.hide();
+
+            //var formData = new FormData();
+            // Simple POST request example (passing data) :
+            $http.post('/photo/add', {
+                "categoryId": photo.categoryId,
+                "class": photo.class,
+                "graduationYear": photo.graduationYear,
+                "school": photo.school,
+                "schoolLevel": photo.schoolLevel,
+                "src": photo.src,
+                "summary": photo.summary
+            }).
+            success(function(data, status, headers, config) {
+                // this callback will be called asynchronously
+                // when the response is available
+            }).
+            error(function(data, status, headers, config) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+            });
         };
     }
 ]);

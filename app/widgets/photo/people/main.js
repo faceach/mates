@@ -10,8 +10,9 @@ angular.module('mates.photo.people', [])
             templateUrl: 'widgets/photo/people/index.html'
         });
         return {
-            "show": function(levelId) {
-                this.levelId = levelId;
+            "show": function(face) {
+                this.face = face;
+                this.peopleId = 1;
                 modalService.activate();
             },
             "hide": function() {
@@ -29,10 +30,15 @@ angular.module('mates.photo.people', [])
     'msgBus',
     function($scope, $q, $http, photoPeopleModal, msgBus) {
 
-        $scope.photo = {
+        $scope.people = {
             "visible": false,
-            "src": "./img/blank.png",
-            "levelId": photoPeopleModal.levelId
+            "peopleId": photoPeopleModal.peopleId,
+            "src": "",
+            "name": "",
+            "company": "",
+            "city": "",
+            "highestDegree": "",
+            "highestUniversity": "",
         };
 
         $scope.closeMe = photoPeopleModal.hide;
@@ -73,17 +79,34 @@ angular.module('mates.photo.people', [])
 
         $scope.readPhoto = function($files) {
             photoReader($files).then(function(file) {
-                $scope.photo.src = file;
-                $scope.photo.visible = true;
+                $scope.people.src = file;
+                $scope.people.visible = true;
             });
         };
 
-        $scope.save = function(photo) {
-            console.log("Add photo params:");
-            console.dir(photo);
-            // Emit
-            msgBus.emitMsg("addPhoto", photo);
-            photoPeopleModal.hide();
+        $scope.save = function(people) {
+            console.log("Add people params:");
+            console.dir(people);
+
+            //var formData = new FormData();
+            // Simple POST request example (passing data) :
+            $http.post('/photo/add', {
+                "peopleId": people.peopleId,
+                "src": people.src,
+                "name": people.name,
+                "company": people.company,
+                "city": people.city,
+                "highestDegree": people.highestDegree,
+                "highestUniversity": people.highestUniversity,
+            }).
+            success(function(data, status, headers, config) {
+                // this callback will be called asynchronously
+                // when the response is available
+            }).
+            error(function(data, status, headers, config) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+            });
         };
     }
 ]);
