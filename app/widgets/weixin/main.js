@@ -3,25 +3,16 @@
 angular.module('mates.weixin', [])
     .run([
         '$http',
-        'staticConfig',
         '_',
-        function($http, staticConfig) {
+        function($http) {
             if (typeof wx !== "undefined") {
                 var tokenRequest;
                 var pageUrl = location.href.substr(0, location.href.indexOf(location.hash));
 
-                if (location && location.origin && staticConfig.devUrl.indexOf(location.origin) >= 0) {
-                    // Local Node.js proxy API
-                    tokenRequest = {
-                        method: 'GET',
-                        url: location.origin + "/api/WechatAccess?url=" + pageUrl
-                    }
-                } else {
-                    // Online proxy API
-                    tokenRequest = {
-                        method: 'GET',
-                        url: "https://VoiceTranslator.chinacloudsites.cn/api/WechatAccess?url=" + pageUrl
-                    }
+                // Online proxy API
+                tokenRequest = {
+                    method: 'GET',
+                    url: "https://mates.chinacloudsites.cn/api/WechatAccess?url=" + pageUrl
                 }
 
                 function accessToken() {
@@ -45,21 +36,21 @@ angular.module('mates.weixin', [])
                                 nonceStr: dataParam.NonceStr, // 必填，生成签名的随机串
                                 signature: dataParam.Signature, // 必填，签名，见附录1
                                 jsApiList: [
-                                    'onMenuShareTimeline',
-                                    'onMenuShareAppMessage',
+                                        'onMenuShareTimeline',
+                                        'onMenuShareAppMessage',
 
-                                    'startRecord',
-                                    'stopRecord',
+                                        'startRecord',
+                                        'stopRecord',
 
-                                    'playVoice',
-                                    'onVoiceRecordEnd',
-                                    'pauseVoice',
-                                    'stopVoice',
-                                    'onVoicePlayEnd',
-                                    'uploadVoice',
+                                        'playVoice',
+                                        'onVoiceRecordEnd',
+                                        'pauseVoice',
+                                        'stopVoice',
+                                        'onVoicePlayEnd',
+                                        'uploadVoice',
 
-                                    'translateVoice'
-                                ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+                                        'translateVoice'
+                                    ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
                             });
                         })();
 
@@ -85,15 +76,15 @@ angular.module('mates.weixin', [])
                         // Share
                         wx.onMenuShareTimeline(_.extend(shareInfo));
                         wx.onMenuShareAppMessage(_.extend(shareInfo, {
-                            desc: '你说中文，我帮你说英文！', // 分享描述
+                            desc: '回首青葱岁月，打开尘封的毕业照', // 分享描述
                             type: '', // 分享类型,music、video或link，不填默认为link
                             dataUrl: '' // 如果type是music或video，则要提供数据链接，默认为空
                         }));
                         wx.onMenuShareQQ(_.extend(shareInfo, {
-                            desc: '你说中文，我帮你说英文！' // 分享描述
+                            desc: '回首青葱岁月，打开尘封的毕业照' // 分享描述
                         }));
                         wx.onMenuShareWeibo(_.extend(shareInfo, {
-                            desc: '你说中文，我帮你说英文！' // 分享描述
+                            desc: '回首青葱岁月，打开尘封的毕业照' // 分享描述
                         }));
                     } catch (e) {}
                 }

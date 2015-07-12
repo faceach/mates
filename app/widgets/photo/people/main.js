@@ -1,13 +1,13 @@
-angular.module('mates.addPhoto', [])
+angular.module('mates.photo.people', [])
 
-.factory('addPhotoModal', [
+.factory('photoPeopleModal', [
     'btfModal',
     '_',
     function(btfModal, _) {
         var modalService = btfModal({
-            controller: 'AddPhotoCtrl',
+            controller: 'PhotoPeopleCtrl',
             controllerAs: 'modal',
-            templateUrl: 'widgets/addphoto/index.html'
+            templateUrl: 'widgets/photo/people/index.html'
         });
         return {
             "show": function(levelId) {
@@ -21,21 +21,21 @@ angular.module('mates.addPhoto', [])
     }
 ])
 
-.controller('AddPhotoCtrl', [
+.controller('PhotoPeopleCtrl', [
     '$scope',
     '$q',
     '$http',
-    'addPhotoModal',
+    'photoPeopleModal',
     'msgBus',
-    function($scope, $q, $http, addPhotoModal, msgBus) {
+    function($scope, $q, $http, photoPeopleModal, msgBus) {
 
         $scope.photo = {
             "visible": false,
             "src": "./img/blank.png",
-            "levelId": addPhotoModal.levelId
+            "levelId": photoPeopleModal.levelId
         };
 
-        $scope.closeMe = addPhotoModal.hide;
+        $scope.closeMe = photoPeopleModal.hide;
 
         function photoReader($files) {
             var deferred = $q.defer();
@@ -83,7 +83,7 @@ angular.module('mates.addPhoto', [])
             console.dir(photo);
             // Emit
             msgBus.emitMsg("addPhoto", photo);
-            addPhotoModal.hide();
+            photoPeopleModal.hide();
         };
     }
 ]);

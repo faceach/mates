@@ -9,12 +9,18 @@ angular.module('mates', [
         'hmTouchEvents',
 
         'ng.utils',
+        'mates.weixin',
 
         'mates.menu',
-        'mates.addPhoto',
         'mates.search',
+        'mates.account',
+
         'mates.photo',
-        'mates.photoReview',
+        'mates.photo.add',
+        'mates.photo.map',
+        'mates.photo.fullscreen',
+        'mates.photo.people',
+
         'mates.version'
     ])
     .config([

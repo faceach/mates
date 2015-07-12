@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('mates.photoReview', [])
+angular.module('mates.photo.pad', [])
 
 .config(['$stateProvider', function($stateProvider) {
-    $stateProvider.state('photo-review', {
+    $stateProvider.state('photo/review', {
         url: "/photo/review",
         views: {
             "menu": {
@@ -11,7 +11,7 @@ angular.module('mates.photoReview', [])
                 controller: 'MenuCtrl'
             },
             "content": {
-                templateUrl: 'widgets/photo-pad/index.html',
+                templateUrl: 'widgets/photo/pad/index.html',
                 controller: 'PhotoPadCtrl'
             }
         }

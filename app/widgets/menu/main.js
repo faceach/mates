@@ -3,8 +3,8 @@
 angular.module('mates.menu', [])
 .controller('MenuCtrl', [
     '$scope',
-    'addPhotoModal',
-    function($scope, addPhotoModal) {
+    'photoAddModal',
+    function($scope, photoAddModal) {
 
         $scope.levelSelector = {
             "visible": false
@@ -16,7 +16,7 @@ angular.module('mates.menu', [])
 
         $scope.addPhoto = function(levelId){
             $scope.levelSelector.visible = false;
-            addPhotoModal.show(levelId);
+            photoAddModal.show(levelId);
         };
     }
 ]);
