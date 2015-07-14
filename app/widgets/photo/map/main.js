@@ -24,7 +24,8 @@ angular.module('mates.photo.map', [])
     '_',
     'msgBus',
     'photoPeopleModal',
-    function($scope, $http, _, msgBus,photoPeopleModal) {
+    'photoFullscreenModal',
+    function($scope, $http, _, msgBus,photoPeopleModal,photoFullscreenModal) {
         var photoId = "004";
 
         $scope.photo = {
@@ -52,6 +53,19 @@ angular.module('mates.photo.map', [])
         msgBus.onMsg('addPhoto', $scope, function($event, photo) {
             $scope.photo.src = photo.src;
         });
+        msgBus.onMsg('cancelEditPeople', $scope, function($event) {
+            var face = _.find($scope.faces, function(face) {
+                return face.read || face.edit;
+            });
+            if(face){
+                face.read = false;
+                face.edit = false;
+            }
+        });
+
+        $scope.landscape = function($event) {
+            photoFullscreenModal.show($scope.photo.src);
+        };
 
         $scope.toggleFaces = function($event) {
             if ($scope.faceActive) {
@@ -85,6 +99,7 @@ angular.module('mates.photo.map', [])
                 return;
             }
         };
+
         $scope.edit = function($event, face) {
             face && (face.edit = true);
         };

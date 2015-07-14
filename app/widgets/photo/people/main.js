@@ -41,7 +41,12 @@ angular.module('mates.photo.people', [])
             "highestUniversity": "",
         };
 
-        $scope.closeMe = photoPeopleModal.hide;
+        $scope.closeMe = function() {
+            // Emit
+            msgBus.emitMsg("cancelEditPeople");
+
+            photoPeopleModal.hide();
+        };
 
         function photoReader($files) {
             var deferred = $q.defer();
@@ -87,6 +92,8 @@ angular.module('mates.photo.people', [])
         $scope.save = function(people) {
             console.log("Add people params:");
             console.dir(people);
+            // Emit
+            msgBus.emitMsg("editPeople", people);
 
             //var formData = new FormData();
             // Simple POST request example (passing data) :
