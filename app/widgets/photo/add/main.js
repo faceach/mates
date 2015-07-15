@@ -93,7 +93,7 @@ angular.module('mates.photo.add', [])
                 "graduationYear": photo.graduationYear,
                 "school": photo.school,
                 "schoolLevel": photo.schoolLevel,
-                "src": photo.src,
+                "src": photo.src.split(",")[1],
                 "summary": photo.summary
             }).
             success(function(data, status, headers, config) {
