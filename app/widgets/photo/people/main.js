@@ -98,6 +98,7 @@ angular.module('mates.photo.people', [])
             //var formData = new FormData();
             // Simple POST request example (passing data) :
             $http.post('/people/add', {
+                "FaceId": "",
                 "PeopleId": people.peopleId,
                 "Name": people.name,
                 "Company": people.company,
