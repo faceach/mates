@@ -101,10 +101,11 @@ angular.module('mates.photo.people', [])
                 "PeopleId": people.peopleId,
                 "Name": people.name,
                 "Company": people.company,
-                "City": people.city,
+                "CurrentLocation": people.city,
                 "HighestDegree": people.highestDegree,
-                "HighestUniversity": people.highestUniversity,
-                "Self": true,
+                "HighestCollege": people.highestUniversity,
+                "IsSelf": true,
+                "WeChatId": "xxx",
                 "Src": people.src.split(",")[1],
             }).
             success(function(data, status, headers, config) {
