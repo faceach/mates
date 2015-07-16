@@ -16,15 +16,20 @@ namespace OurMates.Models
     {
         public string PersonId { get; set; }
         public string WechatId { get; set; }
-        public Nullable<bool> IsClaimed { get; set; }
         public string Name { get; set; }
         public string PictureURL { get; set; }
-        public string Location { get; set; }
-        public string ElementarySchool { get; set; }
-        public string MiddleSchool { get; set; }
-        public string HighSchool { get; set; }
+        public Nullable<bool> IsSingle { get; set; }
+        public string Company { get; set; }
+        public string CurrentLocation { get; set; }
+        public string HomeLocation { get; set; }
+        public string HighestDegree { get; set; }
+        public string HighestCollege { get; set; }
         public string University { get; set; }
-        public string MasterUniversity { get; set; }
+        public string HighSchool { get; set; }
+        public string MiddleSchool { get; set; }
+        public string ElementarySchool { get; set; }
         public string Others { get; set; }
+        public string BusinessScope { get; set; }
+        public Nullable<bool> IsSelf { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace OurMates.Utils
 {
@@ -71,32 +72,35 @@ namespace OurMates.Utils
             return ret;
         }
 
-        public static string UploadImageToAzure(Stream stream, String fileName, String publicPath, String accountName, String accountKey, String blob)
+        public static Task<string> UploadImageToAzure(Stream stream, String fileName, String publicPath, String accountName, String accountKey, String blob)
         {
-            try
-            {
-                StorageCredentials credsC = new StorageCredentials(accountName, accountKey);
-                CloudStorageAccount accountC = new CloudStorageAccount(credsC, "core.chinacloudapi.cn", useHttps: true);
-                CloudBlobClient clientC = accountC.CreateCloudBlobClient();
-                CloudBlobContainer sxhtestContainerC = clientC.GetContainerReference(blob);
-                sxhtestContainerC.CreateIfNotExists();
-                String webFileName = "image/" + publicPath + fileName;
-                //String webFileName = DateTime.Now.ToString("yyyyMMddhhmmss") + "/" + id + "/" + Path.GetFileName(fileName);
-                CloudBlockBlob blobC = sxhtestContainerC.GetBlockBlobReference(webFileName);
-                blobC.Properties.ContentType = "image/jpeg";
-                blobC.UploadFromStream(stream);
-                blobC.SetProperties();
+            return Task.Run<string>(() =>
+                {
+                    try
+                    {
+                        StorageCredentials credsC = new StorageCredentials(accountName, accountKey);
+                        CloudStorageAccount accountC = new CloudStorageAccount(credsC, "core.chinacloudapi.cn", useHttps: true);
+                        CloudBlobClient clientC = accountC.CreateCloudBlobClient();
+                        CloudBlobContainer sxhtestContainerC = clientC.GetContainerReference(blob);
+                        sxhtestContainerC.CreateIfNotExists();
+                        String webFileName = "photo/" + publicPath + fileName;
+                        //String webFileName = DateTime.Now.ToString("yyyyMMddhhmmss") + "/" + id + "/" + Path.GetFileName(fileName);
+                        CloudBlockBlob blobC = sxhtestContainerC.GetBlockBlobReference(webFileName);
+                        blobC.Properties.ContentType = "image/jpeg";
+                        blobC.UploadFromStream(stream);
+                        blobC.SetProperties();
 
-                return webFileName;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+                        return webFileName;
+                    }
+                    catch (Exception e)
+                    {
+                        return null;
+                    }
+                });
         }
 
 
-        public static string SaveImageToAzure(string base64Image, string id, string blob)
+        public static async Task<string> SaveImageToAzure(string base64Image, string id, string blob)
         {
             string result = string.Empty;
             if (!String.IsNullOrEmpty(base64Image))
@@ -104,12 +108,12 @@ namespace OurMates.Utils
                 try
                 {
                     String fileName = id + ".jpg";
-                    var webFileName = fileName;
+                    string webFileName = string.Empty;
                     using (Stream stream = Helper.Base64StringToStream(base64Image))
                     {
                         if (stream != null)
                         {
-                            webFileName = AzureBlobStorageUtil.UploadImageToAzure(stream, fileName, "", AccountUtil.sAccountName, AccountUtil.sAccountKey, blob);
+                            webFileName = await AzureBlobStorageUtil.UploadImageToAzure(stream, fileName, "", AccountUtil.sAccountName, AccountUtil.sAccountKey, blob);
                         }
                     }
                     result = webFileName;

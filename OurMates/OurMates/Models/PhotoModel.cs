@@ -1,6 +1,7 @@
 ﻿
 using OurMates.Database;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OurMates.Models
 {
@@ -21,38 +22,17 @@ namespace OurMates.Models
             this.PhotoEntity = photo;
             this.FaceWithPersonList = faceWithPersonList;
         }
-        public static PhotoModel CreatePhotoModelById(string photoId)
+        public static Task<PhotoModel> CreatePhotoModelById(string photoId)
         {
-            Photo photo = PhotoManager.QueryPhoto(photoId);
-            var faceList = FaceManager.QueryFaceListByPhoto(photoId);
-            var faceWithPersonList = FaceManager.CreateFaceWithPersonList(faceList);
+            return Task.Run<PhotoModel>(() =>
+                {
+                    Photo photo = PhotoManager.QueryPhoto(photoId);
+                    var faceList = FaceManager.QueryFaceListByPhoto(photoId);
+                    var faceWithPersonList = FaceManager.CreateFaceWithPersonList(faceList);
 
-            return new PhotoModel(photo, faceWithPersonList);
+                    return new PhotoModel(photo, faceWithPersonList);
+                });
         }
-        /*
-        public void TagModel(PhotoAnalyzeResultsModel model, string belongTo)
-        {
-            foreach (var face in model.Faces)
-            {
-                face.BelongTo = belongTo;
-            }
 
-            if (model.Faces.Count == 0)
-            {
-                model.Description = "No faces";
-                model.Category |= 0X0000;
-            }
-            else if (model.Faces.Count > 1)
-            {
-                model.Description = "face select";
-                model.Category |= 0X0100;
-            }
-            else
-            {
-                model.Description = "success";
-            }
-
-        }
-        */
     }
 }

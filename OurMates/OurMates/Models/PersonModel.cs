@@ -5,6 +5,7 @@ using OurMates.Database;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace OurMates.Models
 {
@@ -26,13 +27,22 @@ namespace OurMates.Models
 
             this.FaceWithPhotoList = faceWithPhotoList;
         }
-        public static PersonModel CreatePersonModelById(string personId)
-        {
-            Person person = PersonManager.QueryPerson(personId);
-            var faceList = FaceManager.QueryFaceListByPerson(personId);
-            var faceWithPhotoList = FaceManager.CreateFaceWithPhotoList(faceList);
 
-            return new PersonModel(person, faceWithPhotoList);
+        /// <summary>
+        /// 查找一个人的所有信息，包括其所有相片的信息，以及相片中该人的face信息
+        /// </summary>
+        /// <param name="personId"></param>
+        /// <returns></returns>
+        public static Task<PersonModel> CreatePersonModelById(string personId)
+        {
+            return Task.Run<PersonModel>(() =>
+                {
+                    var person = PersonManager.QueryPerson(personId);
+                    var faceList = FaceManager.QueryFaceListByPerson(personId);
+                    var faceWithPhotoList = FaceManager.CreateFaceWithPhotoList(faceList);
+
+                    return new PersonModel(person, faceWithPhotoList);
+                });
         }
     }
 }

@@ -18,6 +18,8 @@ namespace OurMates.Models.OxfordModel
 
         public string PhotoId { get; set; }
 
+        public string PhotoURL { get; set; }
+
         public int Score { get; set; }
 
         public string Description { get; set; }
@@ -31,79 +33,110 @@ namespace OurMates.Models.OxfordModel
         /// </summary>
         public int Category { get; set; } //”success”, “nofaces”, “faceselect”, 
 
+        
+
         public static async Task<PhotoAnalyzeResultsModel> TryParseJson(JObject jsonData)
         {
-            dynamic json = jsonData;
-
             var photoAnalyzeResultsModel = new PhotoAnalyzeResultsModel();
+            var matesResult = MatesResult.MatesResultEnum.Success;
             bool result = true;
 
-            Photo photo = new Photo();
-            photo.PhotoId = json.ID;
-            if (string.IsNullOrEmpty(photo.PhotoId))
+            if (jsonData == null)
             {
-                photoAnalyzeResultsModel.Category = 0X00;
-                result = false;
+                matesResult = MatesResult.MatesResultEnum.RequestError;
             }
-
-            photo.GraduateDate = json.GraduateDate;
-            if (photo.GraduateDate == null || !photo.GraduateDate.HasValue)
+            else
             {
-                photoAnalyzeResultsModel.Category = 0X00;
-                result = false;
-            }
-
-            photo.School = json.School;
-            if (string.IsNullOrEmpty(photo.School))
-            {
-                photoAnalyzeResultsModel.Category = 0X00;
-                result = false;
-            }
-
-            photo.GradeClass = json.GradeClass;
-            if (string.IsNullOrEmpty(photo.GradeClass))
-            {
-                photoAnalyzeResultsModel.Category = 0X00;
-                result = false;
-            }
-
-            try
-            {
-                string timestamp = json.UploadDateTime;
-                if (!string.IsNullOrEmpty(timestamp))
+                try
                 {
-                    DateTime dateTime;
-                    if (DateTime.TryParse(timestamp, out dateTime))
+                    dynamic json = jsonData;
+                    Photo photo = new Photo();
+                    photo.PhotoId = json.ID;
+                    if (string.IsNullOrEmpty(photo.PhotoId))
                     {
-                        photo.UploadDateTime = dateTime;
+                        photo.PhotoId = Guid.NewGuid().ToString().Replace("-", "");
                     }
-                }
 
-                if (!photo.UploadDateTime.HasValue)
-                {
-                    photo.UploadDateTime = DateTime.Now;
-                }
-
-                string base64Image = json.Base64EncodedImage;
-                var filePath = AzureBlobStorageUtil.SaveImageToAzure(base64Image, photo.PhotoId, AccountUtil.sMatesPhotoStorage);
-                if (!string.IsNullOrEmpty(filePath))
-                {
-                    photo.URL = AccountUtil.sPhotoStorageBlobURLBase + filePath;
-                    result = PhotoManager.AddPhoto(photo);
-                    if (result)
+                    string graduateDate = json.GraduateDate;
+                    if (!string.IsNullOrEmpty(graduateDate))
                     {
+                        DateTime dateTime;
+                        if (DateTime.TryParse(graduateDate, out dateTime))
+                        {
+                            photo.GraduateDate = dateTime;
+                        }
+                    }
+
+                    if (!photo.GraduateDate.HasValue)
+                    {
+                        result = false;
+                    }
+
+                    photo.School = json.School;
+                    photo.GradeClass = json.GradeClass;
+                    photo.Category = json.Category;
+                    photo.Summary = json.Summary;
+
+                    string timestamp = json.UploadDateTime;
+                    if (!string.IsNullOrEmpty(timestamp))
+                    {
+                        DateTime dateTime;
+                        if (DateTime.TryParse(timestamp, out dateTime))
+                        {
+                            photo.UploadDateTime = dateTime;
+                        }
+                    }
+
+                    if (!photo.UploadDateTime.HasValue)
+                    {
+                        photo.UploadDateTime = DateTime.Now;
+                    }
+
+                    string base64Image = json.Src;
+                    var filePath = await AzureBlobStorageUtil.SaveImageToAzure(base64Image, photo.PhotoId, AccountUtil.sMatesPhotoStorage);
+                    if (!string.IsNullOrEmpty(filePath))
+                    {
+                        photo.URL = AccountUtil.sPhotoStorageBlobURLBase + filePath;
+
                         //Parse faces
                         Facial[] faces = await MvcApplication.OxfordFaceApiClient.UploadStreamAndDetectFaces(Helper.Base64StringToStream(base64Image));
-                        photoAnalyzeResultsModel.Faces = CreatFaceList(faces);
-                        //TODO 给出photoAnalyzeResultsModel的错误码和描述
+                        if (faces == null || faces.Length <= 0)
+                        {
+                            photoAnalyzeResultsModel.Description = MatesResult.PhotoParseErrorStr;
+                        }
+                        else
+                        {
+                            photo.PersonNum = faces.Length;
+                            photoAnalyzeResultsModel.PhotoURL = photo.URL;
+                            result = PhotoManager.AddPhoto(photo);
+                            photoAnalyzeResultsModel.Faces = CreatFaceList(faces);
+                        }
+
+                        if (!result)
+                        {
+                            matesResult = MatesResult.MatesResultEnum.PhotoAddError;
+                        }
+
+                        result = FaceManager.AddFace(photoAnalyzeResultsModel.Faces, photo.PhotoId);
+                        if (!result)
+                        {
+                            matesResult = MatesResult.MatesResultEnum.FaceAddError;
+                        }
+                    }
+
+                    else
+                    {
+                        matesResult = MatesResult.MatesResultEnum.ImageSaveError;
                     }
                 }
-
+                catch (Exception e)
+                {
+                    matesResult = MatesResult.MatesResultEnum.OtherError;
+                }
             }
-            catch (Exception e)
-            {
-            }
 
+            photoAnalyzeResultsModel.Category = (int)matesResult;
+            photoAnalyzeResultsModel.Description = MatesResult.GetDescriptionFromError(matesResult);
             return photoAnalyzeResultsModel;
         }
 
@@ -126,6 +159,9 @@ namespace OurMates.Models.OxfordModel
                     Width = t.FaceRectangle.Width,
                     Height = t.FaceRectangle.Height,
                     //Attributes = new FaceAttributes()
+                    Age = t.Attributes.Age,
+                    Gender = t.Attributes.Gender
+
                 };
                 imageResult.Add(face);
             }

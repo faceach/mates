@@ -4,6 +4,7 @@ using OurMates.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace OurMates.Database
 {
@@ -31,7 +32,7 @@ namespace OurMates.Database
 
             using (var matesEntities = new MatesEntities())
             {
-                var person1 = matesEntities.Person.FirstOrDefault(c => c.PersonId == person.PersonId);
+                var person1 = matesEntities.Persons.FirstOrDefault(c => c.PersonId == person.PersonId);
                 if (person1 != null)
                 {
                     return true;
@@ -39,30 +40,35 @@ namespace OurMates.Database
 
                 // Add new category and update the old category
 
-                matesEntities.Person.Add(person);
+                matesEntities.Persons.Add(person);
                 matesEntities.SaveChanges();
                 return true;
             }
         }
-        public static bool DeletePerson(string personId)
-        {
-            if (string.IsNullOrEmpty(personId))
-            {
-                return false;
-            }
 
-            using (var matesEntities = new MatesEntities())
+
+        public static Task<bool> DeletePerson(string personId)
+        {
+            return Task.Run<bool>(() =>
             {
-                Person person = matesEntities.Person.FirstOrDefault(c => c.PersonId == personId);
-                if (person == null || string.IsNullOrEmpty(person.PersonId))
+                if (string.IsNullOrEmpty(personId))
                 {
                     return false;
                 }
 
-                matesEntities.Person.Remove(person);
-                matesEntities.SaveChanges();
-                return true;
-            }
+                using (var matesEntities = new MatesEntities())
+                {
+                    Person person = matesEntities.Persons.FirstOrDefault(c => c.PersonId == personId);
+                    if (person == null || string.IsNullOrEmpty(person.PersonId))
+                    {
+                        return false;
+                    }
+
+                    matesEntities.Persons.Remove(person);
+                    matesEntities.SaveChanges();
+                    return true;
+                }
+            });
         }
 
         public static Person QueryPerson(string personId)
@@ -74,7 +80,7 @@ namespace OurMates.Database
 
             using (var matesEntities = new MatesEntities())
             {
-                Person person = matesEntities.Person.FirstOrDefault(c => c.PersonId == personId);
+                Person person = matesEntities.Persons.FirstOrDefault(c => c.PersonId == personId);
 
                 return person;
             }
@@ -103,89 +109,150 @@ namespace OurMates.Database
             }
         }
 
-        public static bool UpdatePerson(Person personEntity)
+        public static Task<bool> UpdatePerson(Person personEntity)
         {
-            if (personEntity == null || string.IsNullOrEmpty(personEntity.PersonId))
+            return Task.Run<bool>(() =>
             {
-                return false;
-            }
-
-            using (var matesEntities = new MatesEntities())
-            {
-                Person person = matesEntities.Person.FirstOrDefault(c => c.PersonId == personEntity.PersonId);
-                if (person == null)
+                if (personEntity == null || string.IsNullOrEmpty(personEntity.PersonId))
                 {
                     return false;
                 }
 
-                person.WechatId = personEntity.WechatId;
-                person.IsClaimed = personEntity.IsClaimed;
-                person.Name = personEntity.Name;
-                person.PictureURL = personEntity.PictureURL;
-                person.Location = personEntity.Location;
-                person.ElementarySchool = personEntity.ElementarySchool;
-                person.MiddleSchool = personEntity.MiddleSchool;
-                person.HighSchool = personEntity.HighSchool;
-                person.University = personEntity.University;
-                person.MasterUniversity = personEntity.MasterUniversity;
-                person.Others = personEntity.Others;
+                using (var matesEntities = new MatesEntities())
+                {
+                    Person person = matesEntities.Persons.FirstOrDefault(c => c.PersonId == personEntity.PersonId);
+                    if (person == null)
+                    {
+                        return false;
+                    }
 
-                matesEntities.SaveChanges();
-                return true;
-            }
+                    person.WechatId = personEntity.WechatId;
+                    person.IsSingle = personEntity.IsSingle;
+                    person.Name = personEntity.Name;
+                    person.PictureURL = personEntity.PictureURL;
+                    person.Company = personEntity.Company;
+                    person.CurrentLocation = personEntity.CurrentLocation;
+                    person.HighestCollege = personEntity.HighestCollege;
+                    person.HighestDegree = personEntity.HighestDegree;
+
+                    person.HomeLocation = personEntity.HomeLocation;
+                    person.ElementarySchool = personEntity.ElementarySchool;
+                    person.MiddleSchool = personEntity.MiddleSchool;
+                    person.HighSchool = personEntity.HighSchool;
+                    person.University = personEntity.University;
+                    person.Others = personEntity.Others;
+
+                    matesEntities.SaveChanges();
+                    return true;
+                }
+            });
         }
 
-        public static bool TryParseJson(JObject jsonData)
+        public static async Task<string> TryParseJson(JObject jsonData)
         {
             dynamic json = jsonData;
+            var matesResult = MatesResult.MatesResultEnum.Success;
 
-            bool result = false;
+            bool result = true;
 
-            Person person = new Person();
-            person.PersonId = json.PersonId;
-            if (string.IsNullOrEmpty(person.PersonId))
+            if (jsonData == null)
             {
-                return false;
+                matesResult = MatesResult.MatesResultEnum.RequestError;
             }
-
-            person.WechatId = json.WechatId;
-            if (!string.IsNullOrEmpty(person.WechatId))
+            else
             {
-                person.IsClaimed = true;
-            }
-
-            person.Name = json.Name;
-            person.Location = json.Location;
-            person.ElementarySchool = json.ElementarySchool;
-            person.MiddleSchool = json.MiddleSchool;
-            person.HighSchool = json.HighSchool;
-            person.University = json.University;
-            person.MasterUniversity = json.MasterUniversity;
-            person.Others = json.Others;
-
-            try
-            {
-                string base64Image = json.Base64EncodedImage;
-                var filePath = AzureBlobStorageUtil.SaveImageToAzure(base64Image, person.PersonId, AccountUtil.sMatesPersonStorage);
-                if (!string.IsNullOrEmpty(filePath))
+                Person person = new Person();
+                person.PersonId = json.PersonId;
+                if (string.IsNullOrEmpty(person.PersonId))
                 {
-                    person.PictureURL = AccountUtil.sPersonPicStorageBlobURLBase + filePath;
+                    person.PersonId = Guid.NewGuid().ToString().Replace("-", "");
                 }
 
-                PersonManager.AddPerson(person);
+                person.WechatId = json.WechatId;
 
-                string faceId = json.FaceId;
-                if (!string.IsNullOrEmpty(faceId))
+                person.Name = json.Name;
+                if (string.IsNullOrEmpty(person.Name))
                 {
-                    FaceManager.UpdatePersonOfFace(faceId, person.PersonId);
+                    result = false;
+                    matesResult = MatesResult.MatesResultEnum.IncompleteInfoError;
+                }
+
+                person.Company = json.Company;
+                person.CurrentLocation = json.CurrentLocation;
+                person.HighestCollege = json.HighestCollege;
+                person.HighestDegree = json.HighestDegree;
+                person.BusinessScope = json.BusinessScope;
+
+                person.HomeLocation = json.HomeLocation;
+                person.ElementarySchool = json.ElementarySchool;
+                person.MiddleSchool = json.MiddleSchool;
+                person.HighSchool = json.HighSchool;
+                person.University = json.University;
+                person.Others = json.Others;
+
+                try
+                {
+                    person.IsSingle = json.IsSingle;
+                    person.IsSelf = json.IsSelf;
+                    /*
+                    var isSingle = json.IsSingle;
+                    if (!string.IsNullOrEmpty(isSingle))
+                    {
+                        person.IsSingle = Boolean.Parse(isSingle);
+                    }
+
+                    var isSelf = json.IsSelf;
+                    if (!string.IsNullOrEmpty(isSelf))
+                    {
+                        person.IsSelf = Boolean.Parse(isSelf);
+                    }
+                     * */
+                    if (result)
+                    {
+                        string base64Image = json.Src;
+                        if (!string.IsNullOrEmpty(base64Image))
+                        {
+                            var filePath = await AzureBlobStorageUtil.SaveImageToAzure(base64Image, person.PersonId, AccountUtil.sMatesPersonStorage);
+                            if (!string.IsNullOrEmpty(filePath))
+                            {
+                                person.PictureURL = AccountUtil.sPersonPicStorageBlobURLBase + filePath;
+                            }
+                            else
+                            {
+                                result = false;
+                                matesResult = MatesResult.MatesResultEnum.ImageSaveError;
+                            }
+                        }
+
+                        if (result)
+                        {
+                            result = PersonManager.AddPerson(person);
+
+                            if(!result)
+                            {
+                                matesResult = MatesResult.MatesResultEnum.PersonAddError;
+                            }
+                        }
+
+                        string faceId = json.FaceId;
+                        if (!string.IsNullOrEmpty(faceId))
+                        {
+                            result = FaceManager.UpdatePersonOfFace(faceId, person.PersonId);
+
+                            if (!result)
+                            {
+                                matesResult = MatesResult.MatesResultEnum.FaceUpdateError;
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    matesResult = MatesResult.MatesResultEnum.OtherError;
                 }
             }
-            catch (Exception e)
-            {
-            }
 
-            return result;
-
+            return MatesResult.GetDescriptionFromError(matesResult);
         }
     }
 }

@@ -25,8 +25,8 @@ namespace OurMates.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Face> Face { get; set; }
-        public DbSet<Person> Person { get; set; }
-        public DbSet<Photo> Photo { get; set; }
+        public DbSet<Face> Faces { get; set; }
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<Photo> Photos { get; set; }
     }
 }

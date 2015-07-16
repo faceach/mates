@@ -187,6 +187,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Mates.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\MatesResult.cs" />
+    <Compile Include="Models\OxfordModel\PhotoAnalyzeResultsModel.cs" />
     <Compile Include="Models\Person.cs">
       <DependentUpon>Mates.tt</DependentUpon>
     </Compile>
@@ -203,23 +205,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <EntityDeploy Include="Models\Mates.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Mates.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Mates.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Mates.edmx</DependentUpon>
-      <LastGenOutput>Mates.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Mates.edmx.diagram">
-      <DependentUpon>Mates.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\Mates.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Mates.edmx</DependentUpon>
-      <LastGenOutput>Mates.cs</LastGenOutput>
-    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -250,6 +235,27 @@
       <Project>{25d58ba5-660f-407b-803c-22b4547c09dc}</Project>
       <Name>ClientLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Models\Mates.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Mates.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Models\Mates.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Mates.edmx</DependentUpon>
+      <LastGenOutput>Mates.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Mates.edmx.diagram">
+      <DependentUpon>Mates.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Mates.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Mates.edmx</DependentUpon>
+      <LastGenOutput>Mates.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

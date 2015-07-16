@@ -7,13 +7,13 @@ namespace OurMates.Utils
 {
     public class AccountUtil
     {
-        public static readonly String sPhotoStorageBlobURLBase = "https://prodcards.blob.core.chinacloudapi.cn/mates_photo/";
+        public static readonly String sPhotoStorageBlobURLBase = "https://prodcards.blob.core.chinacloudapi.cn/mates-photo/";
 
-        public static readonly String sPersonPicStorageBlobURLBase = "https://prodcards.blob.core.chinacloudapi.cn/mates_person/";
+        public static readonly String sPersonPicStorageBlobURLBase = "https://prodcards.blob.core.chinacloudapi.cn/mates-person/";
 
-        public static readonly String sMatesPhotoStorage = "mates_photo";
+        public static readonly String sMatesPhotoStorage = "mates-photo";
 
-        public static readonly String sMatesPersonStorage = "mates_person";
+        public static readonly String sMatesPersonStorage = "mates-person";
 
         public static readonly String sAccountName = "prodcards";
 

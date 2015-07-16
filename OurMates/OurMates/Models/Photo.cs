@@ -15,11 +15,16 @@ namespace OurMates.Models
     public partial class Photo
     {
         public string PhotoId { get; set; }
+        public string PhotoName { get; set; }
         public Nullable<System.DateTime> GraduateDate { get; set; }
         public Nullable<System.DateTime> UploadDateTime { get; set; }
         public Nullable<int> PersonNum { get; set; }
         public string URL { get; set; }
+        public string Thumbnail { get; set; }
         public string School { get; set; }
         public string GradeClass { get; set; }
+        public string Category { get; set; }
+        public string Summary { get; set; }
+        public Nullable<int> SchoolLevel { get; set; }
     }
 }

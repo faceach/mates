@@ -21,5 +21,7 @@ namespace OurMates.Models
         public Nullable<int> LeftPosition { get; set; }
         public Nullable<int> Width { get; set; }
         public Nullable<int> Height { get; set; }
+        public Nullable<double> Age { get; set; }
+        public string Gender { get; set; }
     }
 }

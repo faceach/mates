@@ -27,18 +27,18 @@ namespace OurMates.Controllers
         }
 
         [HttpGet]
-        public JObject GetPersonWithAllPhotos(string personId)
+        public async Task<JObject> GetPersonWithAllPhotos(string personId)
         {
-            var personModel = PersonModel.CreatePersonModelById(personId);
+            var personModel = await PersonModel.CreatePersonModelById(personId);
 
             return JObject.FromObject(personModel);
         }
 
 
         [HttpGet]
-        public JObject GetPhotoWithAllPersons(string photoId)
+        public async Task<JObject> GetPhotoWithAllPersons(string photoId)
         {
-            var photoModel = PhotoModel.CreatePhotoModelById(photoId);
+            var photoModel = await PhotoModel.CreatePhotoModelById(photoId);
 
             return JObject.FromObject(photoModel);
         }
@@ -61,16 +61,32 @@ namespace OurMates.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage UploadPerson(JObject jsonData)
+        public async Task<HttpResponseMessage> UploadPerson(JObject jsonData)
         {
-            HttpStatusCode httpStatusCode = HttpStatusCode.BadRequest;
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
 
-            if (PersonManager.TryParseJson(jsonData))
+            var result = await PersonManager.TryParseJson(jsonData);
+            if (!string.IsNullOrEmpty(result))
             {
-                httpStatusCode = HttpStatusCode.OK;
+                response.Content = new StringContent(result, Encoding.UTF8, "application/json");
             }
 
-            return new HttpResponseMessage(httpStatusCode);
+            return response;
         }
+
+        [HttpPost]
+        public async Task<HttpResponseMessage> DeletePhoto(string personId)
+        {
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.NotFound);
+
+            var result = await FaceManager.DeleteFaceOfPerson(personId);
+            if (result)
+            {
+                response = new HttpResponseMessage(HttpStatusCode.OK);
+            }
+
+            return response;
+        }
+
     }
 }

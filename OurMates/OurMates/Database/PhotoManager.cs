@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using OurMates.Models;
+using System.Threading.Tasks;
 
 namespace OurMates.Database
 {
@@ -14,7 +15,7 @@ namespace OurMates.Database
                                                     int personNum,
                                                     string url,
                                                     string school,
-                                                    string classStr)
+                                                    string gradeClass)
         {
             if (string.IsNullOrEmpty(photoId))
             {
@@ -28,7 +29,7 @@ namespace OurMates.Database
             photo.PersonNum = personNum;
             photo.URL = url;
             photo.School = school;
-            photo.Class = classStr;
+            photo.GradeClass = gradeClass;
 
             return photo;
         }
@@ -45,16 +46,15 @@ namespace OurMates.Database
             return photo;
         }
 
-        public static bool AddPhoto(Photo photo)
+        public static bool AddPhoto(Photo photoItem)
         {
-            if (photo == null || string.IsNullOrEmpty(photo.PhotoId))
+            if (photoItem == null || string.IsNullOrEmpty(photoItem.PhotoId))
             {
                 return false;
             }
-
             using (var matesEntities = new MatesEntities())
             {
-                Photo photo1 = matesEntities.Photo.FirstOrDefault(c => c.PhotoId == photo.PhotoId);
+                Photo photo = matesEntities.Photos.FirstOrDefault(c => c.PhotoId == photoItem.PhotoId);
                 if (photo != null)
                 {
                     return true;
@@ -62,30 +62,35 @@ namespace OurMates.Database
 
                 // Add new category and update the old category
 
-                matesEntities.Photo.Add(photo);
+                matesEntities.Photos.Add(photoItem);
                 matesEntities.SaveChanges();
             }
+
             return true;
         }
-        public static bool DeletePhoto(string photoId)
-        {
-            if (string.IsNullOrEmpty(photoId))
-            {
-                return false;
-            }
 
-            using (var matesEntities = new MatesEntities())
+        public static Task<bool> DeletePhoto(string photoId)
+        {
+            return Task.Run<bool>(() =>
             {
-                Photo photo = matesEntities.Photo.FirstOrDefault(c => c.PhotoId == photoId);
-                if (photo == null || string.IsNullOrEmpty(photo.PhotoId))
+                if (string.IsNullOrEmpty(photoId))
                 {
                     return false;
                 }
 
-                matesEntities.Photo.Remove(photo);
-                matesEntities.SaveChanges();
-            }
-            return true;
+                using (var matesEntities = new MatesEntities())
+                {
+                    Photo photo = matesEntities.Photos.FirstOrDefault(c => c.PhotoId == photoId);
+                    if (photo == null || string.IsNullOrEmpty(photo.PhotoId))
+                    {
+                        return false;
+                    }
+
+                    matesEntities.Photos.Remove(photo);
+                    matesEntities.SaveChanges();
+                }
+                return true;
+            });
         }
 
         public static Photo QueryPhoto(string photoId)
@@ -97,7 +102,7 @@ namespace OurMates.Database
 
             using (var matesEntities = new MatesEntities())
             {
-                Photo photo = matesEntities.Photo.FirstOrDefault(c => c.PhotoId == photoId);
+                Photo photo = matesEntities.Photos.FirstOrDefault(c => c.PhotoId == photoId);
 
                 return photo;
             }
@@ -117,10 +122,11 @@ namespace OurMates.Database
 
             using (var matesEntities = new MatesEntities())
             {
+
                 Face face = FaceManager.QueryFace(faceId);
                 if (face != null && string.IsNullOrEmpty(face.PhotoId))
                 {
-                    Photo photo = matesEntities.Photo.FirstOrDefault(c => c.PhotoId == face.PhotoId);
+                    Photo photo = matesEntities.Photos.FirstOrDefault(c => c.PhotoId == face.PhotoId);
                     return photo;
                 }
 
@@ -191,7 +197,7 @@ namespace OurMates.Database
 
             using (var matesEntities = new MatesEntities())
             {
-                Photo photo = matesEntities.Photo.FirstOrDefault(c => c.PhotoId == photoNew.PhotoId);
+                Photo photo = matesEntities.Photos.FirstOrDefault(c => c.PhotoId == photoNew.PhotoId);
                 if (photo == null)
                 {
                     return false;
@@ -202,7 +208,7 @@ namespace OurMates.Database
                 photo.PersonNum = photoNew.PersonNum;
                 photo.URL = photoNew.URL;
                 photo.School = photoNew.School;
-                photo.Class = photoNew.Class;
+                photo.GradeClass = photoNew.GradeClass;
 
                 matesEntities.SaveChanges();
                 return true;

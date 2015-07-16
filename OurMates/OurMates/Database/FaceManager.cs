@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using OurMates.Models;
+using System.Threading.Tasks;
 
 namespace OurMates.Database
 {
@@ -20,46 +21,112 @@ namespace OurMates.Database
             return face;
         }
 
-        public static bool AddFace(Face faceEntity)
+        public static Task<bool> AddFace(Face faceEntity)
         {
-            if (faceEntity == null || string.IsNullOrEmpty(faceEntity.FaceId))
+            return Task.Run<bool>(() =>
             {
-                return false;
-            }
-
-            using (var matesEntities = new MatesEntities())
-            {
-                Face face = matesEntities.Face.FirstOrDefault(c => c.FaceId == faceEntity.FaceId);
-                if (face != null)
-                {
-                    return true;
-                }
-
-                // Add new category and update the old category
-                matesEntities.Face.Add(faceEntity);
-                matesEntities.SaveChanges();
-                return true;
-            }
-        }
-        public static bool DeleteFace(string faceId)
-        {
-            if (string.IsNullOrEmpty(faceId))
-            {
-                return false;
-            }
-
-            using (var matesEntities = new MatesEntities())
-            {
-                Face face = matesEntities.Face.FirstOrDefault(c => c.FaceId == faceId);
-                if (face == null || string.IsNullOrEmpty(face.FaceId))
+                if (faceEntity == null || string.IsNullOrEmpty(faceEntity.FaceId))
                 {
                     return false;
                 }
 
-                matesEntities.Face.Remove(face);
+                using (var matesEntities = new MatesEntities())
+                {
+                    Face face = matesEntities.Faces.FirstOrDefault(c => c.FaceId == faceEntity.FaceId);
+                    if (face != null)
+                    {
+                        return true;
+                    }
+
+                    // Add new category and update the old category
+                    matesEntities.Faces.Add(faceEntity);
+                    matesEntities.SaveChanges();
+                    return true;
+                }
+            });
+        }
+
+        public static bool AddFace(IList<Face> faceList, string photoId)
+        {
+            if (faceList == null || faceList.Count() <= 0)
+            {
+                return true;
+            }
+            using (var matesEntities = new MatesEntities())
+            {
+
+                foreach (var faceItem in faceList)
+                {
+                    Face face = matesEntities.Faces.FirstOrDefault(c => c.FaceId == faceItem.FaceId);
+                    if (face != null)
+                    {
+                        continue;
+                    }
+
+                    if (string.IsNullOrEmpty(faceItem.PhotoId))
+                    {
+                        faceItem.PhotoId = photoId;
+                    }
+                    // Add new category and update the old category
+                    matesEntities.Faces.Add(faceItem);
+                }
                 matesEntities.SaveChanges();
                 return true;
             }
+        }
+
+        public static Task<bool> DeleteFace(string faceId)
+        {
+            return Task.Run<bool>(() =>
+            {
+                if (string.IsNullOrEmpty(faceId))
+                {
+                    return false;
+                }
+
+                using (var matesEntities = new MatesEntities())
+                {
+                    Face face = matesEntities.Faces.FirstOrDefault(c => c.FaceId == faceId);
+                    if (face == null || string.IsNullOrEmpty(face.FaceId))
+                    {
+                        return false;
+                    }
+
+                    matesEntities.Faces.Remove(face);
+                    matesEntities.SaveChanges();
+                    return true;
+                }
+            });
+        }
+
+        public static Task<bool> DeleteFaceOfPerson(string personId)
+        {
+            return Task.Run<bool>(() =>
+            {
+                if (string.IsNullOrEmpty(personId))
+                {
+                    return false;
+                }
+
+                using (var matesEntities = new MatesEntities())
+                {
+                    List<Face> faceList = new List<Face>();
+                    faceList = matesEntities.Faces.Where(c => c.PersonId == personId).ToList();
+
+                    if (faceList == null || faceList.Count <= 0)
+                    {
+                        return false;
+                    }
+
+                    foreach (var face in faceList)
+                    {
+                        face.PersonId = null;
+                    }
+
+                    matesEntities.SaveChanges();
+                    return true;
+                }
+            });
         }
 
         public static Face QueryFace(string faceId)
@@ -71,7 +138,7 @@ namespace OurMates.Database
 
             using (var matesEntities = new MatesEntities())
             {
-                Face face = matesEntities.Face.FirstOrDefault(c => c.FaceId == faceId);
+                Face face = matesEntities.Faces.FirstOrDefault(c => c.FaceId == faceId);
 
                 return face;
             }
@@ -93,12 +160,17 @@ namespace OurMates.Database
             {
                 List<Face> faceList = new List<Face>();
 
-                faceList = matesEntities.Face.Where(c => c.PersonId == personId).ToList();
+                faceList = matesEntities.Faces.Where(c => c.PersonId == personId).ToList();
 
                 return faceList;
             }
         }
 
+        /// <summary>
+        /// 根据某一个人的多个Face，找到其所有的相片
+        /// </summary>
+        /// <param name="faceList"></param>
+        /// <returns></returns>
         public static IList<FaceWithPhotoModel> CreateFaceWithPhotoList(IList<Face> faceList)
         {
             if (faceList == null || faceList.Count() <= 0)
@@ -161,37 +233,40 @@ namespace OurMates.Database
             {
                 List<Face> faceList = new List<Face>();
 
-                faceList = matesEntities.Face.Where(c => c.PhotoId == photoId).ToList();
+                faceList = matesEntities.Faces.Where(c => c.PhotoId == photoId).ToList();
 
                 return faceList;
             }
         }
 
-        public static bool UpdateFace(Face faceEntity)
+        public static Task<bool> UpdateFace(Face faceEntity)
         {
-            if (faceEntity == null || string.IsNullOrEmpty(faceEntity.FaceId))
+            return Task.Run<bool>(() =>
             {
-                return false;
-            }
-
-            using (var matesEntities = new MatesEntities())
-            {
-                Face face = matesEntities.Face.FirstOrDefault(c => c.FaceId == faceEntity.FaceId);
-                if (face == null)
+                if (faceEntity == null || string.IsNullOrEmpty(faceEntity.FaceId))
                 {
                     return false;
                 }
 
-                face.PersonId = faceEntity.PersonId;
-                face.PhotoId = faceEntity.PhotoId;
-                face.TopPosition = faceEntity.TopPosition;
-                face.LeftPosition = faceEntity.LeftPosition;
-                face.Width = faceEntity.Width;
-                face.Height = faceEntity.Height;
+                using (var matesEntities = new MatesEntities())
+                {
+                    Face face = matesEntities.Faces.FirstOrDefault(c => c.FaceId == faceEntity.FaceId);
+                    if (face == null)
+                    {
+                        return false;
+                    }
 
-                matesEntities.SaveChanges();
-                return true;
-            }
+                    face.PersonId = faceEntity.PersonId;
+                    face.PhotoId = faceEntity.PhotoId;
+                    face.TopPosition = faceEntity.TopPosition;
+                    face.LeftPosition = faceEntity.LeftPosition;
+                    face.Width = faceEntity.Width;
+                    face.Height = faceEntity.Height;
+
+                    matesEntities.SaveChanges();
+                    return true;
+                }
+            });
         }
 
         public static bool UpdatePersonOfFace(string faceId, string personId)
@@ -203,7 +278,7 @@ namespace OurMates.Database
 
             using (var matesEntities = new MatesEntities())
             {
-                Face face = matesEntities.Face.FirstOrDefault(c => c.FaceId == faceId);
+                Face face = matesEntities.Faces.FirstOrDefault(c => c.FaceId == faceId);
                 if (face == null)
                 {
                     return false;

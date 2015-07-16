@@ -93,7 +93,7 @@ namespace Microsoft.WindowsAzure.IntelligentServices.Face.AlgorithmHelper
         {
             try
             {
-                var faces = await faceServiceClient.DetectAsync(stream, false, false, false, false);
+                var faces = await faceServiceClient.DetectAsync(stream, false, true, true, false);
                 return faces.ToArray();
             }
             catch (Exception)

@@ -39,6 +39,12 @@ namespace OurMates
                 routeTemplate: "api/person/upload",
                 defaults: new { controller = "MatesData", action = "UploadPerson", id = RouteParameter.Optional }
             );
+
+            config.Routes.MapHttpRoute(
+                name: "DeletePhotoApi",
+                routeTemplate: "api/photo/delete",
+                defaults: new { controller = "MatesData", action = "DeletePhoto", id = RouteParameter.Optional }
+            );
         }
     }
 }

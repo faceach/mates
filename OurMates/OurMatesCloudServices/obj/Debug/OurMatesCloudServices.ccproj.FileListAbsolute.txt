@@ -205,6 +205,8 @@ D:\Task\Mates\src\mates\OurMates\OurMatesCloudServices\obj\Debug\OurMates\bin\zh
 D:\Task\Mates\src\mates\OurMates\OurMatesCloudServices\obj\Debug\OurMates\bin\zh-Hant\Microsoft.Data.OData.resources.dll
 D:\Task\Mates\src\mates\OurMates\OurMatesCloudServices\obj\Debug\OurMates\bin\zh-Hant\Microsoft.Data.Services.Client.resources.dll
 D:\Task\Mates\src\mates\OurMates\OurMatesCloudServices\obj\Debug\OurMates\bin\zh-Hant\System.Spatial.resources.dll
+D:\Task\Mates\src\mates\OurMates\OurMatesCloudServices\obj\Debug\OurMates\bin\ClientLibrary.dll
+D:\Task\Mates\src\mates\OurMates\OurMatesCloudServices\obj\Debug\OurMates\bin\ClientLibrary.pdb
 D:\Task\Mates\src\mates\OurMates\OurMatesCloudServices\bin\Debug\ValidationIssues.xml
 D:\Task\Mates\src\mates\OurMates\OurMatesCloudServices\obj\Debug\OurMates\Global.asax
 D:\Task\Mates\src\mates\OurMates\OurMatesCloudServices\obj\Debug\OurMates\Models\Mates.edmx.diagram
