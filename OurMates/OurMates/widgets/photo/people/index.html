@@ -1,0 +1,87 @@
+<div class="addphoto-card animated slideInUp">
+    <div class="addphoto-card-panal">
+        <form>
+            <div class="row">
+                <div class="large-12 columns photo-thumbnail" accept="image/*" ngf-select ngf-change="readPhoto($files)">
+                    <div class="photo-thumbnail-container">
+                        <img ng-src="{{people.src}}" src="./img/blank.png" alt="" ng-show="people.visible">
+                        <div accept="image/*" class="photo-thumbnail-btn" ng-hide="people.visible">
+                            <i class="ion-ios-crop-strong"></i>&nbsp;我的生活照
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    <div class="row">
+                        <div class="small-3 columns">
+                            <label for="right-label" class="right inline">名字</label>
+                        </div>
+                        <div class="small-9 columns">
+                            <input type="text" placeholder="名字" required ng-model="people.name" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    <div class="row">
+                        <div class="small-3 columns">
+                            <label for="right-label" class="right inline">当前城市</label>
+                        </div>
+                        <div class="small-9 columns">
+                            <input type="text" placeholder="当前城市" required ng-model="people.city" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    <div class="row">
+                        <div class="small-3 columns">
+                            <label for="right-label" class="right inline">工作单位</label>
+                        </div>
+                        <div class="small-9 columns">
+                            <input type="text" placeholder="工作单位" required ng-model="people.company" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    <div class="row">
+                        <div class="small-3 columns">
+                            <label for="right-label" class="right inline">最高学历</label>
+                        </div>
+                        <div class="small-9 columns">
+                            <input type="text" placeholder="最高学历" required ng-model="people.highestDegree " >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    <div class="row">
+                        <div class="small-3 columns">
+                            <label for="right-label" class="right inline">最高学府</label>
+                        </div>
+                        <div class="small-9 columns">
+                            <input type="text" placeholder="最高学府" required ng-model="people.highestUniversity " >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <textarea placeholder="您所擅长的领域，以及您所希望拓展的业务范围？" ng-model="photo.summary"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <a href class="button secondary" ng-click="closeMe()">取消</a>
+                    <input type="submit" class="button" ng-click="save(people)" value="保存" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

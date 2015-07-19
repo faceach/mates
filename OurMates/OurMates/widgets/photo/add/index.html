@@ -1,0 +1,85 @@
+<div class="addphoto-card animated slideInUp">
+    <div class="addphoto-card-panal">
+        <form>
+            <div class="row">
+                <div class="large-12 columns photo-thumbnail" accept="image/*" ngf-select ngf-change="readPhoto($files)">
+                    <div class="photo-thumbnail-container">
+                        <img ng-src="{{photo.src}}" src="./img/blank.png" alt="" ng-show="photo.visible">
+                        <div accept="image/*" class="photo-thumbnail-btn" ng-hide="photo.visible">
+                            <i class="ion-ios-crop-strong"></i>&nbsp;点击添加集体照
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <div class="row collapse">
+                        <label>学校:</label>
+                        <div class="small-4 columns">
+                            <select ng-model="photo.schoolLevel">
+                                <option value="1">幼儿园</option>
+                                <option value="2">小学</option>
+                                <option value="3">初中</option>
+                                <option value="4">高中</option>
+                                <option value="5">本科</option>
+                                <option value="6">研究生</option>
+                                <option value="7">其它</option>
+                            </select>
+                        </div>
+                        <div class="small-8 columns">
+                            <input type="text" placeholder="育才中学" required ng-model="photo.school" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <div class="row collapse">
+                        <label>毕业年份:</label>
+                        <div class="small-9 columns">
+                            <select ng-model="photo.graduationYear">
+                                <option value="2000">2000</option>
+                                <option value="2001">2001</option>
+                                <option value="2002">2002</option>
+                                <option value="2003">2003</option>
+                                <option value="2004">2004</option>
+                                <option value="2005">2005</option>
+                                <option value="2006">2006</option>
+                                <option value="2007">2007</option>
+                            </select>
+                        </div>
+                        <div class="small-3 columns">
+                            <span class="postfix">届</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <div class="row collapse">
+                        <label>班级:</label>
+                        <div class="small-9 columns">
+                            <input type="text" placeholder="3" required ng-model="photo.class" />
+                        </div>
+                        <div class="small-3 columns">
+                            <span class="postfix">班</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>班级描述:
+                        <textarea placeholder="我有话说..." ng-model="photo.summary"></textarea>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <a href class="button secondary" ng-click="closeMe()">取消</a>
+                    <input type="submit" class="button" ng-click="save(photo)" value="保存" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

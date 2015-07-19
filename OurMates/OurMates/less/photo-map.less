@@ -1,0 +1,73 @@
+@photo-map-color-bg: #eee;
+@photo-map-button-width: 40px;
+@photo-map-fontsize-icon: 20px;
+@photo-map-border-radius-face: 6px;
+@photo-map-border-face: 2px;
+
+.photo-map {
+    background-color: @photo-map-color-bg;
+    .photo-map-panel {
+        position: fixed;
+        width: 100%;
+        left: 0;
+        top: 0;
+        bottom: @menu-height;
+        overflow: scroll;
+        .photo-map-view {
+            position: absolute;
+            width: auto;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transition: all .4s ease-out;
+            > img {
+                max-width: none;
+                height: 100%;
+            }
+            > .photo-map-face {
+                position: absolute;
+                border: @photo-map-border-face solid transparent;
+                transition: all .2s linear;
+                border-radius: @photo-map-border-radius-face;
+
+                &:hover {
+                    border-color: #6f0;
+                    box-shadow: 0 0 @photo-map-border-radius-face @color-white;
+                }
+                &.photo-map-face-active {
+                    border-color: #6f0;
+                    box-shadow: 0 0 @photo-map-border-radius-face @color-white;
+                }
+                &.photo-map-face-read {
+                    border-color: #06f;
+                }
+                &.photo-map-face-edit {
+                    border-color: #f60;
+                }
+            }
+        }
+    }
+}
+.photo-map-control {
+    > ul.photo-map-control-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        padding: 0;
+        > li {
+            list-style: none;
+            display: inline-block;
+            width: @photo-map-button-width;
+
+            > a {
+                display: block;
+                line-height: @photo-map-button-width;
+                font-size: @photo-map-fontsize-icon;
+                text-align: center;
+                color: @color-black;
+                background-color: rgba(255, 255, 255, 0.8);
+            }
+        }
+    }
+}

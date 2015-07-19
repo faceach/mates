@@ -1,0 +1,55 @@
+@photo-thumbnail-height: 160px;
+@photo-thumbnail-height-img: 150px;
+@photo-thumbnail-border: 5px;
+
+.addphoto-card {
+	position: fixed;
+	z-index: 9;
+	bottom: 0;
+	width: @width-card;
+	height: @height-card;
+	left: @width-card-offset;
+	background-color: #fff;
+	border-radius: @border-radius @border-radius 0 0;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+
+	> .addphoto-card-panal {
+		padding: 10px 0;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		overflow-y: scroll;
+	}
+}
+.photo-thumbnail {
+	margin-bottom: 1rem;
+
+	> .photo-thumbnail-container {
+		position: relative;
+		height: @photo-thumbnail-height;
+		background-color: @color-grey-lighter;
+		border: @photo-thumbnail-border dashed @color-grey-light;
+		.valign-img();
+		font-size: 10px;
+
+		img {
+		    max-width: 100%;
+		    max-height: @photo-thumbnail-height-img;
+		}
+		> .photo-thumbnail-btn {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			left: 0;
+			top: 0;
+			background-color: @color-grey-lighter;
+			box-sizing: border-box;
+			line-height: @photo-thumbnail-height;
+			color: @color-grey-dark;
+		}
+	}
+
+}
