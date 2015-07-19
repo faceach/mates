@@ -97,14 +97,17 @@ angular.module('mates.photo.people', [])
 
             //var formData = new FormData();
             // Simple POST request example (passing data) :
-            $http.post('/photo/add', {
-                "peopleId": people.peopleId,
-                "src": people.src,
-                "name": people.name,
-                "company": people.company,
-                "city": people.city,
-                "highestDegree": people.highestDegree,
-                "highestUniversity": people.highestUniversity,
+            $http.post('/people/add', {
+                "FaceId": "",
+                "PeopleId": people.peopleId,
+                "Name": people.name,
+                "Company": people.company,
+                "CurrentLocation": people.city,
+                "HighestDegree": people.highestDegree,
+                "HighestCollege": people.highestUniversity,
+                "IsSelf": true,
+                "WeChatId": "xxx",
+                "Src": people.src.split(",")[1],
             }).
             success(function(data, status, headers, config) {
                 // this callback will be called asynchronously
