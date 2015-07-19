@@ -1,17 +1,25 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>      <html lang="en" ng-app="mates" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="mates" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="mates" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="mates" class="no-js"> <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>My AngularJS App</title>
+  <title>Mates</title>
   <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
-  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
-  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="bower_components/ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="lib/foundation/5.5.2/foundation.min.css">
+
+  <link rel="stylesheet/less" type="text/css" href="less/app.less" />
+  <script src="lib/less/2.5.1/less.min.js" type="text/javascript"></script>
+
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body>
@@ -19,22 +27,49 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
 
-  <div ng-view></div>
+  <div ui-view="content"></div>
+  <div ui-view="menu"></div>
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
   <script src="bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>
+  <script src="bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
+  <script src="bower_components/underscore/underscore-min.js"></script>
+  <script src="bower_components/hammerjs/hammer.min.js"></script>
+  <script src="bower_components/ryanmullins-angular-hammer/angular.hammer.min.js"></script>
 
-  <script src="lib/imagePinch.js"></script>
+  <script src="lib/imagePinch/0.1.0/imagePinch.js"></script>
+  <script src="lib/angular-modal/0.5.0/modal.min.js"></script>
 
   <script src="app.js"></script>
+  
+  <script src="widgets/utils/utils.js"></script>
+  <script src="widgets/utils/msgbus.js"></script>
+  <script src="widgets/utils/underscore.js"></script>
+  <script src="widgets/utils/url.js"></script>
+  <script src="widgets/weixin/main.js"></script>
+
+  <script src="widgets/menu/main.js"></script>
+  <script src="widgets/search/main.js"></script>
+  <script src="widgets/account/main.js"></script>
+
   <script src="widgets/photo/main.js"></script>
+  <script src="widgets/photo/add/main.js"></script>
+  <script src="widgets/photo/map/main.js"></script>
+  <script src="widgets/photo/people/main.js"></script>
+  <script src="widgets/photo/fullscreen/main.js"></script>
 
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
+
+  <script>
+    document.ontouchmove = function(event){
+      //event.preventDefault();
+    }
+  </script>
 </body>
 </html>

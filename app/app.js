@@ -1,12 +1,32 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('myApp', [
-  'ngRoute',
-  'flow',
-  'myApp.photo',
-  'myApp.version'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/photo'});
-}]);
+angular.module('mates', [
+        'ui.router',
+        'flow',
+        'ngFileUpload',
+        'btford.modal',
+        'hmTouchEvents',
+
+        'ng.utils',
+        'mates.weixin',
+
+        'mates.menu',
+        'mates.search',
+        'mates.account',
+
+        'mates.photo',
+        'mates.photo.add',
+        'mates.photo.map',
+        'mates.photo.fullscreen',
+        'mates.photo.people',
+
+        'mates.version'
+    ])
+    .config([
+        '$urlRouterProvider',
+        function($urlRouterProvider) {
+            // Router
+            $urlRouterProvider.otherwise('/photo');
+        }
+    ]);

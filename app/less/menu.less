@@ -1,0 +1,145 @@
+@menu-color-link: #666;
+@menu-color-link-active: #f66;
+@menu-color-bg: #eee;
+@menu-color-bg-active: #ccc;
+@menu-height: 50px;
+@menu-width-link: 40px;
+@menu-fontsize-icon: 24px;
+@menu-fontsize-text: 14px;
+@menu-size-caret: 5px;
+
+.menu {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: @menu-height;
+	background-color: @menu-color-bg;
+
+	a.menu-link {
+		width: @menu-width-link;
+		text-align: center;
+		font-size: @menu-fontsize-icon;
+		padding: 0;
+		line-height: @menu-height;
+		display: block;
+		color: @menu-color-link;
+
+		&:active {
+			background-color: @menu-color-bg-active;
+			color: @menu-color-link-active;
+		}
+	}
+
+	.menu-main {
+		position: absolute;
+		z-index: 3;
+		width: 100%;
+		height: 100%;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		background-color: @menu-color-bg;
+
+		> .menu-fixed {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: @menu-width-link;
+
+			&.menu-l {
+				left: 0;
+			}
+			&.menu-r {
+				right: 0;
+			}
+		}
+		> ul {
+			margin: 0;
+			padding: 0;
+			position: absolute;
+			left: @menu-width-link;
+			right: @menu-width-link;
+			text-align: center;
+
+			> li {
+				list-style: none;
+				display: inline-block;
+				margin: 0;
+
+				> a {
+				}
+			}
+		}
+	}
+
+	.menu-category-selector {
+		position: absolute;
+		z-index: 1;
+		top: -(@menu-height+@menu-size-caret);
+		width: @width-card;
+		left: @width-card-offset;
+		border-radius: @border-radius;
+		height: @menu-height;
+		background-color: @menu-color-bg;
+
+		&.ng-hide-remove.g-hide-remove-active {
+			-webkit-animation-name: bounceInUp;
+			animation-name: bounceInUp;
+		}
+		&.ng-hide-add.ng-hide-add-active {
+			-webkit-animation-name: bounceOutDown;
+			animation-name: bounceOutDown;
+		}
+
+		> ul {
+			margin: 0;
+			padding: 0;
+			text-align: center;
+			overflow: hidden;
+
+			> li {
+				width: 25%;
+				list-style: none;
+				float: left;
+				margin: 0;
+
+				> .menu-category-btn {
+					text-align: center;
+					font-size: @menu-fontsize-text;
+					padding: 0;
+					line-height: @menu-height;
+					display: block;
+					width: 100%;
+					border: none;
+					background-color: transparent;
+					color: @menu-color-link;
+
+					&:active {
+						background-color: @menu-color-bg-active;
+						color: @menu-color-link-active;
+					}
+				}
+				&:first-child {
+					> .menu-category-btn {
+						border-radius: @border-radius 0 0 @border-radius;
+					}
+				}
+				&:last-child {
+					> .menu-category-btn {
+						border-radius: 0 @border-radius @border-radius 0;
+					}
+				}
+			}
+		}
+
+		> .caret {
+			border-width: @menu-size-caret;
+			position: absolute;
+			top: @menu-height;
+			left: 50%;
+			margin-left: -@menu-size-caret;
+			border-top-color: @menu-color-bg;
+		}
+	}
+}

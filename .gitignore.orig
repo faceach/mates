@@ -1,0 +1,15 @@
+logs/*
+!.gitkeep
+
+assets/
+node_modules/
+<<<<<<< HEAD
+bower_components/
+bin/
+obj/
+=======
+>>>>>>> develop
+
+tmp
+.DS_Store
+.idea

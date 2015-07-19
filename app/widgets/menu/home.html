@@ -1,0 +1,38 @@
+<nav class="menu">
+    <div class="menu-main">
+        <div class="menu-fixed menu-l">
+            <a ui-sref="search" class="menu-link">
+                <i class="ion-ios-search-strong"></i>
+            </a>
+        </div>
+        <ul>
+            <li>
+                <a class="menu-link" hm-tap="toggleCategorySelector($event)">
+                    <i class="ion-plus"></i>
+                </a>
+            </li>
+        </ul>
+        <div class="menu-fixed menu-r">
+            <a ui-sref="account" class="menu-link">
+                <i class="ion-android-person"></i>
+            </a>
+        </div>
+    </div>
+    <div class="menu-category-selector animated" ng-show="categorySelector.visible">
+        <ul>
+            <li>
+                <a class="menu-category-btn" hm-tap="addPhoto(1)">毕业照</a>
+            </li>
+            <li>
+                <a class="menu-category-btn" hm-tap="addPhoto(2)">生活合影</a>
+            </li>
+            <li>
+                <a class="menu-category-btn" hm-tap="addPhoto(3)">公司合影</a>
+            </li>
+            <li>
+                <a class="menu-category-btn" hm-tap="addPhoto(0)">其它</a>
+            </li>
+        </ul>
+        <span class="caret"></span>
+    </div>
+</nav>
