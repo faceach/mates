@@ -33,12 +33,12 @@ namespace OurMates.Models
         /// </summary>
         /// <param name="personId"></param>
         /// <returns></returns>
-        public static Task<PersonModel> CreatePersonModelById(string personId)
+        public static Task<PersonModel> CreatePersonModelById(string id, bool isPersonId = true)
         {
             return Task.Run<PersonModel>(() =>
                 {
-                    var person = PersonManager.QueryPerson(personId);
-                    var faceList = FaceManager.QueryFaceListByPerson(personId);
+                    var person = PersonManager.QueryPerson(id, isPersonId);
+                    var faceList = FaceManager.QueryFaceListByPerson(person);
                     var faceWithPhotoList = FaceManager.CreateFaceWithPhotoList(faceList);
 
                     return new PersonModel(person, faceWithPhotoList);

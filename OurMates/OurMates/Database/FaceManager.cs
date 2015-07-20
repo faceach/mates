@@ -149,7 +149,7 @@ namespace OurMates.Database
         /// </summary>
         /// <param name="personId"></param>
         /// <returns></returns>
-        public static IList<Face> QueryFaceListByPerson(string personId)
+        public static IList<Face> QueryFaceListByPersonId(string personId)
         {
             if (string.IsNullOrEmpty(personId))
             {
@@ -161,6 +161,22 @@ namespace OurMates.Database
                 List<Face> faceList = new List<Face>();
 
                 faceList = matesEntities.Faces.Where(c => c.PersonId == personId).ToList();
+
+                return faceList;
+            }
+        }
+        public static IList<Face> QueryFaceListByPerson(Person person)
+        {
+            if (person == null || string.IsNullOrEmpty(person.PersonId))
+            {
+                return null;
+            }
+
+            using (var matesEntities = new MatesEntities())
+            {
+                List<Face> faceList = new List<Face>();
+
+                faceList = matesEntities.Faces.Where(c => c.PersonId == person.PersonId).ToList();
 
                 return faceList;
             }

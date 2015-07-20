@@ -34,6 +34,14 @@ namespace OurMates.Controllers
             return JObject.FromObject(personModel);
         }
 
+        [HttpGet]
+        public async Task<JObject> GetPersonWithAllPhotosByWechat(string wechatId)
+        {
+            var personModel = await PersonModel.CreatePersonModelById(wechatId, false);
+
+            return JObject.FromObject(personModel);
+        }
+
 
         [HttpGet]
         public async Task<JObject> GetPhotoWithAllPersons(string photoId)

@@ -71,16 +71,18 @@ namespace OurMates.Database
             });
         }
 
-        public static Person QueryPerson(string personId)
+        public static Person QueryPerson(string id, bool isPersonId = true)
         {
-            if (string.IsNullOrEmpty(personId))
+            if (string.IsNullOrEmpty(id))
             {
                 return null;
             }
 
             using (var matesEntities = new MatesEntities())
             {
-                Person person = matesEntities.Persons.FirstOrDefault(c => c.PersonId == personId);
+                Person person = null;
+                person = isPersonId ? matesEntities.Persons.FirstOrDefault(c => c.PersonId == id)
+                    : matesEntities.Persons.FirstOrDefault(c => c.WechatId == id);
 
                 return person;
             }

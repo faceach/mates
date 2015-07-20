@@ -173,7 +173,7 @@ namespace OurMates.Database
             {
                 List<Photo> photoList = new List<Photo>();
 
-                var faceList = FaceManager.QueryFaceListByPerson(personId);
+                var faceList = FaceManager.QueryFaceListByPersonId(personId);
 
                 foreach (var face in faceList)
                 {

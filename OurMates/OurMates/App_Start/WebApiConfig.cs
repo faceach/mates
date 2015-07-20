@@ -23,6 +23,12 @@ namespace OurMates
             );
 
             config.Routes.MapHttpRoute(
+                name: "PersonWithAllPhotosApi",
+                routeTemplate: "api/wechat/photos",
+                defaults: new { controller = "MatesData", action = "GetPersonWithAllPhotosByWechat", id = RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "PhotoWithAllPersonsApi",
                 routeTemplate: "api/photo/persons",
                 defaults: new { controller = "MatesData", action = "GetPhotoWithAllPersons", id = RouteParameter.Optional }
