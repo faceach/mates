@@ -1,6 +1,6 @@
 # Mates
 
-After a graduation photo uploaded, claim everyone selves. So you can connect with your classmates, and others can see your school career timeline and your recently information.
+After a school photo is uploaded by a user, it will be shared through social channels to allow others to tag themselves. In addition to having users tag themselves, the application can leverage facial recognition matching to automatically match and suggest high probability matches. The tagged data will allow users to see each other’s school career timeline, share with their friends and connect with previously forgotten classmates.
 
 ## Inspiration
 
