@@ -6,8 +6,18 @@ node_modules/
 bower_components/
 bin/
 obj/
+temp/
 dist/
 
 tmp
 .DS_Store
 .idea
+
+
+# Ignore static version files
+######################
+OurMates/OurMates/bower_components/*
+OurMates/OurMates/lib/*
+OurMates/OurMates/img/*
+OurMates/OurMates/scripts/*
+OurMates/OurMates/styles/*

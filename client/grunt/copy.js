@@ -1,5 +1,6 @@
 module.exports = function() {
   return {
+    // Src --> Dist
     "dist-cshtml": {
         files: [{
             expand: true,
@@ -17,7 +18,6 @@ module.exports = function() {
             ext: '.html'
         }]
     },
-    // Src --> Dist || Images, instead of grunt-contrib-imagemin
     "dist-images": {
         files: [{
             expand: true,
@@ -26,12 +26,11 @@ module.exports = function() {
             dest: '<%= config.dist %>img/'
         }]
     },
-    // Src --> Dist
     "dist-bower": {
       files: [{
         expand: true,
         cwd: "<%= config.src %>bower_components/",
-        src: ['**/*.js', '**/*.css', '**/*.js.map'],
+        src: ['**/*.js', '**/*.css', '**/*.js.map', '**/*.{eot,svg,ttf,woff}', '**/*.{png,jpg,gif}'],
         dest: '<%= config.dist %>bower_components/'
       }]
     },
@@ -39,10 +38,18 @@ module.exports = function() {
       files: [{
         expand: true,
         cwd: "<%= config.src %>lib/",
-        src: ['**/*.js', '**/*.css', '**/*.js.map'],
+        src: ['**/*.js', '**/*.css', '**/*.js.map', '**/*.{eot,svg,ttf,woff}', '**/*.{png,jpg,gif}'],
         dest: '<%= config.dist %>lib/'
       }]
-    }
+    },
+    "dist-api": {
+        files: [{
+            expand: true,
+            cwd: '<%= config.src %>api/',
+            src: ['**/*.json'],
+            dest: '<%= config.dist %>api/'
+        }]
+    },
     // --------------------------------------
     // Dist --> Release
   }

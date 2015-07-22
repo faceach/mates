@@ -17,8 +17,7 @@
   <link rel="stylesheet" href="bower_components/ionicons/css/ionicons.min.css">
   <link rel="stylesheet" href="lib/foundation/5.5.2/foundation.min.css">
 
-  <link rel="stylesheet/less" type="text/css" href="styles/app.less" />
-  <script src="lib/less/2.5.1/less.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="styles/app.min.css" />
 
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
@@ -44,28 +43,9 @@
   <script src="lib/imagePinch/0.1.0/imagePinch.js"></script>
   <script src="lib/angular-modal/0.5.0/modal.min.js"></script>
 
-  <script src="app.js"></script>
+  <script src="scripts/app.min.js"></script>
+  <script src="scripts/templates.js"></script>
   
-  <script src="widgets/utils/utils.js"></script>
-  <script src="widgets/utils/msgbus.js"></script>
-  <script src="widgets/utils/underscore.js"></script>
-  <script src="widgets/utils/url.js"></script>
-  <script src="widgets/weixin/main.js"></script>
-
-  <script src="widgets/menu/main.js"></script>
-  <script src="widgets/search/main.js"></script>
-  <script src="widgets/account/main.js"></script>
-
-  <script src="widgets/photo/main.js"></script>
-  <script src="widgets/photo/add/main.js"></script>
-  <script src="widgets/photo/map/main.js"></script>
-  <script src="widgets/photo/people/main.js"></script>
-  <script src="widgets/photo/fullscreen/main.js"></script>
-
-  <script src="components/version/version.js"></script>
-  <script src="components/version/version-directive.js"></script>
-  <script src="components/version/interpolate-filter.js"></script>
-
   <script>
     document.ontouchmove = function(event){
       //event.preventDefault();

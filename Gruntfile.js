@@ -69,6 +69,7 @@ module.exports = function(grunt) {
 
     'copy:dist-bower',
     'copy:dist-lib',
+    'copy:dist-api',
 
     'less:development',
     'less:production',
