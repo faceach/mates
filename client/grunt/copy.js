@@ -1,14 +1,6 @@
 module.exports = function() {
   return {
     // Src --> Dist
-    "dist-cshtml": {
-        files: [{
-            expand: true,
-            cwd: '<%= config.src %>',
-            src: ['*.cshtml'],
-            dest: '<%= config.dist %>'
-        }]
-    },
     "dist-html": {
         files: [{
             expand: true,
@@ -16,14 +8,6 @@ module.exports = function() {
             src: ['*.cshtml'],
             dest: '<%= config.dist %>',
             ext: '.html'
-        }]
-    },
-    "dist-images": {
-        files: [{
-            expand: true,
-            cwd: '<%= config.src %>img/',
-            src: ['**/*.{png,jpg,gif}'],
-            dest: '<%= config.dist %>img/'
         }]
     },
     "dist-bower": {
@@ -52,5 +36,53 @@ module.exports = function() {
     },
     // --------------------------------------
     // Dist --> Release
+    "release-html": {
+        files: [{
+            expand: true,
+            cwd: '<%= config.dist %>',
+            src: ['*.cshtml'],
+            dest: '<%= config.release %>Views/Mates/'
+        }]
+    },
+    "release-img": {
+        files: [{
+            expand: true,
+            cwd: '<%= config.dist %>img/',
+            src: ['**/*'],
+            dest: '<%= config.release %>img/'
+        }]
+    },
+    "release-bower": {
+        files: [{
+            expand: true,
+            cwd: '<%= config.dist %>bower_components/',
+            src: ['**/*'],
+            dest: '<%= config.release %>bower_components'
+        }]
+    },
+    "release-lib": {
+        files: [{
+            expand: true,
+            cwd: '<%= config.dist %>lib/',
+            src: ['**/*'],
+            dest: '<%= config.release %>lib/'
+        }]
+    },
+    "release-scripts": {
+        files: [{
+            expand: true,
+            cwd: '<%= config.dist %>scripts/',
+            src: ['**/*'],
+            dest: '<%= config.release %>scripts/'
+        }]
+    },
+    "release-styles": {
+        files: [{
+            expand: true,
+            cwd: '<%= config.dist %>styles/',
+            src: ['**/*'],
+            dest: '<%= config.release %>styles/'
+        }]
+    }
   }
 };

@@ -63,7 +63,7 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', [
     'clean:dist',
-    'copy:dist-cshtml',
+    'string-replace:html',
     'copy:dist-html',
     'imagemin:dist-img',
 
@@ -83,6 +83,15 @@ module.exports = function(grunt) {
   // Copy to WEB
   grunt.registerTask('release', [
     'default',
+
+    'clean:release',
+
+    'copy:release-html',
+    'copy:release-img',
+    'copy:release-bower',
+    'copy:release-lib',
+    'copy:release-scripts',
+    'copy:release-styles',
   ]);
 
 };
