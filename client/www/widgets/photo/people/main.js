@@ -31,14 +31,15 @@ angular.module('mates.photo.people', [])
     function($scope, $q, $http, photoPeopleModal, msgBus) {
 
         $scope.people = {
-            "visible": false,
+            "visible": true,
             "peopleId": photoPeopleModal.peopleId,
-            "src": "",
-            "name": "",
-            "company": "",
-            "city": "",
-            "highestDegree": "",
-            "highestUniversity": "",
+            "src": "../test/a_009.jpg",
+            "name": "景甜",
+            "company": "北京星光灿烂影视有限公司",
+            "city": "每天都在飞",
+            "highestDegree": "学士",
+            "highestUniversity": "北京电影学院",
+            "domain": "演员;歌唱;跳舞",
         };
 
         $scope.closeMe = function() {
@@ -105,6 +106,7 @@ angular.module('mates.photo.people', [])
                 "CurrentLocation": people.city,
                 "HighestDegree": people.highestDegree,
                 "HighestCollege": people.highestUniversity,
+                "domain": people.domain,
                 "IsSelf": true,
                 "WeChatId": "xxx",
                 "Src": people.src.split(",")[1],

@@ -26,7 +26,7 @@ angular.module('mates.photo.map', [])
     'photoPeopleModal',
     'photoFullscreenModal',
     function($scope, $http, _, msgBus,photoPeopleModal,photoFullscreenModal) {
-        var photoId = "004";
+        var photoId = "001";
 
         $scope.photo = {
             "src": "../test/" + photoId + ".jpg",

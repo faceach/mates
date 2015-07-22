@@ -1,23 +1,102 @@
-module.exports = function(grunt) {
+// Import depends modules
+var path = "./client/";
+var configClean = require(path + 'grunt/clean.js');
+var configCopy = require(path + 'grunt/copy.js');
+var configLess = require(path + 'grunt/less.js');
+var configImagemin = require(path + 'grunt/imagemin.js');
+var configUglify = require(path + 'grunt/uglify.js');
+var configJshint = require(path + 'grunt/jshint.js');
+var configWatch = require(path + 'grunt/watch.js');
 
-  // Project configuration.
+// Create grunt module
+module.exports = function(grunt) {
+  'use strict';
+
+  grunt.file.preserveBOM = true;
+
+  // Grunt configuration:
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
-    uglify: {
-      options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-      },
-      build: {
-        src: 'src/<%= pkg.name %>.js',
-        dest: 'build/<%= pkg.name %>.min.js'
-      }
+    "pkg": grunt.file.readJSON('package.json'),
+    "meta": {
+      "banner": '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
+        '<%= grunt.template.today("yyyy-mm-dd") %>\\n' +
+        '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
+        '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
+        ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
+    },
+    "config": {
+      "src": path + 'src/',
+      "dist": path + 'dist/',
+      "temp": path + 'temp/',
+      "release": './OurMates/OurMates/'
+    },
+    "bumpup": {
+      file: 'package.json'
+    },
+    "clean": configClean(),
+    "copy": configCopy(),
+    "less": configLess(),
+    "imagemin": configImagemin(),
+    "uglify": configUglify(),
+    "jshint": configJshint(),
+    "watch": configWatch()
+  });
+
+  // Load all grunt tasks
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+
+  // Bumpup task
+  //major: Will bump the major x.0.0 part of a version string.
+  //minor: Will bump the minor 0.x.0 part of a version string.
+  //patch: Will bump the patch 0.0.x part of a version string.
+  //prerelease: Will bump the prerelease 0.0.0-x part of a version string.
+  grunt.registerTask('version', function(type) {
+    if (type != null && type != false) {
+      grunt.task.run('bumpup:' + type);
     }
   });
 
-  // Load the plugin that provides the "uglify" task.
-  grunt.loadNpmTasks('grunt-contrib-uglify');
+  // Fast Copy Images to WEB
+  grunt.registerTask('copyimage', [
+    //'imagemin:dist-images',
+    'copy:dist-images',
+    'copy:release-images'
+  ]);
 
-  // Default task(s).
-  grunt.registerTask('default', ['uglify']);
+  // Default task.
+  grunt.registerTask('default', [
+    'clean:dist',
+    'copy:dist-scripts',
+    'copy:dist-styles',
+    'copy:dist-download',
+    'less:development',
+    'less:production',
+    'requirejs:dist',
+    'requirejs:dist-mobile',
+    'string-replace:html',
+    'string-replace:html-mobile',
+    'string-replace:css',
+    'string-replace:js',
+    'uglify',
+    'jshint'
+  ]);
+
+  // Copy to WEB
+  grunt.registerTask('release', [
+    'default',
+    'clean:release',
+
+    //'imagemin',
+    'copy:dist-bgs',
+    'copyimage',
+
+    'copy:release-styles',
+    'copy:release-styles-version',
+    'copy:release-scripts',
+    'copy:release-scripts-version',
+    'copy:release-html',
+    'copy:release-html-mobile',
+    'copy:release-download'
+  ]);
 
 };
