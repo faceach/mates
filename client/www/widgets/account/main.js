@@ -7,11 +7,11 @@ angular.module('mates.account', [])
         url: "/account",
         views: {
             "menu": {
-                templateUrl: 'widgets/menu/non-home.html',
+                templateUrl: 'widgets/menu/non-home.tpl.html',
                 controller: 'MenuCtrl'
             },
             "content": {
-                templateUrl: 'widgets/account/index.html',
+                templateUrl: 'widgets/account/index.tpl.html',
                 controller: 'AccountCtrl'
             }
         }

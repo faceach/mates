@@ -7,7 +7,7 @@ angular.module('mates.photo.add', [])
         var modalService = btfModal({
             controller: 'PhotoAddCtrl',
             controllerAs: 'modal',
-            templateUrl: 'widgets/photo/add/index.html'
+            templateUrl: 'widgets/photo/add/index.tpl.html'
         });
         return {
             "show": function(categoryId) {

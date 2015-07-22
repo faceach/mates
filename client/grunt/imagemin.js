@@ -1,19 +1,11 @@
 module.exports = function() {
     return {
-        "dist-images": {
+        "dist-img": {
             files: [{
                 expand: true,
-                cwd: '<%= config.src %>images/',
+                cwd: '<%= config.src %>img/',
                 src: ['**/*.{png,jpg,gif}'],
-                dest: '<%= config.dist %>images/'
-            }]
-        },
-        "dist-bgs": {
-            files: [{
-                expand: true,
-                cwd: '<%= config.src %>styles/bg/',
-                src: ['**/*.{png,jpg,gif}'],
-                dest: '<%= config.dist %>styles/bg/'
+                dest: '<%= config.dist %>img/'
             }]
         }
     }

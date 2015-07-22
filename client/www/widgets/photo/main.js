@@ -7,11 +7,11 @@ angular.module('mates.photo', [])
         url: "/photo",
         views: {
             "menu": {
-                templateUrl: 'widgets/menu/home.html',
+                templateUrl: 'widgets/menu/home.tpl.html',
                 controller: 'MenuCtrl'
             },
             "content": {
-                templateUrl: 'widgets/photo/index.html',
+                templateUrl: 'widgets/photo/index.tpl.html',
                 controller: 'PhotoCtrl'
             }
         }

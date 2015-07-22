@@ -6,7 +6,9 @@ var configLess = require(path + 'grunt/less.js');
 var configImagemin = require(path + 'grunt/imagemin.js');
 var configUglify = require(path + 'grunt/uglify.js');
 var configJshint = require(path + 'grunt/jshint.js');
+var configHtml2js = require(path + 'grunt/html2js.js');
 var configWatch = require(path + 'grunt/watch.js');
+var configStringreplace = require(path + 'grunt/stringreplace.js');
 
 // Create grunt module
 module.exports = function(grunt) {
@@ -25,7 +27,7 @@ module.exports = function(grunt) {
         ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
     },
     "config": {
-      "src": path + 'src/',
+      "src": path + 'www/',
       "dist": path + 'dist/',
       "temp": path + 'temp/',
       "release": './OurMates/OurMates/'
@@ -39,6 +41,8 @@ module.exports = function(grunt) {
     "imagemin": configImagemin(),
     "uglify": configUglify(),
     "jshint": configJshint(),
+    "html2js": configHtml2js(),
+    "string-replace": configStringreplace(),
     "watch": configWatch()
   });
 
@@ -56,47 +60,28 @@ module.exports = function(grunt) {
     }
   });
 
-  // Fast Copy Images to WEB
-  grunt.registerTask('copyimage', [
-    //'imagemin:dist-images',
-    'copy:dist-images',
-    'copy:release-images'
-  ]);
-
   // Default task.
   grunt.registerTask('default', [
     'clean:dist',
-    'copy:dist-scripts',
-    'copy:dist-styles',
-    'copy:dist-download',
+    'copy:dist-cshtml',
+    'copy:dist-html',
+    'imagemin:dist-img',
+
+    'copy:dist-bower',
+    'copy:dist-lib',
+
     'less:development',
     'less:production',
-    'requirejs:dist',
-    'requirejs:dist-mobile',
-    'string-replace:html',
-    'string-replace:html-mobile',
-    'string-replace:css',
+
+    'html2js',
     'string-replace:js',
-    'uglify',
-    'jshint'
+    'uglify:development',
+    'uglify:production',
   ]);
 
   // Copy to WEB
   grunt.registerTask('release', [
     'default',
-    'clean:release',
-
-    //'imagemin',
-    'copy:dist-bgs',
-    'copyimage',
-
-    'copy:release-styles',
-    'copy:release-styles-version',
-    'copy:release-scripts',
-    'copy:release-scripts-version',
-    'copy:release-html',
-    'copy:release-html-mobile',
-    'copy:release-download'
   ]);
 
 };

@@ -7,7 +7,7 @@ angular.module('mates.photo.people', [])
         var modalService = btfModal({
             controller: 'PhotoPeopleCtrl',
             controllerAs: 'modal',
-            templateUrl: 'widgets/photo/people/index.html'
+            templateUrl: 'widgets/photo/people/index.tpl.html'
         });
         return {
             "show": function(face) {

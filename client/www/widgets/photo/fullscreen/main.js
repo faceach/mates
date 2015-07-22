@@ -7,7 +7,7 @@ angular.module('mates.photo.fullscreen', [])
         var modalService = btfModal({
             controller: 'PhotoFullscreenCtrl',
             controllerAs: 'modal',
-            templateUrl: 'widgets/photo/fullscreen/index.html'
+            templateUrl: 'widgets/photo/fullscreen/index.tpl.html'
         });
         return {
             "show": function(photoSrc) {

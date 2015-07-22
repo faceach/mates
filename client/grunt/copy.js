@@ -1,112 +1,49 @@
 module.exports = function() {
   return {
+    "dist-cshtml": {
+        files: [{
+            expand: true,
+            cwd: '<%= config.src %>',
+            src: ['*.cshtml'],
+            dest: '<%= config.dist %>'
+        }]
+    },
+    "dist-html": {
+        files: [{
+            expand: true,
+            cwd: '<%= config.dist %>',
+            src: ['*.cshtml'],
+            dest: '<%= config.dist %>',
+            ext: '.html'
+        }]
+    },
     // Src --> Dist || Images, instead of grunt-contrib-imagemin
     "dist-images": {
         files: [{
             expand: true,
-            cwd: '<%= config.src %>images/',
+            cwd: '<%= config.src %>img/',
             src: ['**/*.{png,jpg,gif}'],
-            dest: '<%= config.dist %>images/'
-        }]
-    },
-    "dist-bgs": {
-        files: [{
-            expand: true,
-            cwd: '<%= config.src %>styles/bg/',
-            src: ['**/*.{png,jpg,gif}'],
-            dest: '<%= config.dist %>styles/bg/'
+            dest: '<%= config.dist %>img/'
         }]
     },
     // Src --> Dist
-    "dist-scripts": {
+    "dist-bower": {
       files: [{
         expand: true,
-        cwd: "<%= config.src %>scripts/",
-        src: ['_shared/**', 'skin/**', 'page/share.js', 'paws/**'],
-        dest: '<%= config.dist %>scripts/'
+        cwd: "<%= config.src %>bower_components/",
+        src: ['**/*.js', '**/*.css', '**/*.js.map'],
+        dest: '<%= config.dist %>bower_components/'
       }]
     },
-    "dist-styles": {
+    "dist-lib": {
       files: [{
         expand: true,
-        cwd: "<%= config.src %>styles/",
-        src: ['fonts/**', 'bootstrap/**'],
-        dest: '<%= config.dist %>styles/'
-      }]
-    },
-    "dist-download": {
-      files: [{
-        expand: true,
-        cwd: "<%= config.src %>download/",
-        src: ['**'],
-        dest: '<%= config.dist %>download/'
-      }]
-    },
-    // --------------------------------------
-    // Dist --> Release
-    "release-images": {
-      files: [{
-        expand: true,
-        cwd: "<%= config.dist %>images/",
-        src: ['**'],
-        dest: "<%= config.release %>images/"
-      }]
-    },
-    "release-styles": {
-      files: [{
-        expand: true,
-        cwd: "<%= config.dist %>styles/",
-        src: ['fonts/**', 'bootstrap/**'],
-        dest: '<%= config.release %>styles/'
-      }]
-    },
-    "release-styles-version": {
-      files: [{
-        expand: true,
-        cwd: "<%= config.dist %>styles/",
-        src: ["bg/**", "base/**", "page/**", "mobile/**", "wechat/**", "event/**", "paws/**"],
-        dest: "<%= config.release %>styles/<%= pkg.version %>/"
-      }]
-    },
-    "release-scripts": {
-      files: [{
-        expand: true,
-        cwd: "<%= config.dist %>scripts/",
-        src: ["_shared/**", "skin/**"],
-        dest: "<%= config.release %>scripts/"
-      }]
-    },
-    "release-scripts-version": {
-      files: [{
-        expand: true,
-        cwd: "<%= config.dist %>scripts/",
-        src: ["page/**", "widget/**", "paws/**"],
-        dest: "<%= config.release %>scripts/<%= pkg.version %>/"
-      }]
-    },
-    "release-html": {
-      files: [{
-        expand: true,
-        cwd: "<%= config.dist %>views/",
-        src: ["**/*.cshtml"],
-        dest: "<%= config.release %>Views/"
-      }]
-    },
-    "release-html-mobile": {
-      files: [{
-        expand: true,
-        cwd: "<%= config.dist %>viewsmobile/",
-        src: ["**/*.cshtml"],
-        dest: "<%= config.release %>Areas/Mobile/Views/"
-      }]
-    },
-    "release-download": {
-      files: [{
-        expand: true,
-        cwd: "<%= config.dist %>download/",
-        src: ["**"],
-        dest: "<%= config.release %>download/"
+        cwd: "<%= config.src %>lib/",
+        src: ['**/*.js', '**/*.css', '**/*.js.map'],
+        dest: '<%= config.dist %>lib/'
       }]
     }
+    // --------------------------------------
+    // Dist --> Release
   }
 };

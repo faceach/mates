@@ -1,8 +1,6 @@
 module.exports = function() {
 	return {
-		scripts: ['<%= config.src %>/scripts/page/**/*.js',
-			'<%= config.src %>/scripts/widget/**/*.js'
-		],
+		scripts: ['<%= config.src %>/widgets/**/*.js'],
 		options: {
 			ignores: [
 			]

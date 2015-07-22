@@ -23,7 +23,7 @@ angular.module('mates', [
 
         'mates.version',
 
-        /*'templates-main'*/
+        'templates-main'
     ])
     .config([
         '$urlRouterProvider',
