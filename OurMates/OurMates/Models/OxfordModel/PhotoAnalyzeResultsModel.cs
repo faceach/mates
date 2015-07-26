@@ -56,6 +56,7 @@ namespace OurMates.Models.OxfordModel
                     {
                         photo.PhotoId = Guid.NewGuid().ToString().Replace("-", "");
                     }
+                    photoAnalyzeResultsModel.PhotoId = photo.PhotoId;
 
                     string graduateDate = json.GraduateDate;
                     if (!string.IsNullOrEmpty(graduateDate))

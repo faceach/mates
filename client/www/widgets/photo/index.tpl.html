@@ -11,19 +11,19 @@
     <div class="row">
         <div class="small-12 columns">
             <h2>
-            	育才中学<br>
-            	<small>中国 上海市 嘉定区</small>
+            	{{photo.school}}<br>
+            	<!--small>中国 上海市 嘉定区</small-->
 			</h2>
             <h3 class="subheader">
-            	2003届初三（3）班毕业照<br>
+            	{{photo.graduationYear}}届{{photo.class}}班毕业照<br>
             </h3>
-            <blockquote>初中的生活犹如一本书，打开书，每一个故事都记录了一段单纯的起伏，故事里终究会有遗憾，会有叹息，会有泪滴，要不就是青涩的年纪，就没有酸涩的回忆。请相信，一切暂别的都要重聚，一切遗憾的都要圆满!</blockquote>
+            <blockquote>{{photo.summary}}</blockquote>
         </div>
     </div>
     <hr>
     <div class="row">
         <div class="small-12 columns">
-			<ul class="no-bullet">
+			<ul class="no-bullet" style="display: none;">
 				<li>
 					<div class="row">
 						<div class="small-3 columns">

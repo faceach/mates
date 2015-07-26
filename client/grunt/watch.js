@@ -4,8 +4,14 @@ module.exports = function() {
 			/*livereload: true,*/
 		},
 		"views": {
-			files: ['<%= config.src %>**/*.html'],
-			tasks: ['view']
+			files: [
+				'<%= config.src %>index.cshtml',
+				'<%= config.src %>app.js',
+				'<%= config.src %>styles/**/*.less',
+				'<%= config.src %>widgets/**/*.js',
+				'<%= config.src %>widgets/**/*.tpl.html',
+			],
+			tasks: ['release']
 		}
 	}
 };

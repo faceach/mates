@@ -7,6 +7,7 @@ angular.module('mates', [
         'ngFileUpload',
         'btford.modal',
         'hmTouchEvents',
+        'angular-loading-bar',
 
         'ng.utils',
         'mates.weixin',
@@ -27,8 +28,14 @@ angular.module('mates', [
     ])
     .config([
         '$urlRouterProvider',
-        function($urlRouterProvider) {
+        'cfpLoadingBarProvider',
+        function($urlRouterProvider, cfpLoadingBarProvider) {
             // Router
             $urlRouterProvider.otherwise('/photo');
+
+            // 
+            cfpLoadingBarProvider.includeSpinner = false;
+            cfpLoadingBarProvider.includeBar = true;
+            cfpLoadingBarProvider.latencyThreshold = 500;
         }
     ]);
