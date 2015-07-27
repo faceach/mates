@@ -23,20 +23,42 @@ angular.module('mates.photo', [])
 .controller('PhotoCtrl', [
     '$scope',
     '$http',
+    '$location',
     '_',
     'msgBus',
-    function($scope, $http, _, msgBus) {
-        var photoId = "004";
+    function($scope, $http, $location, _, msgBus) {
 
+        var photoId = $location.search().photoId;
         $scope.photo = {
-            "src": "../test/" + photoId + ".jpg",
+            "photoId": photoId,
+            "src": "",
             "class": "",
             "graduationYear": "",
             "school": "",
             "schoolLevel": "",
             "summary": "",
-            "faces": []
+            "people": []
         };
+
+        console.log("photoId %s", photoId);
+
+        $http.get("api/photo/persons?photoId=" + photoId).
+        success(function(data, status, headers, config) {
+            if (!data || !data.PhotoEntity) {
+                return;
+            }
+            var dataPhoto = data.PhotoEntity;
+            $scope.photo = _.extend($scope.photo, {
+                "src": dataPhoto.URL,
+                "class": dataPhoto.GradeClass,
+                "graduationYear": dataPhoto.GraduateDate,
+                "school": dataPhoto.School,
+                "schoolLevel": dataPhoto.SchoolLevel,
+                "summary": dataPhoto.Summary,
+                "people": data.FaceWithPersonList
+            });
+        }).
+        error(function(data, status, headers, config) {});
 
         // Message event listner
         msgBus.onMsg('addPhoto', $scope, function($event, photo) {

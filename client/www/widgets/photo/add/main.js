@@ -99,7 +99,9 @@ angular.module('mates.photo.add', [])
                 // when the response is available
                 // Emit
                 msgBus.emitMsg("addPhoto", _.extend(photo, {
-                    faces: data.Faces
+                    faces: data.Faces,
+                    photoId: data.PhotoId,
+                    photoUrl: data.PhotoURL
                 }));
                 // Hide current Modal
                 photoAddModal.hide();

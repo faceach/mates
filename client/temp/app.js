@@ -31,7 +31,7 @@ angular.module('mates', [
         'cfpLoadingBarProvider',
         function($urlRouterProvider, cfpLoadingBarProvider) {
             // Router
-            $urlRouterProvider.otherwise('/photo');
+            $urlRouterProvider.otherwise('/photo?photoId=c6b04bcd234143d981fd05015a4fa171');
 
             // 
             cfpLoadingBarProvider.includeSpinner = false;

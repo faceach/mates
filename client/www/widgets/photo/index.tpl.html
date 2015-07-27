@@ -2,7 +2,7 @@
     <div class="row">
         <div class="small-12 columns photo-thumbnail">
             <div class="photo-thumbnail-container">
-                <a ui-sref="photo/review">
+                <a ui-sref="photo/review({photoId: photo.photoId})">
                 	<img ng-src="{{photo.src}}" src="./img/blank.png" alt="">
                 </a>
             </div>

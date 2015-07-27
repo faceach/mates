@@ -2,7 +2,7 @@
     <div class="photo-map-panel" photo-map ratio="photo.ratio">
         <div class="photo-map-view">
             <img ng-src="{{photo.src}}" ng-show="photo.src" alt="">
-            <span ng-repeat="face in faces" class="photo-map-face" ng-class="{'photo-map-face-active': face.active, 'photo-map-face-read': face.read, 'photo-map-face-edit': face.edit}" style="left: {{face.faceRectangle.left * photo.ratio - (photo.sizeEdge + photo.sizeInc/2)}}px; top: {{face.faceRectangle.top * photo.ratio - (photo.sizeEdge + photo.sizeInc/2)}}px; width: {{face.faceRectangle.width * photo.ratio + photo.sizeInc}}px; height: {{face.faceRectangle.height * photo.ratio + photo.sizeInc}}px;" hm-tap="active($event, face)" hm-press="edit($event, face)"></span>
+            <span ng-repeat="face in photo.faces" class="photo-map-face" ng-class="{'photo-map-face-active': face.active, 'photo-map-face-read': face.read, 'photo-map-face-edit': face.edit}" style="left: {{face.faceRectangle.left * photo.ratio - (photo.sizeEdge + photo.sizeInc/2)}}px; top: {{face.faceRectangle.top * photo.ratio - (photo.sizeEdge + photo.sizeInc/2)}}px; width: {{face.faceRectangle.width * photo.ratio + photo.sizeInc}}px; height: {{face.faceRectangle.height * photo.ratio + photo.sizeInc}}px;" hm-tap="active($event, face)" hm-press="edit($event, face)"></span>
         </div>
     </div>
     <div class="photo-map-control">

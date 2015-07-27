@@ -4,7 +4,7 @@ angular.module('mates.photo.map', [])
 
 .config(['$stateProvider', function($stateProvider) {
     $stateProvider.state('photo/review', {
-        url: "/photo/review",
+        url: "/photo/review/:photoId",
         views: {
             "menu": {
                 templateUrl: 'widgets/menu/home.tpl.html',
@@ -21,40 +21,47 @@ angular.module('mates.photo.map', [])
 .controller('PhotoMapCtrl', [
     '$scope',
     '$http',
+    '$location',
+    '$stateParams',
     '_',
     'msgBus',
     'photoPeopleModal',
     'photoFullscreenModal',
-    function($scope, $http, _, msgBus,photoPeopleModal,photoFullscreenModal) {
+    function($scope, $http, $location, $stateParams, _, msgBus,photoPeopleModal,photoFullscreenModal) {
         var photoId = "001";
 
         $scope.photo = {
             "src": "../test/" + photoId + ".jpg",
             "ratio": 0,
             "sizeInc": 10,
-            "sizeEdge": 2
+            "sizeEdge": 2,
+            "faces": []
         };
-        $scope.faces = [];
         $scope.faceActive = false;
 
+        var photoId = $stateParams.photoId;
         $http({
                 method: 'GET',
-                url: "./api/face_" + photoId + ".json"
+                url: "api/photo/persons",
+                data: {
+                    photoId: photoId
+                }
             })
             .success(function(data, status, headers, config) {
                 if (!data) {
                     return;
                 }
-                $scope.faces = data;
+                $scope.photo.faces = data;
             })
             .error(function(data, status, headers, config) {});
 
         // Message event listner
         msgBus.onMsg('addPhoto', $scope, function($event, photo) {
             $scope.photo.src = photo.src;
+            $scope.photo.faces = photo.faces;
         });
         msgBus.onMsg('cancelEditPeople', $scope, function($event) {
-            var face = _.find($scope.faces, function(face) {
+            var face = _.find($scope.photo.faces, function(face) {
                 return face.read || face.edit;
             });
             if(face){
@@ -69,13 +76,13 @@ angular.module('mates.photo.map', [])
 
         $scope.toggleFaces = function($event) {
             if ($scope.faceActive) {
-                _.each($scope.faces, function(face) {
+                _.each($scope.photo.faces, function(face) {
                     face.active = false;
                     face.read = false;
                     face.edit = false;
                 });
             } else {
-                _.each($scope.faces, function(face) {
+                _.each($scope.photo.faces, function(face) {
                     face.active = true;
                     face.read = false;
                     face.edit = false;
@@ -85,7 +92,7 @@ angular.module('mates.photo.map', [])
         };
         $scope.active = function($event, face) {
             if (!face.active) {
-                _.each($scope.faces, function(face) {
+                _.each($scope.photo.faces, function(face) {
                     face.active = false;
                     face.read = false;
                     face.edit = false;
