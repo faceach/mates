@@ -93,22 +93,23 @@ angular.module('mates.photo.add', [])
                 "SchoolLevel": photo.schoolLevel,
                 "Summary": photo.summary,
                 "Src": photo.src.split(",")[1],
-            }).
-            success(function(data, status, headers, config) {
-                // this callback will be called asynchronously
-                // when the response is available
-                // Emit
-                msgBus.emitMsg("addPhoto", _.extend(photo, {
-                    faces: data.Faces,
-                    photoId: data.PhotoId,
-                    photoUrl: data.PhotoURL
-                }));
-                // Hide current Modal
-                photoAddModal.hide();
-            }).error(function(data, status, headers, config) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
-            });
+            })
+                .success(function(data, status, headers, config) {
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    // Emit
+                    msgBus.emitMsg("addPhoto", _.extend(photo, {
+                        faces: data.Faces,
+                        photoId: data.PhotoId,
+                        photoUrl: data.PhotoURL
+                    }));
+                    // Hide current Modal
+                    photoAddModal.hide();
+                })
+                .error(function(data, status, headers, config) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                });
         };
     }
 ]);

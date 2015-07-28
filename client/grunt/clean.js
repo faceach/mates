@@ -8,6 +8,14 @@ module.exports = function() {
         "<%= config.release %>scripts/",
         "<%= config.release %>styles/",
         "<%= config.release %>Views/Mates/"
+      ],
+      "develop": [
+        "<%= config.dist %>scripts/",
+        "<%= config.dist %>styles/",
+        "<%= config.dist %>Views/Mates/",
+        "<%= config.release %>scripts/",
+        "<%= config.release %>styles/",
+        "<%= config.release %>Views/Mates/"
       ]
     }
 };

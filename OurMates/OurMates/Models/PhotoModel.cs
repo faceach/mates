@@ -13,13 +13,15 @@ namespace OurMates.Models
         /// All persons in this photo
         /// </summary>
         public IList<FaceWithPersonModel> FaceWithPersonList { get; set; }
+        public IList<Face> FaceList { get; set; }
 
         public PhotoModel()
         { }
 
-        public PhotoModel(Photo photo, IList<FaceWithPersonModel> faceWithPersonList)
+        public PhotoModel(Photo photo, IList<Face> faceList, IList<FaceWithPersonModel> faceWithPersonList)
         {
             this.PhotoEntity = photo;
+            this.FaceList = faceList;
             this.FaceWithPersonList = faceWithPersonList;
         }
         public static Task<PhotoModel> CreatePhotoModelById(string photoId)
@@ -30,7 +32,7 @@ namespace OurMates.Models
                     var faceList = FaceManager.QueryFaceListByPhoto(photoId);
                     var faceWithPersonList = FaceManager.CreateFaceWithPersonList(faceList);
 
-                    return new PhotoModel(photo, faceWithPersonList);
+                    return new PhotoModel(photo, faceList, faceWithPersonList);
                 });
         }
 

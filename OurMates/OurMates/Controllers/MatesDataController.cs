@@ -76,7 +76,7 @@ namespace OurMates.Controllers
             var result = await PersonManager.TryParseJson(jsonData);
             if (!string.IsNullOrEmpty(result))
             {
-                response.Content = new StringContent(result, Encoding.UTF8, "application/json");
+                response.Content = new StringContent(result, Encoding.UTF8, "application/text");
             }
 
             return response;

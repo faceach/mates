@@ -11,7 +11,7 @@ module.exports = function() {
 				'<%= config.src %>widgets/**/*.js',
 				'<%= config.src %>widgets/**/*.tpl.html',
 			],
-			tasks: ['release']
+			tasks: ['develop']
 		}
 	}
 };

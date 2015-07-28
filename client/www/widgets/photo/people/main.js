@@ -30,9 +30,7 @@ angular.module('mates.photo.people', [])
     'msgBus',
     function($scope, $q, $http, photoPeopleModal, msgBus) {
 
-        $scope.people = {
-            "visible": true,
-            "peopleId": photoPeopleModal.peopleId,
+        /*
             "src": "../test/a_009.jpg",
             "name": "景甜",
             "company": "北京星光灿烂影视有限公司",
@@ -40,6 +38,17 @@ angular.module('mates.photo.people', [])
             "highestDegree": "学士",
             "highestUniversity": "北京电影学院",
             "domain": "演员;歌唱;跳舞",
+        */
+        $scope.people = {
+            "visible": true,
+            "peopleId": photoPeopleModal.peopleId,
+            "src": "",
+            "name": "",
+            "company": "",
+            "city": "",
+            "highestDegree": "",
+            "highestUniversity": "",
+            "domain": "",
         };
 
         $scope.closeMe = function() {
@@ -99,7 +108,7 @@ angular.module('mates.photo.people', [])
             //var formData = new FormData();
             // Simple POST request example (passing data) :
             $http.post('api/person/upload', {
-                "FaceId": "",
+                "FaceId": photoPeopleModal.face.FaceId,
                 "PeopleId": people.peopleId,
                 "Name": people.name,
                 "Company": people.company,
@@ -110,15 +119,18 @@ angular.module('mates.photo.people', [])
                 "IsSelf": true,
                 "WeChatId": "xxx",
                 "Src": people.src.split(",")[1],
-            }).
-            success(function(data, status, headers, config) {
-                // this callback will be called asynchronously
-                // when the response is available
-            }).
-            error(function(data, status, headers, config) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
-            });
+            })
+                .success(function(data, status, headers, config) {
+                    // this callback will be called asynchronously
+                    // when the response is available
+                    photoPeopleModal.hide();
+                })
+                .error(function(data, status, headers, config) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    console.error("api/person/upload: " + status);
+                    photoPeopleModal.hide();
+                });
         };
     }
 ]);

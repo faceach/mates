@@ -61,6 +61,23 @@ module.exports = function(grunt) {
   });
 
   // Default task.
+  grunt.registerTask('develop', [
+    'clean:develop',
+    'string-replace:html-debug',
+    'copy:dist-html',
+    'less:development',
+    'less:production',
+    'html2js',
+    'string-replace:js',
+    'uglify:development',
+    'uglify:production',
+
+    'copy:release-html',
+    'copy:release-scripts',
+    'copy:release-styles',
+  ]);
+
+  // Default task.
   grunt.registerTask('default', [
     'clean:dist',
     'string-replace:html',

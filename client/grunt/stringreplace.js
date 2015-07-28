@@ -1,3 +1,5 @@
+var crypto = require('crypto');
+
 module.exports = function() {
   return {
     "html-debug": {
@@ -9,8 +11,8 @@ module.exports = function() {
       }],
       options: {
         replacements: [{
-          pattern: /scripts\//ig,
-          replacement: "_scripts/"
+          pattern: /#v#/ig,
+          replacement: "v=" + crypto.randomBytes(20).toString('hex')
         }]
       }
     },
@@ -25,6 +27,9 @@ module.exports = function() {
         replacements: [{
           pattern: /#v#/ig,
           replacement: "v=<%= pkg.version %>"
+        }, {
+          pattern: /app.js/ig,
+          replacement: "app.min.js"
         }]
       }
     },

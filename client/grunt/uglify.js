@@ -2,8 +2,8 @@ module.exports = function() {
     return {
         development: {
             options: {
-                mangle: true,
-                compress: true,
+                mangle: false,
+                compress: false,
                 beautify: true
                 /*Sitemap*/
             },

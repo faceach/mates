@@ -17,129 +17,27 @@
             <h3 class="subheader">
             	{{photo.graduationYear}}届{{photo.class}}班毕业照<br>
             </h3>
-            <blockquote>{{photo.summary}}</blockquote>
+            <blockquote ng-show="photo.summary">{{photo.summary}}</blockquote>
         </div>
     </div>
     <hr>
     <div class="row">
         <div class="small-12 columns">
-			<ul class="no-bullet" style="display: none;">
-				<li>
+			<ul class="no-bullet">
+				<li ng-repeat="people in photo.people">
 					<div class="row">
 						<div class="small-3 columns">
 							<a class="th" href>
-								<img src="../test/a_001.jpg" alt="" width="100%">
+								<img ng-src="{{people.PersonModel.PictureURL}}" alt="" width="100%">
 							</a>
 						</div>
 						<div class="small-9 columns">
-							<h5>同学_001</h5>
-							<p>
-								<span class="info round label">可爱</span>
-								<span class="info round label">聪明</span>
-								<span class="info round label">调皮</span>
-							</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="row">
-						<div class="small-3 columns">
-							<a class="th" href>
-								<img src="../test/a_002.jpg" alt="" width="100%">
-							</a>
-						</div>
-						<div class="small-9 columns">
-							<h5>同学_002</h5>
-							<p>
-								<span class="info round label">可爱</span>
-								<span class="info round label">聪明</span>
-								<span class="info round label">调皮</span>
-							</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="row">
-						<div class="small-3 columns">
-							<a class="th" href>
-								<img src="../test/a_003.jpg" alt="" width="100%">
-							</a>
-						</div>
-						<div class="small-9 columns">
-							<h5>同学_003</h5>
-							<p>
-								<span class="info round label">可爱</span>
-								<span class="info round label">聪明</span>
-								<span class="info round label">调皮</span>
-							</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="row">
-						<div class="small-3 columns">
-							<a class="th" href>
-								<img src="../test/a_004.jpg" alt="" width="100%">
-							</a>
-						</div>
-						<div class="small-9 columns">
-							<h5>同学_004</h5>
-							<p>
-								<span class="info round label">可爱</span>
-								<span class="info round label">聪明</span>
-								<span class="info round label">调皮</span>
-							</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="row">
-						<div class="small-3 columns">
-							<a class="th" href>
-								<img src="../test/a_005.jpg" alt="" width="100%">
-							</a>
-						</div>
-						<div class="small-9 columns">
-							<h5>同学_005</h5>
-							<p>
-								<span class="info round label">可爱</span>
-								<span class="info round label">聪明</span>
-								<span class="info round label">调皮</span>
-							</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="row">
-						<div class="small-3 columns">
-							<a class="th" href>
-								<img src="../test/a_006.jpg" alt="" width="100%">
-							</a>
-						</div>
-						<div class="small-9 columns">
-							<h5>同学_006</h5>
-							<p>
-								<span class="info round label">可爱</span>
-								<span class="info round label">聪明</span>
-								<span class="info round label">调皮</span>
-							</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="row">
-						<div class="small-3 columns">
-							<a class="th" href>
-								<img src="../test/a_007.jpg" alt="" width="100%">
-							</a>
-						</div>
-						<div class="small-9 columns">
-							<h5>同学_007</h5>
-							<p>
-								<span class="info round label">可爱</span>
-								<span class="info round label">聪明</span>
-								<span class="info round label">调皮</span>
-							</p>
+							<h5>{{people.PersonModel.Name}}</h5>
+                            <ul class="disc">
+                                <li class="locality">所在城市：{{people.PersonModel.CurrentLocation}}</li>
+                                <li class="locality">当前公司：{{people.PersonModel.Company}}</li>
+                                <li class="locality">最高学历：{{people.PersonModel.HighestDegree}} &bull; {{people.PersonModel.HighestCollege}}</li>
+                            </ul>
 						</div>
 					</div>
 				</li>

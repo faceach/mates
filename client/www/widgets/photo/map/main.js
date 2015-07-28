@@ -2,21 +2,23 @@
 
 angular.module('mates.photo.map', [])
 
-.config(['$stateProvider', function($stateProvider) {
-    $stateProvider.state('photo/review', {
-        url: "/photo/review/:photoId",
-        views: {
-            "menu": {
-                templateUrl: 'widgets/menu/home.tpl.html',
-                controller: 'MenuCtrl'
-            },
-            "content": {
-                templateUrl: 'widgets/photo/map/index.tpl.html',
-                controller: 'PhotoMapCtrl'
+.config(['$stateProvider',
+    function($stateProvider) {
+        $stateProvider.state('photo/review', {
+            url: "/photo/review/:photoId",
+            views: {
+                "menu": {
+                    templateUrl: 'widgets/menu/home.tpl.html',
+                    controller: 'MenuCtrl'
+                },
+                "content": {
+                    templateUrl: 'widgets/photo/map/index.tpl.html',
+                    controller: 'PhotoMapCtrl'
+                }
             }
-        }
-    });
-}])
+        });
+    }
+])
 
 .controller('PhotoMapCtrl', [
     '$scope',
@@ -27,31 +29,40 @@ angular.module('mates.photo.map', [])
     'msgBus',
     'photoPeopleModal',
     'photoFullscreenModal',
-    function($scope, $http, $location, $stateParams, _, msgBus,photoPeopleModal,photoFullscreenModal) {
-        var photoId = "001";
+    function($scope, $http, $location, $stateParams, _, msgBus, photoPeopleModal, photoFullscreenModal) {
+        var photoId = $stateParams.photoId;
 
         $scope.photo = {
-            "src": "../test/" + photoId + ".jpg",
+            "photoId": photoId,
+            "src": "",
             "ratio": 0,
             "sizeInc": 10,
             "sizeEdge": 2,
-            "faces": []
+            "faces": [],
+            "people": []
         };
         $scope.faceActive = false;
 
-        var photoId = $stateParams.photoId;
-        $http({
-                method: 'GET',
-                url: "api/photo/persons",
-                data: {
-                    photoId: photoId
-                }
-            })
+        $http.get("api/photo/persons?photoId=" + photoId)
             .success(function(data, status, headers, config) {
-                if (!data) {
+                if (!data || !data.PhotoEntity) {
                     return;
                 }
-                $scope.photo.faces = data;
+                var dataPhoto = data.PhotoEntity;
+
+                _.each(data.FaceList, function (e, keye) {
+                    _.each(data.FaceWithPersonList, function (f, keyf) {
+                        if(e.FaceId === f.FaceModel.FaceId){
+                            e.recognized = true;
+                            e.people = f.PersonModel;
+                        }
+                    })
+                });
+
+                $scope.photo = _.extend($scope.photo, {
+                    "src": dataPhoto.URL,
+                    "faces": data.FaceList
+                });
             })
             .error(function(data, status, headers, config) {});
 
@@ -64,7 +75,7 @@ angular.module('mates.photo.map', [])
             var face = _.find($scope.photo.faces, function(face) {
                 return face.read || face.edit;
             });
-            if(face){
+            if (face) {
                 face.read = false;
                 face.edit = false;
             }
