@@ -2,11 +2,11 @@
     <div class="addphoto-card-panal">
         <form>
             <div class="row">
-                <div class="large-12 columns photo-thumbnail" accept="image/*" ngf-select ngf-change="readPhoto($files)">
+                <div class="photo-thumbnail" accept="image/*" ngf-select ngf-change="readPhoto($files)">
                     <div class="photo-thumbnail-container">
                         <img ng-src="{{people.src}}" src="./img/blank.png" alt="" ng-show="people.visible">
                         <div accept="image/*" class="photo-thumbnail-btn" ng-hide="people.visible">
-                            <i class="ion-ios-crop-strong"></i>&nbsp;我的生活照
+                            <i class="ion-ios-crop-strong"></i>&nbsp;点击添加头像（最近生活照）
                         </div>
                     </div>
                 </div>
@@ -14,11 +14,36 @@
             <div class="row">
                 <div class="small-12 columns">
                     <div class="row">
-                        <div class="small-4 columns">
-                            <label for="right-label" class="right inline">名字</label>
+                        <div class="small-6 columns">
+                            <label>
+                                名字
+                                <input type="text" placeholder="姓名" required ng-model="people.name" >
+                            </label>
                         </div>
-                        <div class="small-8 columns">
-                            <input type="text" placeholder="名字" required ng-model="people.name" >
+                        <!--div class="small-6 columns">
+                            <div class="switch radius">
+                                <label for="gender">状态
+                                    <input id="gender" type="radio" name="testGroup">
+                                </label>
+                            </div>
+                        </div-->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    <div class="row">
+                        <div class="small-6 columns">
+                            <label>
+                                当前城市
+                                <input type="text" placeholder="当前城市" required ng-model="people.city" >
+                            </label>
+                        </div>
+                        <div class="small-6 columns">
+                            <label>
+                                工作单位
+                                <input type="text" placeholder="工作单位" required ng-model="people.company" >
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -26,54 +51,28 @@
             <div class="row">
                 <div class="small-12 columns">
                     <div class="row">
-                        <div class="small-4 columns">
-                            <label for="right-label" class="right inline">当前城市</label>
+                        <div class="small-6 columns">
+                            <label>
+                                最高学历
+                                <input type="text" placeholder="最高学历" required ng-model="people.highestDegree" >
+                            </label>
                         </div>
-                        <div class="small-8 columns">
-                            <input type="text" placeholder="当前城市" required ng-model="people.city" >
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="small-12 columns">
-                    <div class="row">
-                        <div class="small-4 columns">
-                            <label for="right-label" class="right inline">工作单位</label>
-                        </div>
-                        <div class="small-8 columns">
-                            <input type="text" placeholder="工作单位" required ng-model="people.company" >
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="small-12 columns">
-                    <div class="row">
-                        <div class="small-4 columns">
-                            <label for="right-label" class="right inline">最高学历</label>
-                        </div>
-                        <div class="small-8 columns">
-                            <input type="text" placeholder="最高学历" required ng-model="people.highestDegree " >
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="small-12 columns">
-                    <div class="row">
-                        <div class="small-4 columns">
-                            <label for="right-label" class="right inline">最高学府</label>
-                        </div>
-                        <div class="small-8 columns">
-                            <input type="text" placeholder="最高学府" required ng-model="people.highestUniversity " >
+                        <div class="small-6 columns">
+                            <label>
+                                最高学府
+                                <input type="text" placeholder="最高学府" required ng-model="people.highestUniversity" >
+                            </label>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="large-12 columns">
-                    <textarea placeholder="您所擅长的领域，以及您所希望拓展的业务范围？" ng-model="people.domain"></textarea>
+                    <label>
+                        希望同学们了解更多您的个人动态吗？（逗号隔开）<br>
+                        例如：您擅长的领域，或者您希望拓展的业务范围
+                        <input type="text" placeholder="律师，医生，老师，保险..." required ng-model="people.domain" >
+                    </label>
                 </div>
             </div>
             <div class="row">

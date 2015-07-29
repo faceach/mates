@@ -1,6 +1,6 @@
 <div class="photo">
     <div class="row">
-        <div class="small-12 columns photo-thumbnail">
+        <div class="photo-thumbnail photo-thumbnail-bg">
             <div class="photo-thumbnail-container">
                 <a ui-sref="photo/review({photoId: photo.photoId})">
                 	<img ng-src="{{photo.src}}" src="./img/blank.png" alt="">
@@ -21,22 +21,31 @@
         </div>
     </div>
     <hr>
-    <div class="row">
+    <div class="row photo-people-list-container">
         <div class="small-12 columns">
 			<ul class="no-bullet">
-				<li ng-repeat="people in photo.people">
+				<li class="photo-people" ng-repeat="people in photo.people">
 					<div class="row">
-						<div class="small-3 columns">
+						<div class="small-3 columns photo-people-thubmnail">
 							<a class="th" href>
 								<img ng-src="{{people.PersonModel.PictureURL}}" alt="" width="100%">
 							</a>
 						</div>
-						<div class="small-9 columns">
+						<div class="small-9 columns photo-people-main">
 							<h5>{{people.PersonModel.Name}}</h5>
-                            <ul class="disc">
-                                <li class="locality">所在城市：{{people.PersonModel.CurrentLocation}}</li>
-                                <li class="locality">当前公司：{{people.PersonModel.Company}}</li>
-                                <li class="locality">最高学历：{{people.PersonModel.HighestDegree}} &bull; {{people.PersonModel.HighestCollege}}</li>
+                            <ul class="photo-people-property inline-list">
+                                <li class="locality">
+                                    <i class="ion-location"></i>
+                                    {{people.PersonModel.CurrentLocation}}
+                                </li>
+                                <li class="locality">
+                                    <i class="ion-briefcase"></i>
+                                    {{people.PersonModel.Company}}
+                                </li>
+                                <li class="locality">
+                                    <i class="ion-university"></i>
+                                    {{people.PersonModel.HighestDegree}} &bull; {{people.PersonModel.HighestCollege}}
+                                </li>
                             </ul>
 						</div>
 					</div>

@@ -40,7 +40,7 @@ angular.module('mates.photo.people', [])
             "domain": "演员;歌唱;跳舞",
         */
         $scope.people = {
-            "visible": true,
+            "visible": false,
             "peopleId": photoPeopleModal.peopleId,
             "src": "",
             "name": "",

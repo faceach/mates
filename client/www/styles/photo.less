@@ -2,3 +2,50 @@
 .photo {
     padding-bottom: @menu-height;
 }    
+
+.photo-people-list-container {
+	.photo-people {
+		.photo-people-thubmnail {
+			.th {
+				overflow: hidden;
+				width: 100%;
+				position: relative;
+				border-radius: @border-radius;
+				border-width: 0;
+
+				&:after {
+					content: '';
+					display: block;
+					margin-top: 100%;
+				}
+				> img {
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+				}
+			}
+		}
+		.photo-people-main {
+			h5 {
+
+			}
+			ul.photo-people-property {
+				margin-left: 0;
+				> li {
+					line-height: 1.2;
+					font-size: 85%;
+
+					&:first-child {
+						margin-left: 0;
+					}
+					i {
+						display: inline-block;
+						width: 1.2em;
+						text-align: center;
+					}
+				}
+			}
+		}
+	}
+}

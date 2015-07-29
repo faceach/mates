@@ -3,7 +3,7 @@
 @menu-color-bg: #eee;
 @menu-color-bg-active: #ccc;
 @menu-height: 50px;
-@menu-width-link: 40px;
+@menu-width-link: 60px;
 @menu-fontsize-icon: 24px;
 @menu-fontsize-text: 14px;
 @menu-size-caret: 5px;
@@ -18,11 +18,24 @@
 	a.menu-link {
 		width: @menu-width-link;
 		text-align: center;
-		font-size: @menu-fontsize-icon;
 		padding: 0;
 		line-height: @menu-height;
 		display: block;
 		color: @menu-color-link;
+		
+		i {
+			font-size: 10px;
+			line-height: 1;
+			white-space: nowrap;
+			font-style: normal;
+			&:before {
+				line-height: 1;
+				font-size: @menu-fontsize-icon;
+				display: block;
+				margin-bottom: -.8em;
+				margin-top: 5px;
+			}
+		}
 
 		&:active {
 			background-color: @menu-color-bg-active;
@@ -54,7 +67,7 @@
 				right: 0;
 			}
 		}
-		> ul {
+		> ul.menu-function {
 			margin: 0;
 			padding: 0;
 			position: absolute;
@@ -68,6 +81,8 @@
 				margin: 0;
 
 				> a {
+					text-align: center;
+					display: block;
 				}
 			}
 		}

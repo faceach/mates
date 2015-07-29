@@ -33,7 +33,12 @@ angular.module('mates.photo.add', [])
         $scope.photo = {
             "visible": false,
             "src": "./img/blank.png",
-            "categoryId": photoAddModal.categoryId
+            "categoryId": photoAddModal.categoryId,
+            "class": "",
+            "graduationYear": "2000",
+            "school": "",
+            "schoolLevel": "3",
+            "summary": "",
         };
 
         $scope.closeMe = photoAddModal.hide;
