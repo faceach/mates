@@ -5,6 +5,10 @@
 
 .photo-people-list-container {
 	.photo-people {
+		padding-bottom: 3px;
+		margin-bottom: .5rem;
+		border-bottom: 1px solid @color-grey-lighter;
+
 		.photo-people-thubmnail {
 			.th {
 				overflow: hidden;
@@ -27,14 +31,20 @@
 			}
 		}
 		.photo-people-main {
-			h5 {
-
+			h6 {
+				font-weight: bold;
+				margin-top: 0;
+				margin-bottom: .3rem;
 			}
 			ul.photo-people-property {
 				margin-left: 0;
 				> li {
 					line-height: 1.2;
 					font-size: 85%;
+					width: 50%;
+					margin-left: 0;
+					white-space: nowrap;
+					color: @color-grey-darker;
 
 					&:first-child {
 						margin-left: 0;
@@ -43,6 +53,8 @@
 						display: inline-block;
 						width: 1.2em;
 						text-align: center;
+						font-size: 120%;
+						vertical-align: middle;
 					}
 				}
 			}

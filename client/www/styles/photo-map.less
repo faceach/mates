@@ -31,15 +31,15 @@
                 border-radius: @photo-map-border-radius-face;
 
                 &:hover {
-                    border-color: #6f0;
+                    border-color: rgba(255, 255, 255, .6);
                     box-shadow: 0 0 @photo-map-border-radius-face @color-white;
                 }
                 &.photo-map-face-active {
-                    border-color: #6f0;
+                    border-color: rgba(255, 255, 255, .6);
                     box-shadow: 0 0 @photo-map-border-radius-face @color-white;
                 }
                 &.photo-map-face-read {
-                    border-color: #06f;
+                    border-color: #6f0;
                 }
                 &.photo-map-face-edit {
                     border-color: #f60;
@@ -50,6 +50,8 @@
                     top: 100%;
                     left: 0;
                     white-space: nowrap;
+                    background-color: rgba(0, 0, 0, .6);
+                    text-shadow: 1px 1px 1px #000;
                 }
             }
         }

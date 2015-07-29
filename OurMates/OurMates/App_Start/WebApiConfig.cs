@@ -51,6 +51,12 @@ namespace OurMates
                 routeTemplate: "api/photo/delete",
                 defaults: new { controller = "MatesData", action = "DeletePhoto", id = RouteParameter.Optional }
             );
+
+            config.Routes.MapHttpRoute(
+                name: "WechatAccessApi",
+                routeTemplate: "api/wechat/access",
+                defaults: new { controller = "WechatAccess", action = "Access", id = RouteParameter.Optional }
+            );
         }
     }
 }

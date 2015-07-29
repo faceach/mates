@@ -7,12 +7,12 @@ angular.module('mates.weixin', [])
         function($http) {
             if (typeof wx !== "undefined") {
                 var tokenRequest;
-                var pageUrl = location.href.substr(0, location.href.indexOf(location.hash));
+                var pageUrl = location.href.substr(0, location.href.indexOf('/' + location.hash));
 
                 // Online proxy API
                 tokenRequest = {
                     method: 'GET',
-                    url: "https://mates.chinacloudsites.cn/api/WechatAccess?url=" + pageUrl
+                    url: "http://mates.chinacloudsites.cn/api/wechat/access?url=" + encodeURIComponent(pageUrl)
                 }
 
                 function accessToken() {
@@ -64,8 +64,8 @@ angular.module('mates.weixin', [])
 
                         var shareInfo = {
                             title: '回首青葱岁月，打开尘封的毕业照', // 分享标题
-                            link: 'https://mates.chinacloudsites.cn', // 分享链接
-                            imgUrl: 'https://mates.chinacloudsites.cn/app/img/share.png', // 分享图标
+                            link: 'http://mates.chinacloudsites.cn', // 分享链接
+                            imgUrl: 'http://mates.chinacloudsites.cn/app/img/share.png', // 分享图标
                             success: function() {
                                 // 用户确认分享后执行的回调函数
                             },

@@ -20,13 +20,15 @@
                                 <input type="text" placeholder="姓名" required ng-model="people.name" >
                             </label>
                         </div>
-                        <!--div class="small-6 columns">
-                            <div class="switch radius">
-                                <label for="gender">状态
-                                    <input id="gender" type="radio" name="testGroup">
-                                </label>
-                            </div>
-                        </div-->
+                        <div class="small-6 columns">
+                            <label>
+                                单身
+                                <div class="switch radius">
+                                    <input id="gender" type="checkbox" name="testGroup" ng-model="people.isSingle">
+                                    <label for="gender"></label>
+                                </div>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -71,7 +73,7 @@
                     <label>
                         希望同学们了解更多您的个人动态吗？（逗号隔开）<br>
                         例如：您擅长的领域，或者您希望拓展的业务范围
-                        <input type="text" placeholder="律师，医生，老师，保险..." required ng-model="people.domain" >
+                        <input type="text" placeholder="律师，医生，老师，保险..." ng-model="people.domain" >
                     </label>
                 </div>
             </div>

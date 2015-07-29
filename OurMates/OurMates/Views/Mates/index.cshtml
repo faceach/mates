@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--[if lt IE 7]>      <html lang="en" ng-app="mates" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html lang="en" ng-app="mates" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html lang="en" ng-app="mates" class="no-js lt-ie9"> <![endif]-->
@@ -6,8 +6,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Mates</title>
-  <meta name="description" content="">
+  <title>Mates - 毕业照</title>
+  <meta name="description" content="'回首青葱岁月，打开尘封的毕业照">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -28,8 +28,10 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
 
-  <div ui-view="content"></div>
-  <div ui-view="menu"></div>
+  <div class="scroll">
+    <div ui-view="content"></div>
+    <div ui-view="menu"></div>
+  </div>
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
@@ -43,6 +45,9 @@
   <script src="bower_components/ryanmullins-angular-hammer/angular.hammer.min.js"></script>
   <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
 
+  <!-- Weixin JS-SDK -->
+  <script src="lib/weixin/1.0.0/jweixin-1.0.0.js"></script>
+
   <script src="lib/imagePinch/0.1.0/imagePinch.js"></script>
   <script src="lib/angular-modal/0.5.0/modal.min.js"></script>
 
@@ -50,9 +55,10 @@
   <script src="scripts/templates.js?v=0.0.2"></script>
   
   <script>
-    document.ontouchmove = function(event){
+    document.body.addEventListener("touchmove", function(event) {
       //event.preventDefault();
-    }
+      //event.stopPropagation();
+    }, false);
   </script>
 </body>
 </html>

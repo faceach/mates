@@ -12,7 +12,7 @@ angular.module('mates.photo.people', [])
         return {
             "show": function(face) {
                 this.face = face;
-                this.peopleId = 1;
+                this.peopleId = face.PersonId || null;
                 modalService.activate();
             },
             "hide": function() {
@@ -26,9 +26,10 @@ angular.module('mates.photo.people', [])
     '$scope',
     '$q',
     '$http',
+    '_',
     'photoPeopleModal',
     'msgBus',
-    function($scope, $q, $http, photoPeopleModal, msgBus) {
+    function($scope, $q, $http, _, photoPeopleModal, msgBus) {
 
         /*
             "src": "../test/a_009.jpg",
@@ -44,12 +45,28 @@ angular.module('mates.photo.people', [])
             "peopleId": photoPeopleModal.peopleId,
             "src": "",
             "name": "",
+            "isSingle": true,
             "company": "",
             "city": "",
             "highestDegree": "",
             "highestUniversity": "",
             "domain": "",
         };
+
+        var defaultPeople = photoPeopleModal.face.people;
+        if (defaultPeople) {
+            $scope.people = _.extend($scope.people, {
+                "visible": true,
+                "src": defaultPeople.PictureURL,
+                "name": defaultPeople.Name,
+                "isSingle": defaultPeople.IsSingle,
+                "company": defaultPeople.Company,
+                "city": defaultPeople.CurrentLocation,
+                "highestDegree": defaultPeople.HighestDegree,
+                "highestUniversity": defaultPeople.HighestCollege,
+                "domain": defaultPeople.BusinessScope,
+            })
+        }
 
         $scope.closeMe = function() {
             // Emit
@@ -107,22 +124,30 @@ angular.module('mates.photo.people', [])
 
             //var formData = new FormData();
             // Simple POST request example (passing data) :
-            $http.post('api/person/upload', {
-                "FaceId": photoPeopleModal.face.FaceId,
-                "PeopleId": people.peopleId,
-                "Name": people.name,
-                "Company": people.company,
-                "CurrentLocation": people.city,
-                "HighestDegree": people.highestDegree,
-                "HighestCollege": people.highestUniversity,
-                "domain": people.domain,
-                "IsSelf": true,
-                "WeChatId": "xxx",
-                "Src": people.src.split(",")[1],
-            })
+            var postData = {
+                    "FaceId": photoPeopleModal.face.FaceId,
+                    "PeopleId": people.peopleId,
+                    "Name": people.name,
+                    "IsSingle": people.isSingle,
+                    "Company": people.company,
+                    "CurrentLocation": people.city,
+                    "HighestDegree": people.highestDegree,
+                    "HighestCollege": people.highestUniversity,
+                    "BusinessScope": people.domain,
+                    "IsSelf": true,
+                    "WeChatId": "xxx",
+                    "PictureURL": people.src.split(",")[1],
+                };
+            $http.post('api/person/upload', postData)
                 .success(function(data, status, headers, config) {
                     // this callback will be called asynchronously
                     // when the response is available
+
+                    // Emit
+                    msgBus.emitMsg("addPeople", _.extend(postData, {
+                        PictureURL: people.src
+                    }));
+
                     photoPeopleModal.hide();
                 })
                 .error(function(data, status, headers, config) {

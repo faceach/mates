@@ -23,12 +23,22 @@ angular.module('mates.photo', [])
 .controller('PhotoCtrl', [
     '$scope',
     '$http',
+    '$state',
     '$stateParams',
     '_',
+    'photoPeopleModal',
     'msgBus',
-    function($scope, $http, $stateParams, _, msgBus) {
+    function($scope, $http, $state, $stateParams, _, photoPeopleModal, msgBus) {
 
         var photoId = $stateParams.photoId;
+        if (!photoId) {
+            // Default photo
+            $state.go("photo", {
+                photoId: "860b9ca135f443aeb1f582f6f83cd3c8"
+            });
+            return;
+        }
+
         $scope.photo = {
             "photoId": photoId,
             "src": "",
@@ -46,6 +56,11 @@ angular.module('mates.photo', [])
                     return;
                 }
                 var dataPhoto = data.PhotoEntity;
+
+                _.each(data.FaceWithPersonList, function(e, keye) {
+                    e.FaceModel.people = e.PersonModel;
+                });
+
                 $scope.photo = _.extend($scope.photo, {
                     "src": dataPhoto.URL,
                     "class": dataPhoto.GradeClass,
@@ -60,7 +75,20 @@ angular.module('mates.photo', [])
 
         // Message event listner
         msgBus.onMsg('addPhoto', $scope, function($event, photo) {
+            $scope.photo.people = [];
             $scope.photo = _.extend($scope.photo, photo);
         });
+        msgBus.onMsg('addPeople', $scope, function($event, people) {
+            _.each($scope.photo.people, function(e, keye) {
+                if (e.FaceModel.FaceId === people.FaceId) {
+                    e.PersonModel = _.extend(e.PersonModel, people);
+                }
+            });
+        });
+
+        //
+        $scope.readPeopleInfo = function($event, face) {
+            photoPeopleModal.show(face);
+        };
     }
 ]);

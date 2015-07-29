@@ -32,7 +32,7 @@ angular.module('mates', [
         function($urlRouterProvider, cfpLoadingBarProvider) {
             // Router
             $urlRouterProvider.otherwise(function($injector, $location) {
-                return '/photo/de15051d69e841bb90f7f78410ef312a';
+                return '/photo/review/';
             });
 
             // Loading Bar Configuration

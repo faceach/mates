@@ -27,12 +27,12 @@
 				<li class="photo-people" ng-repeat="people in photo.people">
 					<div class="row">
 						<div class="small-3 columns photo-people-thubmnail">
-							<a class="th" href>
+							<a class="th" href hm-tap="readPeopleInfo($event, people.FaceModel)">
 								<img ng-src="{{people.PersonModel.PictureURL}}" alt="" width="100%">
 							</a>
 						</div>
 						<div class="small-9 columns photo-people-main">
-							<h5>{{people.PersonModel.Name}}</h5>
+							<h6>{{people.PersonModel.Name}}</h6>
                             <ul class="photo-people-property inline-list">
                                 <li class="locality">
                                     <i class="ion-location"></i>

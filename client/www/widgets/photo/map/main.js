@@ -24,13 +24,21 @@ angular.module('mates.photo.map', [])
     '$scope',
     '$http',
     '$location',
+    '$state',
     '$stateParams',
     '_',
     'msgBus',
     'photoPeopleModal',
     'photoFullscreenModal',
-    function($scope, $http, $location, $stateParams, _, msgBus, photoPeopleModal, photoFullscreenModal) {
+    function($scope, $http, $location, $state, $stateParams, _, msgBus, photoPeopleModal, photoFullscreenModal) {
         var photoId = $stateParams.photoId;
+        if (!photoId) {
+            // Default photo
+            $state.go("photo/review", {
+                photoId: "860b9ca135f443aeb1f582f6f83cd3c8"
+            });
+            return;
+        }
 
         $scope.photo = {
             "photoId": photoId,
@@ -39,7 +47,6 @@ angular.module('mates.photo.map', [])
             "sizeInc": 10,
             "sizeEdge": 2,
             "faces": [],
-            "people": []
         };
         $scope.faceActive = false;
 
@@ -50,13 +57,13 @@ angular.module('mates.photo.map', [])
                 }
                 var dataPhoto = data.PhotoEntity;
 
-                _.each(data.FaceList, function (e, keye) {
-                    _.each(data.FaceWithPersonList, function (f, keyf) {
-                        if(e.FaceId === f.FaceModel.FaceId){
+                _.each(data.FaceList, function(e, keye) {
+                    _.each(data.FaceWithPersonList, function(f, keyf) {
+                        if (e.FaceId === f.FaceModel.FaceId) {
                             e.recognized = true;
                             e.people = f.PersonModel;
                         }
-                    })
+                    });
                 });
 
                 $scope.photo = _.extend($scope.photo, {
@@ -70,6 +77,13 @@ angular.module('mates.photo.map', [])
         msgBus.onMsg('addPhoto', $scope, function($event, photo) {
             $scope.photo.src = photo.src;
             $scope.photo.faces = photo.faces;
+        });
+        msgBus.onMsg('addPeople', $scope, function($event, people) {
+            _.each($scope.photo.faces, function(e, keye) {
+                if (e.FaceId === people.FaceId) {
+                    e.people = _.extend(e.people, people);
+                }
+            });
         });
         msgBus.onMsg('cancelEditPeople', $scope, function($event) {
             var face = _.find($scope.photo.faces, function(face) {
@@ -111,9 +125,12 @@ angular.module('mates.photo.map', [])
                 face.active = true;
                 return;
             } else if (!face.read) {
-                // Read mode
-                face && (face.read = true);
-                photoPeopleModal.show(face);
+                if (confirm("这是你本人吗？或者你希望编辑该同学的资料？")) {
+                    // Read mode
+                    face && (face.read = true);
+                    photoPeopleModal.show(face);
+                }
+
                 return;
             }
         };

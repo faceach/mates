@@ -143,6 +143,7 @@ namespace OurMates.Database
                     person.HighSchool = personEntity.HighSchool;
                     person.University = personEntity.University;
                     person.Others = personEntity.Others;
+                    person.BusinessScope = personEntity.BusinessScope;
 
                     matesEntities.SaveChanges();
                     return true;
@@ -211,7 +212,7 @@ namespace OurMates.Database
                      * */
                     if (result)
                     {
-                        string base64Image = json.Src;
+                        string base64Image = json.PictureURL;
                         if (!string.IsNullOrEmpty(base64Image))
                         {
                             var filePath = await AzureBlobStorageUtil.SaveImageToAzure(base64Image, person.PersonId, AccountUtil.sMatesPersonStorage);
