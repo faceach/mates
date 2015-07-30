@@ -56,7 +56,7 @@ angular.module('mates.photo.people', [])
         var defaultPeople = photoPeopleModal.face.people;
         if (defaultPeople) {
             $scope.people = _.extend($scope.people, {
-                "visible": true,
+                "visible": defaultPeople.PictureURL ? true : false,
                 "src": defaultPeople.PictureURL,
                 "name": defaultPeople.Name,
                 "isSingle": defaultPeople.IsSingle,
@@ -125,19 +125,19 @@ angular.module('mates.photo.people', [])
             //var formData = new FormData();
             // Simple POST request example (passing data) :
             var postData = {
-                    "FaceId": photoPeopleModal.face.FaceId,
-                    "PeopleId": people.peopleId,
-                    "Name": people.name,
-                    "IsSingle": people.isSingle,
-                    "Company": people.company,
-                    "CurrentLocation": people.city,
-                    "HighestDegree": people.highestDegree,
-                    "HighestCollege": people.highestUniversity,
-                    "BusinessScope": people.domain,
-                    "IsSelf": true,
-                    "WeChatId": "xxx",
-                    "PictureURL": people.src.split(",")[1],
-                };
+                "FaceId": photoPeopleModal.face.FaceId,
+                "PeopleId": people.peopleId,
+                "Name": people.name,
+                "IsSingle": people.isSingle,
+                "Company": people.company,
+                "CurrentLocation": people.city,
+                "HighestDegree": people.highestDegree,
+                "HighestCollege": people.highestUniversity,
+                "BusinessScope": people.domain,
+                "IsSelf": true,
+                "WeChatId": "xxx",
+                "PictureURL": people.src.split(",")[1],
+            };
             $http.post('api/person/upload', postData)
                 .success(function(data, status, headers, config) {
                     // this callback will be called asynchronously

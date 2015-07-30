@@ -4,19 +4,16 @@ angular.module('mates.weixin', [])
     .run([
         '$http',
         '_',
-        function($http) {
+        function($http, _) {
             if (typeof wx !== "undefined") {
                 var tokenRequest;
-                var pageUrl = location.href.substr(0, location.href.indexOf('/' + location.hash));
+                var pageUrl = location.href.substr(0, location.href.indexOf(location.hash));
 
                 // Online proxy API
-                tokenRequest = {
-                    method: 'GET',
-                    url: "http://mates.chinacloudsites.cn/api/wechat/access?url=" + encodeURIComponent(pageUrl)
-                }
+                var tokenRequestURL = location.origin + "/api/wechat/access?url=" + pageUrl;
 
                 function accessToken() {
-                    $http(tokenRequest)
+                    $http.get(tokenRequestURL)
                         .success(function(data, status, headers, config) {
                             if (!data) {
                                 return;
@@ -65,7 +62,7 @@ angular.module('mates.weixin', [])
                         var shareInfo = {
                             title: '回首青葱岁月，打开尘封的毕业照', // 分享标题
                             link: 'http://mates.chinacloudsites.cn', // 分享链接
-                            imgUrl: 'http://mates.chinacloudsites.cn/app/img/share.png', // 分享图标
+                            imgUrl: '', // 分享图标
                             success: function() {
                                 // 用户确认分享后执行的回调函数
                             },

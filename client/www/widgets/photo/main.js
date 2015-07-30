@@ -75,6 +75,7 @@ angular.module('mates.photo', [])
 
         // Message event listner
         msgBus.onMsg('addPhoto', $scope, function($event, photo) {
+            $scope.photo.photoId = photo.PhotoId;
             $scope.photo.people = [];
             $scope.photo = _.extend($scope.photo, photo);
         });

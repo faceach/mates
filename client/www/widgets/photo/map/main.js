@@ -58,6 +58,7 @@ angular.module('mates.photo.map', [])
                 var dataPhoto = data.PhotoEntity;
 
                 _.each(data.FaceList, function(e, keye) {
+                    e.people = {};
                     _.each(data.FaceWithPersonList, function(f, keyf) {
                         if (e.FaceId === f.FaceModel.FaceId) {
                             e.recognized = true;
@@ -75,6 +76,7 @@ angular.module('mates.photo.map', [])
 
         // Message event listner
         msgBus.onMsg('addPhoto', $scope, function($event, photo) {
+            $scope.photo.photoId = photo.PhotoId;
             $scope.photo.src = photo.src;
             $scope.photo.faces = photo.faces;
         });

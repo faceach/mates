@@ -91,14 +91,14 @@ angular.module('mates.photo.add', [])
             //var formData = new FormData();
             // Simple POST request example (passing data) :
             $http.post('api/photo/upload', {
-                "CategoryId": photo.categoryId,
-                "Class": photo.class,
-                "GraduationYear": photo.graduationYear,
-                "School": photo.school,
-                "SchoolLevel": photo.schoolLevel,
-                "Summary": photo.summary,
-                "Src": photo.src.split(",")[1],
-            })
+                    "CategoryId": photo.categoryId,
+                    "Class": photo.class,
+                    "GraduationYear": photo.graduationYear,
+                    "School": photo.school,
+                    "SchoolLevel": photo.schoolLevel,
+                    "Summary": photo.summary,
+                    "Src": photo.src.split(",")[1],
+                })
                 .success(function(data, status, headers, config) {
                     // this callback will be called asynchronously
                     // when the response is available
